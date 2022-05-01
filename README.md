@@ -1,6 +1,7 @@
-## Food Inventory App
+# Food Inventory App
 
-# Web-based food inventory application at DIMSUM PAWON KULO using PHP Native, MySQL & Bootstrap Framework
+# Overview
+Web-based food inventory application at DIMSUM PAWON KULO using PHP Native, MySQL & Bootstrap Framework
 
     Features :
     - Login (multi level user)
@@ -10,5 +11,5 @@
     - Cetak Laporan (PDF & Excel)
     - Preferencess (Account Setting, Add new user)
 
-# Contact Me : hellofrond@yahoo.com
+ Contact Me : hellofrond@yahoo.com
 
