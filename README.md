@@ -1,4 +1,4 @@
-# Food Inventory App
+# Food Inventory App (Dev)
 
 # Overview
 Web-based food inventory application at DIMSUM PAWON KULO using PHP Native, MySQL & Bootstrap Framework
