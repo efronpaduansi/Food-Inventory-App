@@ -3,9 +3,37 @@
     session_start();
     include "../../conn/koneksi.php";
 
-    //tampil data kedalam table
-    $data = $conn->query("SELECT tb_makanan.nama_makanan, tb_makanan.varian_rasa, stock.hrg_satuan, stock.jumlah FROM (tb_makanan LEFT JOIN stock ON tb_makanan.kode = stock.kode_makanan)");
-    
+    //menampilkan data ke dalam table
+    $query = "SELECT nama_makanan, varian_rasa, hrg_satuan, jumlah FROM tb_makanan LEFT JOIN stock ON tb_makanan.kode = stock.kode_makanan";
+    $result = array();
+    while($data = mysqli_fetch_array($query));
+    $result[] = $data;
+
+    //Ambil jumlah persediaan dimsum rasa ayam
+    $getDataAyam = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlRasaAyam FROM brg_masuk WHERE varian_rasa = 'Ayam'");
+    $resultDataAyam = mysqli_fetch_array($getDataAyam);
+    $jmlRasaAyam = $resultDataAyam['jmlRasaAyam'];
+
+    //Ambil jumlah persediaan dimsum rasa beef
+    $getDataBeef = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlRasaBeef FROM brg_masuk WHERE varian_rasa = 'Beef'");
+    $resultDataBeef = mysqli_fetch_array($getDataBeef);
+    $jmlRasaBeef = $resultDataBeef['jmlRasaBeef'];
+
+    //Ambil jumlah persediaan dimsum rasa cumi
+    $getDataCumi = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlRasaCumi FROM brg_masuk WHERE varian_rasa = 'Cumi'");
+    $resultDataCumi = mysqli_fetch_array($getDataCumi);
+    $jmlRasaCumi = $resultDataCumi['jmlRasaCumi'];
+
+    //Ambil jumlah persediaan dimsum rasa udang
+    $getDataUdang = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlRasaUdang FROM brg_masuk WHERE varian_rasa = 'Udang'");
+    $resultDataUdang = mysqli_fetch_array($getDataUdang);
+    $jmlRasaUdang = $resultDataUdang['jmlRasaUdang'];
+
+    //Menghitung total persediaan makanan
+    $getDataMakanan = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlPersediaan FROM brg_masuk");
+    $resultDataMakanan = mysqli_fetch_array($getDataMakanan);
+    $jmlPersediaan = $resultDataMakanan['jmlPersediaan'];
+
 ?>
 
 <!DOCTYPE html>
@@ -91,7 +119,7 @@
           <div class="section-body">
               <!-- Table stok makanan -->
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-9">
                         <div class="form-inline mb-3">
                           <button type="button" class="btn btn-primary mr-3" data-toggle="modal" data-target="#stokModal">
                               Tambahkan ke Stok
@@ -100,34 +128,106 @@
                           </div>
                         <table class="table table-bordered table-secondary">
                             <thead class="thead-dark">
-                              <tr>
+                                <tr>
                                 <th scope="col">NO</th>
                                 <th scope="col">NAMA MAKANAN</th>
                                 <th scope="col">VARIAN RASA</th>
-                                <th scope="col">HARGA / Pcs</th>
-                                <th scope="col">JUMLAH</th>
-                              </tr>
+                                <th scope="col">JML PERSEDIAAN</th>
+                                <th scope="col">KETERANGAN</th>
+                                </tr>
                             </thead>
                             <tbody>
-                              <?php 
-                                  $no = 1;
-                                  while( $tampil = $data->fetch_array()) {
-                                ?>
                                 <tr>
-                                  <th scope="row"><?= $no; ?></th>
-                                  <td><?=$tampil['nama_makanan']; ?></td>
-                                  <td><?=$tampil['varian_rasa']; ?></td>
-                                  <td><?=$tampil['hrg_satuan']; ?></td>
-                                  <td><?=$tampil['jumlah']; ?></td>
-                                </tr>
-                                <?php 
-                                  $no++; 
-                                  }
+                                <td scope="row">1</td>
+                                <td>Dimsum</td>
+                                <td>Ayam</td>
+                                <?php
+                                    if($jmlRasaAyam == 0){
+                                        echo "<td>0</td>";
+                                    }else{
+                                        echo "<td>" . $jmlRasaAyam . "</td>";
+                                    }
+                                    if($jmlRasaAyam == 0){
+                                        echo "<td class='text-danger'><strong>Habis</strong></td>";
+                                    }else{
+                                        echo "<td class='text-success'><strong>Tersedia</strong></td>";
+                                    }
                                 ?>
+                                </tr>
+                            </tbody>
                             <tbody>
+                                <tr>
+                                <td scope="row">2</td>
+                                <td>Dimsum</td>
+                                <td>Beef</td>
+                                <?php 
+                                    if($jmlRasaBeef == 0){
+                                        echo "<td>0</td>";
+                                    }else{
+                                        echo "<td>" . $jmlRasaBeef . "</td>";
+                                    }
+                                    if($jmlRasaBeef == 0){
+                                        echo "<td class='text-danger'><strong>Habis</strong></td>";
+                                    }else{
+                                        echo "<td class='text-success'><strong>Tersedia</strong></td>";
+                                    }
+                                ?>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                <td scope="row">3</td>
+                                <td>Dimsum</td>
+                                <td>Cumi</td>
+                                <?php 
+                                    if($jmlRasaCumi == 0){
+                                        echo "<td>0</td>";
+                                    }else{
+                                        echo "<td>" . $jmlRasaCumi . "</td>";
+                                    }
+                                    if($jmlRasaCumi == 0){
+                                        echo "<td class='text-danger'><strong>Habis</strong></td>";
+                                    }else{
+                                        echo "<td class='text-success'><strong>Tersedia</strong></td>";
+                                    }
+                                ?>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                <td scope="row">4</td>
+                                <td>Dimsum</td>
+                                <td>Udang</td>
+                                <?php 
+                                     if($jmlRasaUdang == 0){
+                                        echo "<td>0</td>";
+                                    }else{
+                                        echo "<td>" . $jmlRasaUdang . "</td>";
+                                    }
+                                    if($jmlRasaUdang == 0){
+                                        echo "<td class='text-danger'><strong>Habis</strong></td>";
+                                    }else{
+                                        echo "<td class='text-success'><strong>Tersedia</strong></td>";
+                                    }
+                                ?>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
-                    
+                    <div class="col-lg-3">
+                        <?php
+                            $getLastUpdate = mysqli_query($conn, "SELECT * FROM brg_masuk ORDER BY id_masuk DESC LIMIT 1");
+                            $result = mysqli_fetch_array($getLastUpdate);
+                        ?>
+                       <strong>Terakhir ditambahkan</strong> <br><br>    
+                       <p>Varian Rasa : <?= $result['varian_rasa']; ?></p>
+                       <p>Harga Satuan : <?= $result['harga_satuan']; ?></p>
+                       <p>Jumlah : <?= $result['jumlah']; ?></p>
+                       <p>Penerima : <?= $result['penerima']; ?></p>
+                    </div>
+                    <div class="total ml-3">
+                        <strong><?= "Total Persediaan : " . " " . $jmlPersediaan . " " . "Pcs"; ?></strong>
+                    </div>
                 </div>
            </div>
         </section>

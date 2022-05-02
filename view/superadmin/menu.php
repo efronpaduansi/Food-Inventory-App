@@ -1,7 +1,7 @@
 <?php
   session_start();
     //membuat kode makanan otomatis
-    include "../conn/koneksi.php";
+    include "../../conn/koneksi.php";
 
     $query = "SELECT max(kode) as kodeMenu FROM tb_makanan";
     $hasil = mysqli_query($conn, $query);
@@ -194,8 +194,8 @@
                             </button>
                           </div>
                         <input type="text" name="kode" class="form-control mb-3" value="<?=$kode; ?>" readonly>
-                        <input type="text" name="nama_makanan" placeholder="Nama Makanan" class="form-control mb-3" required>
-                        <input type="text" name="varian_rasa" placeholder="Varian Rasa" class="form-control mb-5" required>
+                        <input type="text" name="nama_makanan" placeholder="Nama Makanan" class="form-control mb-3" required autocomplete="off">
+                        <input type="text" name="varian_rasa" placeholder="Varian Rasa" class="form-control mb-5" required autocomplete="off">
                         <div class="modal-footer">
                           <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                           <button type="submit" name="simpan" class="btn btn-primary">Simpan</button>
