@@ -2,7 +2,6 @@
 
     session_start();
     include "../../conn/koneksi.php";
-
     //tampil data kedalam table
     // $data = $conn->query("SELECT tb_makanan.nama_makanan, tb_makanan.varian_rasa, stock.hrg_satuan, stock.jumlah, stock.tgl_order, stock.admin FROM (tb_makanan LEFT JOIN stock ON tb_makanan.kode = stock.kode_makanan)");
     $data = $conn->query("SELECT * FROM stock");
@@ -213,6 +212,12 @@
                                           <td><?=$tampil['jumlah']; ?></td>
                                           <td><?=$tampil['tgl_order']; ?></td>
                                           <td><?=$tampil['admin']; ?></td>
+                                          <td>
+                                              <div class="form-inline">
+                                                <a href="" class="mr-1" onclick="halo"><i class="fas fa-edit"></i></a>
+                                               <a href="../../functions/stock_delete.php?id=<?=$tampil['id']; ?>" onclick = "return confirm ('Apakah anda yakin untuk menghapus data ini ?');"><i class="fas fa-trash"></i></a>
+                                              </div>
+                                          </td>
                                         </tr>
                                         <?php 
                                           $no++; 
@@ -236,7 +241,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                    <form action="../../function/add_stock.php" method="post">
+                    <form action="../../functions/stock_insert.php" method="post">
                     <select name="nama_makanan" class="form-control mb-3" required>
                         <option value="" disabled selected hidden>Select Makanan</option>
                         <option value="Dimsum">Dimsum</option>
@@ -245,7 +250,7 @@
                         <option value="" disabled selected hidden>Select Varian Rasa</option>
                          <!-- Ambil data makanan dari table tb_makanan -->
                            <?php
-                              $sql = $conn->query("SELECT varian_rasa FROM tb_makanan");
+                              $sql = $conn->query("SELECT * FROM tb_makanan");
                               while( $data = $sql->fetch_array()) {
                             ?>
                         <option value="<?=$data['varian_rasa']; ?>"><?=$data['varian_rasa']; ?></option>

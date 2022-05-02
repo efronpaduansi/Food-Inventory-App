@@ -1,14 +1,15 @@
 <?php
 
-    include "koneksi.php";
+    include "../conn/koneksi.php";
 
-    $id_masuk = $_GET['id_masuk'];
-    $sql = "DELETE FROM brg_masuk WHERE id_masuk = '$id_masuk' ";
+    $id = $_GET['id'];
+    
+    $sql = "DELETE FROM stock WHERE id = '$id' ";
     $hapus = mysqli_query($conn, $sql);
     if($hapus){
-        header("location:../view/admin/brg_masuk.php?hapus=sukses");
+        header("location:../view/superadmin/stock.php?hapus=sukses");
     }else{
-        header("location:../view/admin/brg_masuk.php?hapus=gagal");
+        header("location:../view/superadmin/stock.php?hapus=gagal");
     }
 
 ?>

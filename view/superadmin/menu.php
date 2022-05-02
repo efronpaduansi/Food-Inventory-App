@@ -186,7 +186,7 @@
                 </div>
                 <div class="modal-body">
                     <!-- form input -->
-                    <form action="../../functions/add_menu.php" method="post">
+                    <form action="../../functions/menu_insert.php" method="post">
                           <div class="alert alert-warning alert-dismissible fade show" role="alert">
                             <strong>Perhatian!</strong> Fitur ini hanya bisa diakses oleh superadmin.
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
