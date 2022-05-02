@@ -44,6 +44,33 @@
       }
     }
 
+    //cek hapus menu
+    if( isset($_GET['hapus'])){
+      if($_GET['hapus'] == "sukses"){
+        $alert = "
+          <div class='alert alert-success alert-dismissible fade show' role='alert'>
+              <strong>Menu baru berhasil dihapus</strong>
+              <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+              <span aria-hidden='true'>&times;</span>
+              </button>
+          </div>
+          ";
+      }
+    }
+
+    //cek update menu
+    if( isset($_GET['update'])){
+      if($_GET['update'] == "sukses"){
+        $alert = "
+        <div class='alert alert-success alert-dismissible fade show' role='alert'>
+            <strong>Menu baru berhasil diubah</strong>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+            </button>
+        </div>
+        ";
+      }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -158,8 +185,8 @@
                                 <td><?=$menu['varian_rasa']; ?></td>
                                 <td>
                                   <div class="form-inline">
-                                      <a href="" class="btn btn-danger mr-1">Edit</a>
-                                      <button class="btn btn-warning">Hapus</button>
+                                      <a href="menu_edit.php?kode=<?=$menu['kode']; ?>"><i class="fas fa-edit"></i></a>
+                                      <a href="../../functions/menu_delete.php?kode=<?=$menu['kode']; ?>" onclick = "return confirm ('Apakah anda yakin untuk menghapus data ini ?');"><i class="fas fa-trash"></i></a>
                                   </div>
                                 </td>
                             </tr>

@@ -1,5 +1,11 @@
 <?php
-  session_start();
+
+        include "../../conn/koneksi.php";
+
+        $kode = $_GET['kode'];
+
+        $query = $conn->query("SELECT * FROM tb_makanan WHERE kode = '$kode'");
+        while( $data = $query->fetch_assoc()) {
 
 ?>
 <!DOCTYPE html>
@@ -8,7 +14,7 @@
   <?php 
     include "../master/header.php";
   ?>
-  <title><?=$_SESSION['fname']; ?> | Informasi Akun</title>
+  <title>Edit Menu | Dimsum Pawonkulo</title>
 </head>
 <body>
   <div id="app">
@@ -58,7 +64,7 @@
               <li class="nav-item">
                 <a href="dashboard.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
               </li>
-              <li class=""><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
+              <li class="active"><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
               <li class=""><a class="nav-link" href="stock.php"><i class="fas fa-layer-group"></i><span>Stock</span></a></li>
               <li class=""><a class="nav-link" href="data_penjualan.php"><i class="fas fa-chart-line"></i><span>Data Penjualan</span></a></li>
               <li class=""><a class="nav-link" href="profit.php"><i class="fas fa-coins"></i><span>Profit</span></a></li>
@@ -75,55 +81,46 @@
               <a href="../../logout.php" class="btn btn-danger btn-lg btn-block btn-icon-split">
               <i class="fas fa-sign-out"></i> Keluar
               </a>
-            </div>
+          </div>
         </aside>
       </div>
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>Informasi Akun</h1>
+            <h1>Edit Menu</h1>
           </div>
           <div class="section-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card shadow-lg">
-                        <div class="card-header bg-dark text-light">
-                             Anda login sebagai : @<?=$_SESSION['username'] . " " ."[".  $_SESSION['id_user']. "]";?> 
-                        </div>
-                        <div class="card-body text-center">
-                                <img alt="image" src="../../assets/img/avatar/avatar-1.png" class="rounded-circle mr-1" height=75>
-                                 <div class="row d-flex justify-content-center mt-3">
-                                   <div class="title text-left">
-                                      <h5>ID</h5>
-                                      <h5>USERNAME</h5>
-                                      <h5>FULLNAME</h5>
-                                      <h5>LEVEL</h5>
-                                   </div>
-                                   <div class="titik ml-2">
-                                     <h5>: </h5>
-                                     <h5>: </h5>
-                                     <h5>: </h5>
-                                     <h5>: </h5>
-                                   </div>
-                                   <div class="identitas text-left ml-3">
-                                     <h5><?= $_SESSION['id_user']; ?></h5>
-                                     <h5><?= $_SESSION['username']; ?></h5>
-                                     <h5><?= $_SESSION['fname']; ?></h5>
-                                     <h5><?= $_SESSION['level']; ?></h5>
-                                   </div>
-                                 </div>
-                                <div class="form-inline d-flex justify-content-center mt-5">
-                                  <a href="account_edit.php" class="btn btn-primary mr-4">Edit Akun</a>
-                                  <a href="account_setting.php" class="btn btn-danger">Kembali</a>
-                              </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+             <div class="container">
+                     <div class="row">
+                             <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-header bg-secondary">Edit Menu</div>
+                                    <div class="card-body">
+                                        <form action="../../functions/menu_update.php" method="post">
+                                                <input type="hidden" name="kode" class="form-control mb-3" value="<?=$data['kode']; ?>">
+                                                <input type="text" name="nama_makanan" class="form-control mb-3" value="<?=$data['nama_makanan']; ?>" required>
+                                                <select name="varian_rasa" id="varian_rasa" class="form-control mb-5" required>
+                                                        <option value="" disabled selected hidden><?=$data['varian_rasa']; ?></option>
+                                                        <option value="Ayam">Ayam</option>
+                                                        <option value="Beef">Beef</option>
+                                                        <option value="Cumi">Cumi</option>
+                                                        <option value="Udang">Udang</option>
+                                                </select>
+                                                <div class="form-inline">
+                                                        <a href="menu.php"  class="btn btn-danger mr-2">Batal</a>
+                                                        <button type="submit" name="update" class="btn btn-primary">Update</button>
+                                                </div>
+                                        </form>
+                                    </div>
+                                </div>
+                             </div>
+                     </div>
+             </div>
           </div>
         </section>
       </div>
      <?php include "../master/footer.php" ?>
 </body>
 </html>
+<?php } ?>
