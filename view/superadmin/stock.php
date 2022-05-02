@@ -4,8 +4,29 @@
     include "../../conn/koneksi.php";
 
     //tampil data kedalam table
-    $data = $conn->query("SELECT tb_makanan.nama_makanan, tb_makanan.varian_rasa, stock.hrg_satuan, stock.jumlah FROM (tb_makanan LEFT JOIN stock ON tb_makanan.kode = stock.kode_makanan)");
+    // $data = $conn->query("SELECT tb_makanan.nama_makanan, tb_makanan.varian_rasa, stock.hrg_satuan, stock.jumlah, stock.tgl_order, stock.admin FROM (tb_makanan LEFT JOIN stock ON tb_makanan.kode = stock.kode_makanan)");
+    $data = $conn->query("SELECT * FROM stock");
     
+    //hitung jumlah data berdasarkan varian rasa
+    $getRasaAyam = $conn->query("SELECT SUM(jumlah) AS jml FROM stock WHERE kode_makanan = 'DPK001'");
+    $result = mysqli_fetch_array($getRasaAyam);
+    $jmlRasaAyam = $result['jml'];
+
+    $getRasabBeef = $conn->query("SELECT SUM(jumlah) AS jml FROM stock WHERE kode_makanan = 'DPK002'");
+    $result = mysqli_fetch_array($getRasabBeef);
+    $jmlRasaBeef = $result['jml'];
+
+    $getRasaCumi = $conn->query("SELECT SUM(jumlah) AS jml FROM stock WHERE kode_makanan = 'DPK003'");
+    $result = mysqli_fetch_array($getRasaCumi);
+    $jmlRasaCumi = $result['jml'];
+
+    $getRasaUdang = $conn->query("SELECT SUM(jumlah) AS jml FROM stock WHERE kode_makanan = 'DPK004'");
+    $result = mysqli_fetch_array($getRasaUdang);
+    $jmlRasaUdang = $result['jml'];
+
+    $getTotal = $conn->query("SELECT SUM(jumlah) AS total FROM stock");
+    $result = mysqli_fetch_array($getTotal);
+    $total = $result['total'];
 ?>
 
 <!DOCTYPE html>
@@ -90,45 +111,118 @@
           </div>
           <div class="section-body">
               <!-- Table stok makanan -->
-                <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-12">
                         <div class="form-inline mb-3">
                           <button type="button" class="btn btn-primary mr-3" data-toggle="modal" data-target="#stokModal">
                               Tambahkan ke Stok
                             </button>
                               <a href="../../functions/laporan_stok_brg.php" target="_blank" class="btn btn-info"><i class="fas fa-print"></i> Cetak Laporan</a>
+                              <input type="text" class="form-control ml-3 bg-dark text-light" value="<?="Total" . " ". $total . " " . "Pcs"; ?>" readonly>
                           </div>
-                        <table class="table table-bordered table-secondary">
-                            <thead class="thead-dark">
-                              <tr>
-                                <th scope="col">NO</th>
-                                <th scope="col">NAMA MAKANAN</th>
-                                <th scope="col">VARIAN RASA</th>
-                                <th scope="col">HARGA / Pcs</th>
-                                <th scope="col">JUMLAH</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <?php 
-                                  $no = 1;
-                                  while( $tampil = $data->fetch_array()) {
-                                ?>
-                                <tr>
-                                  <th scope="row"><?= $no; ?></th>
-                                  <td><?=$tampil['nama_makanan']; ?></td>
-                                  <td><?=$tampil['varian_rasa']; ?></td>
-                                  <td><?=$tampil['hrg_satuan']; ?></td>
-                                  <td><?=$tampil['jumlah']; ?></td>
-                                </tr>
-                                <?php 
-                                  $no++; 
-                                  }
-                                ?>
-                            <tbody>
-                        </table>
-                    </div>
-                    
-                </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                              <div class="row">
+                                  <div class="col-lg-3">
+                                      <div class="card bg-danger">
+                                        <div class="card-header">Rasa Ayam</div>
+                                        <div class="card-body">
+                                            <?php 
+                                                if($jmlRasaAyam == 0){
+                                                  echo "<h1>0</h1>" . "Pcs" . "<br>";
+                                                  echo "Ket. Habis";
+                                                }else{
+                                                  echo "<h1>". $jmlRasaAyam . "</h1>" . "Pcs" . "<br>";
+                                                  echo "Ket. Tersedia";
+                                                }
+                                            ?> 
+                                        </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-3">
+                                     <div class="card bg-success">
+                                          <div class="card-header">Rasa Beef</div>
+                                          <div class="card-body">
+                                          <?php 
+                                                if($jmlRasaBeef == 0){
+                                                  echo "<h1>0</h1>" . "Pcs" . "<br>";
+                                                  echo "Ket. Habis";
+                                                }else{
+                                                  echo "<h1>". $jmlRasaBeef . "</h1>" . "Pcs" . "<br>";
+                                                  echo "Ket. Tersedia";
+                                                }
+                                            ?> 
+                                          </div>
+                                     </div>
+                                  </div>
+                                  <div class="col-lg-3">
+                                      <div class="card bg-warning">
+                                          <div class="card-header">Rasa Cumi</div>
+                                          <div class="card-body">
+                                          <?php 
+                                                if($jmlRasaCumi == 0){
+                                                  echo "<h1>0</h1>" . "Pcs" . "<br>";
+                                                  echo "Ket. Habis";
+                                                }else{
+                                                  echo "<h1>". $jmlRasaCumi . "</h1>" . "Pcs" . "<br>";
+                                                  echo "Ket. Tersedia";
+                                                }
+                                            ?> 
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-3">
+                                      <div class="card bg-info">
+                                            <div class="card-header">Rasa Udang</div>
+                                            <div class="card-body">
+                                            <?php 
+                                                if($jmlRasaUdang == 0){
+                                                  echo "<h1>0</h1>" . "Pcs" . "<br>";
+                                                  echo "Ket. Habis";
+                                                }else{
+                                                  echo "<h1>". $jmlRasaUdang . "</h1>" . "Pcs" . "<br>";
+                                                  echo "Ket. Tersedia";
+                                                }
+                                            ?> 
+                                            </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <table class="table table-bordered table-secondary">
+                                    <thead class="thead-dark">
+                                      <tr>
+                                        <th scope="col">NO</th>
+                                        <th scope="col">NAMA MAKANAN</th>
+                                        <th scope="col">VARIAN RASA</th>
+                                        <th scope="col">HARGA / Pcs</th>
+                                        <th scope="col">JUMLAH</th>
+                                        <th scope="col">TGL ORDER</th>
+                                        <th scope="col">ADMIN</th>
+                                        <th scope="col">AKSI</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <?php 
+                                          $no = 1;
+                                          while( $tampil = $data->fetch_array()) {
+                                        ?>
+                                        <tr>
+                                          <th scope="row"><?= $no; ?></th>
+                                          <td><?=$tampil['nama_makanan']; ?></td>
+                                          <td><?=$tampil['varian_rasa']; ?></td>
+                                          <td><?=$tampil['hrg_satuan']; ?></td>
+                                          <td><?=$tampil['jumlah']; ?></td>
+                                          <td><?=$tampil['tgl_order']; ?></td>
+                                          <td><?=$tampil['admin']; ?></td>
+                                        </tr>
+                                        <?php 
+                                          $no++; 
+                                          }
+                                        ?>
+                                    <tbody>
+                                </table>
+                            </div>
+                        </div>
+                      </div>
            </div>
         </section>
         <!-- Modal -->
@@ -142,11 +236,30 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
+                    <form action="../../function/add_stock.php" method="post">
+                    <select name="nama_makanan" class="form-control mb-3" required>
+                        <option value="" disabled selected hidden>Select Makanan</option>
+                        <option value="Dimsum">Dimsum</option>
+                      </select>
+                      <select name="varian_rasa" class="form-control mb-3" required>
+                        <option value="" disabled selected hidden>Select Varian Rasa</option>
+                         <!-- Ambil data makanan dari table tb_makanan -->
+                           <?php
+                              $sql = $conn->query("SELECT varian_rasa FROM tb_makanan");
+                              while( $data = $sql->fetch_array()) {
+                            ?>
+                        <option value="<?=$data['varian_rasa']; ?>"><?=$data['varian_rasa']; ?></option>
+                        <?php } ?>
+                      </select>
+                      <input type="number" name="hrg_satuan" class="form-control mb-3" placeholder="Harga per pcs" required>
+                      <input type="number" name="jumlah" class="form-control mb-3" placeholder="Jumlah" required>
+                      <input type="date" name="tgl_order" class="form-control mb-3"  required>
+                      <input type="text" name="admin" class="form-control mb-5" value="<?= $_SESSION['fname'];?>"  readonly>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
+                      </div>
+                    </form>
                 </div>
               </div>
             </div>
