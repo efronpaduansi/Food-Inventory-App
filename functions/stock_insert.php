@@ -9,7 +9,7 @@
        $tgl_order = $_POST['tgl_order'];
        $admin = $_POST['admin'];
 
-       $sql = "INSERT INTO stock (nama_makanan, varian_rasa, kode_makanan, )";
+    
 
 
 ?>
