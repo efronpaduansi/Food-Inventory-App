@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include "koneksi.php";
+    include "../conn/koneksi.php";
 
 ?>
 
@@ -20,16 +20,17 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/components.css">
 
-    <title>Laporan Brg Masuk|Dimsum Pawon Kulo</title>
+    <title>Stock Report|Dimsum Pawon Kulo</title>
 </head>
 <body>
     <div class="container">
         <div class="header mr-auto mt-3 mb-3">
-            <strong><?= "Cetak : " . date("Y-m-d h:i:sa"); ?></strong>
+            <strong><?= "Cetak : " . date("d/m/Y"); ?></strong> 
+            <strong>Time : <?=date("h:i:sa") ?></strong>
         </div>
         <div class="title text-center">
             <h2 class="text-primary">DIMSUM PAWON KULO</h2>
-            <h4><strong>STRUK DATA BARANG MASUK</strong></h4>
+            <h4><strong>LAPORAN STOK MAKANAN</strong></h4>
             <p class="mb-4">Jl. Ampera Poncol Babakan Setu Tangsel - Tlp : 081xxxxxx</p>
         </div>
        <table class="table table-bordered">
@@ -38,44 +39,45 @@
                     <th scope="col">NO</th>
                     <th scope="col">NAMA MAKANAN</th>
                     <th scope="col">VARIAN RASA</th>
-                    <th scope="col">HRG SATUAN (Rp)</th>
+                    <th scope="col">HRG/Pcs (Rp)</th>
                     <th scope="col">JUMLAH (Pcs)</th>
-                    <th scope="col">TGL MASUK</th>
-                    <th scope="col">PENERIMA</th>
+                    <th scope="col">TGL ORDER</th>
+                    <th scope="col">ADMIN</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                     $no = 1;
-                    $sql = mysqli_query($conn,"select * from brg_masuk");
+                    $sql = mysqli_query($conn,"SELECT * FROM stock");
                     while($data = mysqli_fetch_array($sql)){
                 ?>
                 <tr>
                     <th scope="row"><?= $no++;?></th>
                     <td><?=$data['nama_makanan'];?></td>
                     <td><?=$data['varian_rasa'];?></td>
-                    <td><?= "Rp.". " " . $data['harga_satuan'];?></td>
+                    <td><?= "Rp.". " " . $data['hrg_satuan'];?></td>
                     <td><?=$data['jumlah'];?></td>
-                    <td><?=$data['tgl_masuk'];?></td>
-                    <td><?=$data['penerima'];?></td>
+                    <td><?=$data['tgl_order'];?></td>
+                    <td><?=$data['administrator'];?></td>
                 </tr>
                 <?php } ?>
             </tbody>
        </table>
         <!-- Hitung total data -->
         <?php
-            $getTotal = mysqli_query($conn, "SELECT SUM(jumlah) AS total FROM brg_masuk");
-            $getPengeluaran = mysqli_query($conn, "SELECT SUM(harga_satuan * jumlah) AS pengeluaran FROM brg_masuk");
+            $getTotal = mysqli_query($conn, "SELECT SUM(jumlah) AS total FROM stock");
+            $getPengeluaran = mysqli_query($conn, "SELECT SUM(hrg_satuan * jumlah) AS pengeluaran FROM stock");
             $result = mysqli_fetch_array($getTotal);
             $hasilPengeluaran = mysqli_fetch_array($getPengeluaran);
             $total = $result['total'];
             $totalPengeluaran = $hasilPengeluaran['pengeluaran'];
-            echo "<strong>" . "Total : ". " " . $total . " " . "pcs" . "</strong>" . "<br>";
+            echo "<strong>" . "Total Makanan : ". " " . $total . " " . "pcs" . "</strong>" . "<br>";
             echo "<strong>" . "Total Pengeluaran : " . " " . "Rp. " . " " . $totalPengeluaran . "</strong>";
         ?>
         
        <br> <br> <br>
        <div class="text-center">
+           <p>Depok, <?=date('d M Y'); ?></p>
            <strong>Administrator</strong> 
            <br> <br>
            <p><?=$_SESSION['fname']; ?></p>

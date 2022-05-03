@@ -163,14 +163,14 @@
                     <button type="button" class="btn btn-primary mb-4" data-toggle="modal" data-target="#menuModal">
                         Tambah Menu Baru
                     </button>
-                    <table class="table">
-                        <thead class="thead-dark">
+                    <table class="table table-striped">
+                        <thead class="bg-primary">
                           <tr>
-                            <th scope="col">NO</th>
-                            <th scope="col">KODE</th>
-                            <th scope="col">NAMA MAKANAN</th>
-                            <th scope="col">VARIAN RASA</th>
-                            <th scope="col">AKSI</th>
+                            <th scope="col" class="text-light">NO</th>
+                            <th scope="col" class="text-light">KODE</th>
+                            <th scope="col" class="text-light">NAMA MAKANAN</th>
+                            <th scope="col" class="text-light">VARIAN RASA</th>
+                            <th scope="col" class="text-light">AKSI</th>
                           </tr>
                         </thead>
                         <tbody>

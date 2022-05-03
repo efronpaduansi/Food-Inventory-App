@@ -26,6 +26,48 @@
     $getTotal = $conn->query("SELECT SUM(jumlah) AS total FROM stock");
     $result = mysqli_fetch_array($getTotal);
     $total = $result['total'];
+
+    //cek insert data stock
+    if(isset($_GET['pesan'])){
+      if($_GET['pesan'] == "sukses"){
+        $alert = "
+        <div class='alert alert-success alert-dismissible fade show' role='alert'>
+            <strong>Data stock berhasil ditambahkan</strong>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+            </button>
+        </div>
+        ";
+      }
+    }
+
+    //cek update data stock
+    if(isset($_GET['update'])){
+      if($_GET['update'] == "sukses"){
+        $alert = "
+        <div class='alert alert-success alert-dismissible fade show' role='alert'>
+            <strong>Data stock berhasil diubah</strong>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+            </button>
+        </div>
+        ";
+      }
+    }
+
+    //cek hapus data stock
+    if(isset($_GET['hapus'])){
+      if($_GET['hapus'] == "sukses"){
+        $alert = "
+        <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+            <strong>Data stock berhasil dihapus</strong>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+            </button>
+        </div>
+        ";
+      }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -111,11 +153,12 @@
           <div class="section-body">
               <!-- Table stok makanan -->
                     <div class="col-12">
+                        <?=@$alert; ?>
                         <div class="form-inline mb-3">
                           <button type="button" class="btn btn-primary mr-3" data-toggle="modal" data-target="#stokModal">
                               Tambahkan ke Stok
                             </button>
-                              <a href="../../functions/laporan_stok_brg.php" target="_blank" class="btn btn-info"><i class="fas fa-print"></i> Cetak Laporan</a>
+                              <a href="../../functions/stock_report.php" target="_blank" class="btn btn-info"><i class="fas fa-print"></i> Cetak Laporan</a>
                               <input type="text" class="form-control ml-3 bg-dark text-light" value="<?="Total" . " ". $total . " " . "Pcs"; ?>" readonly>
                           </div>
                         <div class="row">
@@ -211,10 +254,10 @@
                                           <td><?=$tampil['hrg_satuan']; ?></td>
                                           <td><?=$tampil['jumlah']; ?></td>
                                           <td><?=$tampil['tgl_order']; ?></td>
-                                          <td><?=$tampil['admin']; ?></td>
+                                          <td><?=$tampil['administrator']; ?></td>
                                           <td>
                                               <div class="form-inline">
-                                                <a href="" class="mr-1" onclick="halo"><i class="fas fa-edit"></i></a>
+                                                <a href="stock_edit.php?id=<?=$tampil['id']; ?>" class="mr-1"><i class="fas fa-edit"></i></a>
                                                <a href="../../functions/stock_delete.php?id=<?=$tampil['id']; ?>" onclick = "return confirm ('Apakah anda yakin untuk menghapus data ini ?');"><i class="fas fa-trash"></i></a>
                                               </div>
                                           </td>

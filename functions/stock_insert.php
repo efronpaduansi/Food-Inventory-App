@@ -16,7 +16,7 @@
        $kode_makanan = $fetch_kode['kode_makanan'];
        echo $kode_makanan;
 
-       $query = $conn->query("INSERT INTO stock(nama_makanan, varian_rasa, kode_makanan, hrg_satuan, jumlah, tgl_order, admin) VALUES ('$nama_makanan', '$varian_rasa', '$kode_makanan', '$hrg_satuan', '$jumlah', '$tgl_order', '$admin')");
+       $query = $conn->query("INSERT INTO stock(nama_makanan, varian_rasa, kode_makanan, hrg_satuan, jumlah, tgl_order, administrator) VALUES ('$nama_makanan', '$varian_rasa', '$kode_makanan', '$hrg_satuan', '$jumlah', '$tgl_order', '$admin')");
        if($query){
            header("location:../view/superadmin/stock.php?pesan=sukses");
        }else{

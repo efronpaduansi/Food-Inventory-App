@@ -1,10 +1,10 @@
 <?php
   session_start();
 
-  include "../../functions/koneksi.php";
+  include "../../conn/koneksi.php";
 
   //Mengambil jumlah makanan masuk
-    $queryDataMasuk = mysqli_query($conn, "SELECT SUM(jumlah) AS total FROM brg_masuk");
+    $queryDataMasuk = mysqli_query($conn, "SELECT SUM(jumlah) AS total FROM stock");
     $resultDataMasuk = mysqli_fetch_array($queryDataMasuk);
     $jmlDataMasuk = $resultDataMasuk['total'];
 
@@ -102,7 +102,7 @@
                     <div class="row">
                         <div class="col-lg-4">
                            <div class="card shadow-lg">
-                               <div class="card-header bg-primary text-light"><strong>Data Masuk</strong></div>
+                               <div class="card-header bg-primary text-light"><strong>Stock Masuk</strong></div>
                                <div class="card-body text-center">
                                     <h1 class="text-success"><?=$jmlDataMasuk . " " . Pcs; ?></h1>
                                     <div class="form-inline mt-5">
@@ -114,7 +114,7 @@
                         </div>
                         <div class="col-lg-4">
                            <div class="card shadow-lg">
-                               <div class="card-header bg-primary text-light"><strong>Data Keluar</strong></div>
+                               <div class="card-header bg-primary text-light"><strong>Penjualan</strong></div>
                                <div class="card-body">
                                    12345
                                </div>
@@ -122,7 +122,7 @@
                         </div>
                         <div class="col-lg-4">
                            <div class="card shadow-lg">
-                               <div class="card-header bg-primary text-light"><strong>Stok</strong></div>
+                               <div class="card-header bg-primary text-light"><strong>Total Persediaan</strong></div>
                                <div class="card-body text-center">
                                     <h1 class="text-success"><?=$jmlDataMasuk . " " . Pcs; ?></h1>
                                     <div class="form-inline mt-5">

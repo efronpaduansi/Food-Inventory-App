@@ -1,5 +1,5 @@
 <?php
-
+        session_start();
         include "../../conn/koneksi.php";
 
         $kode = $_GET['kode'];
