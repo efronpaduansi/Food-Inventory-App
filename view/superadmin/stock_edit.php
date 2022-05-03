@@ -100,16 +100,22 @@
                                 <form action="../../functions/stock_update.php" method="post">
                                    <input type="hidden" name="id" value="<?=$data['id']; ?>">
                                    <input type="text" name="kode_makanan" class="form-control mb-3" value="<?=$data['kode_makanan']; ?>" readonly>
-                                   <input type="text" class="form-control mb-3" name="nama_makanan" value="<?=$data['nama_makanan']; ?>">
+                                   <select name="nama_makanan" class="form-control mb-3" required>
+                                      <option value="" disabled selected hidden>Select Makanan</option>
+                                      <option value="Dimsum">Dimsum</option>
+                                  </select>
                                    <select name="varian_rasa" id="varian_rasa" class="form-control mb-3" required>
                                        <option value="" disabled selected hidden><?=$data['varian_rasa']; ?></option>
-                                       <option value="Ayam">Ayam</option>
-                                       <option value="Beef">Beef</option>
-                                       <option value="Cumi">Cumi</option>
-                                       <option value="Udang">Udang</option>
+                                        <!-- Ambil nama makanan dari tb_makanan -->
+                                        <?php
+                                          $sql = $conn->query("SELECT * FROM tb_makanan");
+                                          while( $varian = $sql->fetch_array()) {
+                                        ?>
+                                       <option value="<?=$varian['varian_rasa'];?>"><?=$varian['varian_rasa']; ?></option>
+                                       <?php } ?>
                                     </select>
-                                   <input type="number" name="hrg_beli" class="form-control mb-3" value="<?=$data['hrg_beli']; ?>">
-                                   <input type="number" name="jumlah" class="form-control mb-3" value="<?=$data['jumlah']; ?>">
+                                   <input type="number" name="hrg_beli" class="form-control mb-3" value="<?=$data['hrg_beli']; ?>" required>
+                                   <input type="number" name="jumlah" class="form-control mb-3" value="<?=$data['jumlah']; ?>" required>
                                    <input type="date" name="tgl_order" class="form-control mb-3">
                                    <input type="text" name="administrator" class="form-control mb-5" value="<?=$_SESSION['fname']; ?>" readonly>
                                    <div class="card-footer">

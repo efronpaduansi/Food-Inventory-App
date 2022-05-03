@@ -206,7 +206,7 @@
                           ?>
                         <strong>Terakhir ditambahkan</strong> <br><br>    
                         <p>Varian Rasa : <?= $result['varian_rasa']; ?></p>
-                        <p>Harga Satuan : <?= "Rp." . " " . $result['hrg_satuan']; ?></p>
+                        <p>Harga : <?= "Rp." . " " . $result['hrg_beli']; ?></p>
                         <p>Jumlah : <?= $result['jumlah']; ?></p>
                         <p>Penerima : <?= $result['administrator']; ?></p>
                       </div>

@@ -164,6 +164,7 @@
                             <th scope="col" class="text-light">KODE</th>
                             <th scope="col" class="text-light">NAMA MAKANAN</th>
                             <th scope="col" class="text-light">VARIAN RASA</th>
+                            <th scope="col" class="text-light">HARGA</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -176,6 +177,7 @@
                                 <td><?=$menu['kode']; ?></td>
                                 <td><?=$menu['nama_makanan']; ?></td>
                                 <td><?=$menu['varian_rasa']; ?></td>
+                                <td><?="Rp." . " " . $menu['harga']; ?></td>
                             </tr>
                             <?php
                               $no++;

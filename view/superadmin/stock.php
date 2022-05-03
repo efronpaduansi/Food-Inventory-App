@@ -285,7 +285,7 @@
                 </div>
                 <div class="modal-body">
                     <form action="../../functions/stock_insert.php" method="post">
-                    <select name="nama_makanan" class="form-control mb-3" required>
+                      <select name="nama_makanan" class="form-control mb-3" required>
                         <option value="" disabled selected hidden>Select Makanan</option>
                         <option value="Dimsum">Dimsum</option>
                       </select>

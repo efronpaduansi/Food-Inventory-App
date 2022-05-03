@@ -55,7 +55,7 @@
                     <th scope="row"><?= $no++;?></th>
                     <td><?=$data['nama_makanan'];?></td>
                     <td><?=$data['varian_rasa'];?></td>
-                    <td><?= "Rp.". " " . $data['hrg_satuan'];?></td>
+                    <td><?= "Rp.". " " . $data['hrg_beli'];?></td>
                     <td><?=$data['jumlah'];?></td>
                     <td><?=$data['tgl_order'];?></td>
                     <td><?=$data['administrator'];?></td>
@@ -66,7 +66,7 @@
         <!-- Hitung total data -->
         <?php
             $getTotal = mysqli_query($conn, "SELECT SUM(jumlah) AS total FROM stock");
-            $getPengeluaran = mysqli_query($conn, "SELECT SUM(hrg_satuan * jumlah) AS pengeluaran FROM stock");
+            $getPengeluaran = mysqli_query($conn, "SELECT SUM(hrg_beli * jumlah) AS pengeluaran FROM stock");
             $result = mysqli_fetch_array($getTotal);
             $hasilPengeluaran = mysqli_fetch_array($getPengeluaran);
             $total = $result['total'];
