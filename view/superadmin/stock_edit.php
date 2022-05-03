@@ -108,7 +108,7 @@
                                        <option value="Cumi">Cumi</option>
                                        <option value="Udang">Udang</option>
                                     </select>
-                                   <input type="number" name="hrg_satuan" class="form-control mb-3" value="<?=$data['hrg_satuan']; ?>">
+                                   <input type="number" name="hrg_beli" class="form-control mb-3" value="<?=$data['hrg_beli']; ?>">
                                    <input type="number" name="jumlah" class="form-control mb-3" value="<?=$data['jumlah']; ?>">
                                    <input type="date" name="tgl_order" class="form-control mb-3">
                                    <input type="text" name="administrator" class="form-control mb-5" value="<?=$_SESSION['fname']; ?>" readonly>

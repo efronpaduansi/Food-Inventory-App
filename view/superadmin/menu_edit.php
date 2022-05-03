@@ -99,14 +99,15 @@
                                     <div class="card-body">
                                         <form action="../../functions/menu_update.php" method="post">
                                                 <input type="hidden" name="kode" class="form-control mb-3" value="<?=$data['kode']; ?>">
-                                                <input type="text" name="nama_makanan" class="form-control mb-3" value="<?=$data['nama_makanan']; ?>" required>
-                                                <select name="varian_rasa" id="varian_rasa" class="form-control mb-5" required>
+                                                <input type="text" name="nama_makanan" class="form-control mb-3" value="<?=$data['nama_makanan']; ?>">
+                                                <select name="varian_rasa" id="varian_rasa" class="form-control mb-3" required>
                                                         <option value="" disabled selected hidden><?=$data['varian_rasa']; ?></option>
                                                         <option value="Ayam">Ayam</option>
                                                         <option value="Beef">Beef</option>
                                                         <option value="Cumi">Cumi</option>
                                                         <option value="Udang">Udang</option>
                                                 </select>
+                                                <input type="number" name="harga" class="form-control mb-5" value="<?=$data['harga']; ?>">
                                                 <div class="form-inline">
                                                         <a href="menu.php"  class="btn btn-danger mr-2">Batal</a>
                                                         <button type="submit" name="update" class="btn btn-primary">Update</button>

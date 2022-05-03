@@ -124,22 +124,15 @@
             <a href="index.html">DPK</a>
           </div>
           <ul class="sidebar-menu">
-              <li class="menu-header"><?= $_SESSION['level']; ?></li>
+              <li class="menu-header"><?=$_SESSION['level']; ?></li>
               <li class="nav-item">
                 <a href="dashboard.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
               </li>
               <li class="active"><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
               <li class=""><a class="nav-link" href="stock.php"><i class="fas fa-layer-group"></i><span>Stock</span></a></li>
-              <li class=""><a class="nav-link" href="data_penjualan.php"><i class="fas fa-chart-line"></i><span>Data Penjualan</span></a></li>
-              <li class=""><a class="nav-link" href="profit.php"><i class="fas fa-coins"></i><span>Profit</span></a></li>
+              <li class=""><a class="nav-link" href="penjualan.php"><i class="fas fa-shopping-bag"></i><span>Penjualan</span></a></li>
               <li class=""><a class="nav-link" href="laporan.php"><i class="fas fa-file-excel"></i> <span>Laporan</span></a></li>
-              <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-sliders-h"></i><span>Preferences</span></a>
-                <ul class="dropdown-menu">
-                  <li><a class="nav-link" href="account_setting.php"><i class="fas fa-cog"></i>Pengaturan Akun</a></li>
-                  <li><a class="nav-link" href="users.php"><i class="fas fa-user"></i>Tambah User</a></li>
-                </ul>
-              </li>
+              <li class=""><a class="nav-link" href="setting.php"><i class="fas fa-cog"></i> <span>Pengaturan</span></a></li>
             </ul>
             <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
               <a href="../../logout.php" class="btn btn-danger btn-lg btn-block btn-icon-split">
@@ -159,10 +152,11 @@
                 <div class="row">
                   <div class="col-lg-9">
                     <?=@$alert; ?>
-                    <!-- tombol tambah menu -->
-                    <button type="button" class="btn btn-primary mb-4" data-toggle="modal" data-target="#menuModal">
-                        Tambah Menu Baru
-                    </button>
+                    <!-- tombol cari menu -->
+                    <form class="form-inline mb-3">
+                        <input type="text" name="cari" placeholder="Telusuri menu..." class="form-control mr-3" autofocus>
+                        <button type="submit" name="cari" class="btn btn-primary">Cari</button>
+                    </form>
                     <table class="table table-striped">
                         <thead class="bg-primary">
                           <tr>
@@ -170,8 +164,6 @@
                             <th scope="col" class="text-light">KODE</th>
                             <th scope="col" class="text-light">NAMA MAKANAN</th>
                             <th scope="col" class="text-light">VARIAN RASA</th>
-                            <th scope="col" class="text-light">HARGA JUAL / <sub>Pcs</sub></th>
-                            <th scope="col" class="text-light">AKSI</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -184,13 +176,6 @@
                                 <td><?=$menu['kode']; ?></td>
                                 <td><?=$menu['nama_makanan']; ?></td>
                                 <td><?=$menu['varian_rasa']; ?></td>
-                                <td><?= "Rp.". " " . $menu['harga']; ?></td>
-                                <td>
-                                  <div class="form-inline">
-                                      <a href="menu_edit.php?kode=<?=$menu['kode']; ?>"><i class="fas fa-edit"></i></a>
-                                      <a href="../../functions/menu_delete.php?kode=<?=$menu['kode']; ?>" onclick = "return confirm ('Apakah anda yakin untuk menghapus data ini ?');"><i class="fas fa-trash"></i></a>
-                                  </div>
-                                </td>
                             </tr>
                             <?php
                               $no++;
@@ -202,39 +187,7 @@
                 </div>
               </div>
           </div>
-        </section>
-        <!-- Menu Modal -->
-          <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Tambah Menu Baru</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                    <!-- form input -->
-                    <form action="../../functions/menu_insert.php" method="post">
-                          <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                            <strong>Perhatian!</strong> Fitur ini hanya bisa diakses oleh superadmin.
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                        <input type="text" name="kode" class="form-control mb-3" value="<?=$kode; ?>" readonly>
-                        <input type="text" name="nama_makanan" placeholder="Nama Makanan" class="form-control mb-3" required autocomplete="off">
-                        <input type="text" name="varian_rasa" placeholder="Varian Rasa" class="form-control mb-3" required autocomplete="off">
-                        <input type="number" name="harga" placeholder="Harga Jual" class="form-control mb-5" min="3500" max="999999" required autocomplete="off">
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                          <button type="submit" name="simpan" class="btn btn-primary">Simpan</button>
-                        </div>
-                    </form>
-                </div>
-              </div>
-            </div>
-          </div>
+        </section> 
       </div>
      <?php include "../master/footer.php" ?>
 </body>

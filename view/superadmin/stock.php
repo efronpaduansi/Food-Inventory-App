@@ -235,7 +235,7 @@
                                         <th scope="col">NO</th>
                                         <th scope="col">NAMA MAKANAN</th>
                                         <th scope="col">VARIAN RASA</th>
-                                        <th scope="col">HARGA / Pcs</th>
+                                        <th scope="col">HARGA BELI / <sub>Pcs</sub></th>
                                         <th scope="col">JUMLAH</th>
                                         <th scope="col">TGL ORDER</th>
                                         <th scope="col">ADMIN</th>
@@ -251,7 +251,7 @@
                                           <th scope="row"><?= $no; ?></th>
                                           <td><?=$tampil['nama_makanan']; ?></td>
                                           <td><?=$tampil['varian_rasa']; ?></td>
-                                          <td><?=$tampil['hrg_satuan']; ?></td>
+                                          <td><?=$tampil['hrg_beli']; ?></td>
                                           <td><?=$tampil['jumlah']; ?></td>
                                           <td><?=$tampil['tgl_order']; ?></td>
                                           <td><?=$tampil['administrator']; ?></td>
@@ -299,7 +299,7 @@
                         <option value="<?=$data['varian_rasa']; ?>"><?=$data['varian_rasa']; ?></option>
                         <?php } ?>
                       </select>
-                      <input type="number" name="hrg_satuan" class="form-control mb-3" placeholder="Harga per pcs" required>
+                      <input type="number" name="hrg_beli" class="form-control mb-3" placeholder="Harga per pcs" required>
                       <input type="number" name="jumlah" class="form-control mb-3" placeholder="Jumlah" required>
                       <input type="date" name="tgl_order" class="form-control mb-3"  required>
                       <input type="text" name="admin" class="form-control mb-5" value="<?= $_SESSION['fname'];?>"  readonly>

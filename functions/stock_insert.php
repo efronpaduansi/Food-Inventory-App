@@ -5,7 +5,7 @@
         $id = $_POST['id'];
        $nama_makanan = $_POST['nama_makanan'];
        $varian_rasa = $_POST['varian_rasa'];
-       $hrg_satuan = $_POST['hrg_satuan'];
+       $hrg_beli = $_POST['hrg_beli'];
        $jumlah  = $_POST['jumlah'];
        $tgl_order = $_POST['tgl_order'];
        $admin = $_POST['admin'];
@@ -16,7 +16,7 @@
        $kode_makanan = $fetch_kode['kode_makanan'];
        echo $kode_makanan;
 
-       $query = $conn->query("INSERT INTO stock(nama_makanan, varian_rasa, kode_makanan, hrg_satuan, jumlah, tgl_order, administrator) VALUES ('$nama_makanan', '$varian_rasa', '$kode_makanan', '$hrg_satuan', '$jumlah', '$tgl_order', '$admin')");
+       $query = $conn->query("INSERT INTO stock(nama_makanan, varian_rasa, kode_makanan, hrg_beli, jumlah, tgl_order, administrator) VALUES ('$nama_makanan', '$varian_rasa', '$kode_makanan', '$hrg_beli', '$jumlah', '$tgl_order', '$admin')");
        if($query){
            header("location:../view/superadmin/stock.php?pesan=sukses");
        }else{

@@ -6,7 +6,7 @@
     $nama_makanan = $_POST['nama_makanan'];
     $varian_rasa = $_POST['varian_rasa'];
     $kode_makanan = $_POST['kode_makanan'];
-    $hrg_satuan  = $_POST['hrg_satuan'];
+    $hrg_beli  = $_POST['hrg_beli'];
     $jumlah     = $_POST['jumlah'];
     $tgl_order  = $_POST['tgl_order'];
     $administrator = $_POST['administrator'];
@@ -21,7 +21,7 @@
             nama_makanan = '$nama_makanan',
             varian_rasa  = '$varian_rasa',
             kode_makanan = '$kode_makanan2',
-            hrg_satuan = '$hrg_satuan',
+            hrg_beli = '$hrg_beli',
             jumlah     = '$jumlah',
             tgl_order  = '$tgl_order',
             administrator = '$administrator' 

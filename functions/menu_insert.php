@@ -5,9 +5,10 @@
       $kode             = $_POST['kode'];
       $nama_makanan     = $_POST['nama_makanan'];
       $varian_rasa      = $_POST['varian_rasa'];
+      $harga            = $_POST['harga'];
 
-        $sql = "INSERT INTO tb_makanan(kode, nama_makanan, varian_rasa) VALUES
-              ('$kode', '$nama_makanan', '$varian_rasa')";
+        $sql = "INSERT INTO tb_makanan(kode, nama_makanan, varian_rasa, harga) VALUES
+              ('$kode', '$nama_makanan', '$varian_rasa', '$harga')";
         $query = mysqli_query($conn, $sql);
         if($query){
                 header("location:../view/superadmin/menu.php?pesan=sukses");
