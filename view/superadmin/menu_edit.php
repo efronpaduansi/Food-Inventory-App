@@ -4,7 +4,7 @@
 
         $kode = $_GET['kode'];
 
-        $query = $conn->query("SELECT * FROM tb_makanan WHERE kode = '$kode'");
+        $query = $conn->query("SELECT * FROM menu WHERE kode = '$kode'");
         while( $data = $query->fetch_assoc()) {
 
 ?>

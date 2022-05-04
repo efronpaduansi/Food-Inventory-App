@@ -1,9 +1,9 @@
 <?php
   session_start();
-    //membuat kode makanan otomatis
+    //membuat kode menu otomatis
     include "../../conn/koneksi.php";
 
-    $query = "SELECT max(kode) as kodeMenu FROM tb_makanan";
+    $query = "SELECT max(kode) as kodeMenu FROM menu";
     $hasil = mysqli_query($conn, $query);
     $data = mysqli_fetch_array($hasil);
 
@@ -15,7 +15,7 @@
     $kode = $char . sprintf("%03s", $noUrut);
 
     //tampilkan data menu kedalam table
-    $getData = mysqli_query($conn, "SELECT * FROM tb_makanan");
+    $getData = mysqli_query($conn, "SELECT * FROM menu");
     $menus = array();
     while ($data = mysqli_fetch_array($getData)){
       $menus[] = $data;
@@ -170,7 +170,7 @@
                             <th scope="col" class="text-light">KODE</th>
                             <th scope="col" class="text-light">NAMA MAKANAN</th>
                             <th scope="col" class="text-light">VARIAN RASA</th>
-                            <th scope="col" class="text-light">HARGA JUAL / <sub>Pcs</sub></th>
+                            <th scope="col" class="text-light">HARGA/ <sub>Pcs</sub></th>
                             <th scope="col" class="text-light">AKSI</th>
                           </tr>
                         </thead>

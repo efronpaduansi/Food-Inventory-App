@@ -7,7 +7,7 @@
       $varian_rasa      = $_POST['varian_rasa'];
       $harga            = $_POST['harga'];
 
-        $sql = "INSERT INTO tb_makanan(kode, nama_makanan, varian_rasa, harga) VALUES
+        $sql = "INSERT INTO menu(kode, nama_makanan, varian_rasa, harga) VALUES
               ('$kode', '$nama_makanan', '$varian_rasa', '$harga')";
         $query = mysqli_query($conn, $sql);
         if($query){

@@ -6,7 +6,7 @@
     $varian_rasa = $_POST['varian_rasa'];
     $harga = $_POST['harga'];
 
-    $query = $conn->query("UPDATE tb_makanan SET
+    $query = $conn->query("UPDATE menu SET
                 nama_makanan = '$nama_makanan',
                 varian_rasa  = '$varian_rasa',
                 harga       = '$harga'

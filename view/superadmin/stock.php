@@ -3,23 +3,23 @@
     session_start();
     include "../../conn/koneksi.php";
     //tampil data kedalam table
-    // $data = $conn->query("SELECT tb_makanan.nama_makanan, tb_makanan.varian_rasa, stock.hrg_satuan, stock.jumlah, stock.tgl_order, stock.admin FROM (tb_makanan LEFT JOIN stock ON tb_makanan.kode = stock.kode_makanan)");
-    $data = $conn->query("SELECT * FROM stock");
+    $data = $conn->query("SELECT menu.nama_makanan, menu.varian_rasa, stock.id, stock.hrg_beli, stock.jumlah, stock.tgl_order, stock.administrator FROM (menu LEFT JOIN stock ON menu.kode = stock.kode_menu)");
+   
     
     //hitung jumlah data berdasarkan varian rasa
-    $getRasaAyam = $conn->query("SELECT SUM(jumlah) AS jml FROM stock WHERE kode_makanan = 'DPK001'");
+    $getRasaAyam = $conn->query("SELECT SUM(jumlah) AS jml FROM stock WHERE kode_menu = 'DPK001'");
     $result = mysqli_fetch_array($getRasaAyam);
     $jmlRasaAyam = $result['jml'];
 
-    $getRasabBeef = $conn->query("SELECT SUM(jumlah) AS jml FROM stock WHERE kode_makanan = 'DPK002'");
+    $getRasabBeef = $conn->query("SELECT SUM(jumlah) AS jml FROM stock WHERE kode_menu = 'DPK002'");
     $result = mysqli_fetch_array($getRasabBeef);
     $jmlRasaBeef = $result['jml'];
 
-    $getRasaCumi = $conn->query("SELECT SUM(jumlah) AS jml FROM stock WHERE kode_makanan = 'DPK003'");
+    $getRasaCumi = $conn->query("SELECT SUM(jumlah) AS jml FROM stock WHERE kode_menu = 'DPK003'");
     $result = mysqli_fetch_array($getRasaCumi);
     $jmlRasaCumi = $result['jml'];
 
-    $getRasaUdang = $conn->query("SELECT SUM(jumlah) AS jml FROM stock WHERE kode_makanan = 'DPK004'");
+    $getRasaUdang = $conn->query("SELECT SUM(jumlah) AS jml FROM stock WHERE kode_menu = 'DPK004'");
     $result = mysqli_fetch_array($getRasaUdang);
     $jmlRasaUdang = $result['jml'];
 
@@ -293,7 +293,7 @@
                         <option value="" disabled selected hidden>Select Varian Rasa</option>
                          <!-- Ambil data makanan dari table tb_makanan -->
                            <?php
-                              $sql = $conn->query("SELECT * FROM tb_makanan");
+                              $sql = $conn->query("SELECT varian_rasa FROM menu");
                               while( $data = $sql->fetch_array()) {
                             ?>
                         <option value="<?=$data['varian_rasa']; ?>"><?=$data['varian_rasa']; ?></option>
@@ -302,7 +302,7 @@
                       <input type="number" name="hrg_beli" class="form-control mb-3" placeholder="Harga per pcs" required>
                       <input type="number" name="jumlah" class="form-control mb-3" placeholder="Jumlah" required>
                       <input type="date" name="tgl_order" class="form-control mb-3"  required>
-                      <input type="text" name="admin" class="form-control mb-5" value="<?= $_SESSION['fname'];?>"  readonly>
+                      <input type="text" name="administrator" class="form-control mb-5" value="<?= $_SESSION['fname'];?>"  readonly>
                         <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>

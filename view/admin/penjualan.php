@@ -1,6 +1,8 @@
 <?php
   session_start();
   include "../../conn/koneksi.php";
+  include "../../functions/kode_trx.php";
+
   
  
 
@@ -130,34 +132,34 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="" method="post">
-                            <input type="text" name="kode_transaksi"class="form-control mb-3" readonly>
+                        <form action="../../funtions/penjualan_proses.php" method="post">
+                            <input type="text" name="kode_trx" value="<?=$kodeTrx; ?>" class="form-control mb-3" readonly>
                             <select name="nama_makanan" class="form-control mb-3" required>
                                 <option value="" disabled selected hidden>--Select Makanan--</option>
                                 <option value="Dimsum">Dimsum</option>
                             </select>
-                            <select name="varian_rasa" class="form-control mb-3" required>
-                                <option value="" disabled selected hidden>--Select Varian Rasa--</option>
-                                    <?php
-                                        $sql = $conn->query("SELECT varian_rasa FROM tb_makanan");
-                                        while( $data_varian = $sql->fetch_array()) {
-                                    ?>
-                                <option value="<?=$data_varian['varian_rasa']; ?>"><?=$data_varian['varian_rasa']; ?></option>
-                                <?php } ?>
-                            </select>
-                            <div class="row">
+                                  <select name="varian_rasa" class="form-control mb-3" required>
+                                      <option value="" disabled selected hidden>--Select Varian Rasa--</option>
+                                          <?php
+                                              $sql = $conn->query("SELECT varian_rasa FROM tb_makanan");
+                                              while( $data_varian = $sql->fetch_array()) {
+                                          ?>
+                                      <option value="<?=$data_varian['varian_rasa']; ?>"><?=$data_varian['varian_rasa']; ?></option>
+                                      <?php } ?>
+                                  </select>
+                            <div class="row mb-5">
                                 <div class="col">
-                                    <input type="number" name="jumlah" class="form-control" placeholder="Jumlah">
+                                    <input type="number" name="jumlah" min="1" class="form-control" placeholder="Jumlah" required>
                                 </div>
                                 <div class="col">
-                                    <input type="text" name="jml_bayar" class="form-control" placeholder="Rp. 123">
+                                    <input type="text" name="administrator" class="form-control" value="<?=$_SESSION['fname']; ?>" placeholder="<?=$_SESSION['fname']; ?>" readonly >
                                 </div>
                             </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
+                            </div>
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                     </div>
                 </div>

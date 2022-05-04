@@ -4,7 +4,8 @@
 
   $id = $_GET['id'];
 
-  $query = $conn->query("SELECT * FROM stock WHERE id = '$id'");
+  //tampil data kedalam table
+  $query = $conn->query("SELECT menu.nama_makanan, menu.varian_rasa, stock.id, stock.kode_menu, stock.hrg_beli, stock.jumlah, stock.tgl_order, stock.administrator FROM (menu LEFT JOIN stock ON menu.kode = stock.kode_menu) WHERE id = '$id'");
   while( $data = $query->fetch_assoc()) {
 
 ?>
@@ -14,7 +15,7 @@
   <?php 
     include "../master/header.php";
   ?>
-  <title>Dashboard | Dimsum Pawonkulo</title>
+  <title>Edit Data Stock | Dimsum Pawonkulo</title>
 </head>
 <body>
   <div id="app">
@@ -99,7 +100,7 @@
                             <div class="card-body">
                                 <form action="../../functions/stock_update.php" method="post">
                                    <input type="hidden" name="id" value="<?=$data['id']; ?>">
-                                   <input type="text" name="kode_makanan" class="form-control mb-3" value="<?=$data['kode_makanan']; ?>" readonly>
+                                   <input type="text" name="kode_menu" class="form-control mb-3" value="<?=$data['kode_menu']; ?>" readonly>
                                    <select name="nama_makanan" class="form-control mb-3" required>
                                       <option value="" disabled selected hidden>Select Makanan</option>
                                       <option value="Dimsum">Dimsum</option>
@@ -108,7 +109,7 @@
                                        <option value="" disabled selected hidden><?=$data['varian_rasa']; ?></option>
                                         <!-- Ambil nama makanan dari tb_makanan -->
                                         <?php
-                                          $sql = $conn->query("SELECT * FROM tb_makanan");
+                                          $sql = $conn->query("SELECT * FROM menu");
                                           while( $varian = $sql->fetch_array()) {
                                         ?>
                                        <option value="<?=$varian['varian_rasa'];?>"><?=$varian['varian_rasa']; ?></option>
