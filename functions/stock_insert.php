@@ -2,7 +2,7 @@
 
     include "../conn/koneksi.php";
 
-        $id = $_POST['id'];
+       $id = $_POST['id'];
        $nama_makanan = $_POST['nama_makanan'];
        $varian_rasa = $_POST['varian_rasa'];
        $hrg_beli = $_POST['hrg_beli'];

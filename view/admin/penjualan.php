@@ -4,6 +4,32 @@
   include "../../functions/kode_trx.php";
 
   
+  //cek proses transaksi
+  if( isset( $_GET['transaksi'])){
+    if( $_GET['transaksi'] == "sukses"){
+      $alert = "
+      <div class='alert alert-success alert-dismissible fade show' role='alert'>
+          <strong>Transaksi berhasil</strong>
+          <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+          <span aria-hidden='true'>&times;</span>
+          </button>
+      </div>
+      ";
+    }
+  }
+
+  if( isset( $_GET['stock'])){
+    if($_GET['stock']== "kurang"){
+      $alert = "
+      <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+          <strong>Transaksi gagal ! Stock tidak cukup.</strong>
+          <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+          <span aria-hidden='true'>&times;</span>
+          </button>
+      </div>
+      ";
+    }
+  }
  
 
 ?>
@@ -86,6 +112,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
+                          <?=@$alert; ?>
                             <!-- Tombol data penjualan -->
                             <div class="form-inline mb-5">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#penjualanModal">
@@ -98,11 +125,11 @@
                                     <tr>
                                         <th scope="col">NO</th>
                                         <th scope="col">KODE TRX</th>
+                                        <th scope="col">TGL TRX</th>
                                         <th scope="col">NAMA MAKANAN</th>
                                         <th scope="col">VARIAN RASA</th>
                                         <th scope="col">HRG JUAL / <sub>Pcs</sub></th>
-                                        <th scope="col">JUMLAH</th>
-                                        <th scope="col">TGL TRX</th>
+                                        <th scope="col">JML (Pcs)</th>
                                         <th scope="col">ADMIN</th>
                                         <th scope="col">AKSI</th>
                                     </tr>
@@ -132,8 +159,8 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="../../funtions/penjualan_proses.php" method="post">
-                            <input type="text" name="kode_trx" value="<?=$kodeTrx; ?>" class="form-control mb-3" readonly>
+                        <form action="../../functions/penjualan_proses.php" method="post">
+                            <input type="text" name="id" value="<?=$kodeTrx; ?>" class="form-control mb-3" readonly>
                             <select name="nama_makanan" class="form-control mb-3" required>
                                 <option value="" disabled selected hidden>--Select Makanan--</option>
                                 <option value="Dimsum">Dimsum</option>
@@ -141,7 +168,7 @@
                                   <select name="varian_rasa" class="form-control mb-3" required>
                                       <option value="" disabled selected hidden>--Select Varian Rasa--</option>
                                           <?php
-                                              $sql = $conn->query("SELECT varian_rasa FROM tb_makanan");
+                                              $sql = $conn->query("SELECT varian_rasa FROM menu");
                                               while( $data_varian = $sql->fetch_array()) {
                                           ?>
                                       <option value="<?=$data_varian['varian_rasa']; ?>"><?=$data_varian['varian_rasa']; ?></option>

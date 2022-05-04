@@ -3,11 +3,11 @@
     // Membuat kode transaksi otomatis
     include "../conn/koneksi.php";
 
-    $query = "SELECT max(kode_trx) as kode FROM penjualan";
+    $query = "SELECT max(id) as kodeTrx FROM penjualan";
     $hasil = mysqli_query($conn, $query);
     $data = mysqli_fetch_array($hasil);
   
-    $maxkode = $data['kode'];
+    $maxkode = $data['kodeTrx'];
   
     $noUrut = (int) substr($maxkode, 9, 3);
   

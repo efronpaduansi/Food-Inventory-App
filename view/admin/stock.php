@@ -3,22 +3,22 @@
     include "../../conn/koneksi.php";
 
     //Ambil jumlah persediaan dimsum rasa ayam
-    $getDataAyam = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlRasaAyam FROM stock WHERE varian_rasa = 'Ayam'");
+    $getDataAyam = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlRasaAyam FROM (stock INNER JOIN menu ON menu.kode = stock.kode_menu) WHERE varian_rasa = 'Ayam'");
     $resultDataAyam = mysqli_fetch_array($getDataAyam);
     $jmlRasaAyam = $resultDataAyam['jmlRasaAyam'];
 
     //Ambil jumlah persediaan dimsum rasa beef
-    $getDataBeef = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlRasaBeef FROM stock WHERE varian_rasa = 'Beef'");
+    $getDataBeef = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlRasaBeef FROM (stock INNER JOIN menu ON menu.kode = stock.kode_menu) WHERE varian_rasa = 'Beef'");
     $resultDataBeef = mysqli_fetch_array($getDataBeef);
     $jmlRasaBeef = $resultDataBeef['jmlRasaBeef'];
 
     //Ambil jumlah persediaan dimsum rasa cumi
-    $getDataCumi = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlRasaCumi FROM stock WHERE varian_rasa = 'Cumi'");
+    $getDataCumi = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlRasaCumi FROM (stock INNER JOIN menu ON menu.kode = stock.kode_menu) WHERE varian_rasa = 'Cumi'");
     $resultDataCumi = mysqli_fetch_array($getDataCumi);
     $jmlRasaCumi = $resultDataCumi['jmlRasaCumi'];
 
     //Ambil jumlah persediaan dimsum rasa udang
-    $getDataUdang = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlRasaUdang FROM stock WHERE varian_rasa = 'Udang'");
+    $getDataUdang = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlRasaUdang FROM (stock INNER JOIN menu ON menu.kode = stock.kode_menu) WHERE varian_rasa = 'Udang'");
     $resultDataUdang = mysqli_fetch_array($getDataUdang);
     $jmlRasaUdang = $resultDataUdang['jmlRasaUdang'];
 
@@ -201,7 +201,7 @@
                       </div>
                       <div class="col-lg-3">
                           <?php
-                              $getLastUpdate = mysqli_query($conn, "SELECT * FROM stock ORDER BY id DESC LIMIT 1");
+                              $getLastUpdate = $conn->query("SELECT menu.varian_rasa, stock.hrg_beli, stock.jumlah, stock.administrator FROM (menu INNER JOIN stock ON menu.kode = stock.kode_menu) ORDER BY id DESC LIMIT 1");
                               $result = mysqli_fetch_array($getLastUpdate);
                           ?>
                         <strong>Terakhir ditambahkan</strong> <br><br>    

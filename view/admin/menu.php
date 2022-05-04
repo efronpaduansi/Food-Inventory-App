@@ -3,7 +3,7 @@
     //membuat kode makanan otomatis
     include "../../conn/koneksi.php";
 
-    $query = "SELECT max(kode) as kodeMenu FROM tb_makanan";
+    $query = "SELECT max(kode) as kodeMenu FROM menu";
     $hasil = mysqli_query($conn, $query);
     $data = mysqli_fetch_array($hasil);
 
@@ -15,7 +15,7 @@
     $kode = $char . sprintf("%03s", $noUrut);
 
     //tampilkan data menu kedalam table
-    $getData = mysqli_query($conn, "SELECT * FROM tb_makanan");
+    $getData = mysqli_query($conn, "SELECT * FROM menu");
     $menus = array();
     while ($data = mysqli_fetch_array($getData)){
       $menus[] = $data;
