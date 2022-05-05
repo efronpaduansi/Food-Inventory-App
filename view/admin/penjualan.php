@@ -31,6 +31,14 @@
     }
   }
  
+  //Menampilkan data kedalam tabel
+  $getData = $conn->query("SELECT menu.nama_makanan, menu.varian_rasa, menu.harga, penjualan.id, penjualan.tgl, penjualan.jumlah, penjualan.administrator FROM (menu INNER JOIN penjualan ON menu.kode = penjualan.kode_menu)");
+  $dtPenjualan = array();
+  while($data = $getData->fetch_array()){
+    $dtPenjualan[] = $data;
+  }
+
+
 
 ?>
 
@@ -111,12 +119,12 @@
           <div class="section-body">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-12">
                           <?=@$alert; ?>
                             <!-- Tombol data penjualan -->
                             <div class="form-inline mb-5">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#penjualanModal">
-                                    Tambah data penjualan
+                                    Tambah Data Penjualan
                                 </button>
                             </div>
                             <!-- Tabel data penjualan -->
@@ -135,12 +143,30 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                  <?php
+                                      $no = 1;
+                                      foreach($dtPenjualan as $data) :
+                                  ?>
                                     <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
+                                    <th scope="row"><?=$no;  ?></th>
+                                    <td><?=$data['id']; ?></td>
+                                    <td><?=$data['tgl']; ?></td>
+                                    <td><?=$data['nama_makanan']; ?></td>
+                                    <td><?=$data['varian_rasa']; ?></td>
+                                    <td><?=$data['harga']; ?></td>
+                                    <td><?=$data['jumlah']; ?></td>
+                                    <td><?=$data['administrator']; ?></td>
+                                    <td>
+                                        <div class="form-inline">
+                                          <a href="" data-toggle="tooltip" data-placement="right" title="Lihat detail"><i class="fas fa-eye"></i></a>
+                                          <a href="" data-toggle="tooltip" data-placement="right" title="Cetak struk"><i class="fas fa-print"></i></a>
+                                        </div>
+                                    </td>
                                     </tr>
+                                    <?php
+                                        $no++;
+                                      endforeach
+                                    ?>
                                 </tbody>
                             </table>
                         </div>

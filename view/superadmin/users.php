@@ -2,7 +2,7 @@
 
     session_start();
     include "../../conn/koneksi.php";
-    include "../../functions/id_new_user.php";
+    include "../../functions/user_autocode.php";
 
 
     //ambil data user dari database
@@ -139,8 +139,8 @@
                                 <td><?= $user['level']; ?></td>
                                 <td>
                                   <div class="form-inline row">
-                                        <a href="../../functions/edit_user.php?id_masuk=<?=$user['id_user']; ?>" class="mr-2 text-info"><i class="fas fa-edit"></i></a> 
-                                        <a href="../../functions/delete_user.php?id_masuk=<?=$user['id_user']; ?>" class="text-primary" onclick = "return confirm ('Apakah anda yakin untuk menghapus data ini ?');"><i class="fas fa-trash"></i>
+                                        <a href="user_edit.php?id_user=<?=$user['id_user']; ?>" class="mr-2 text-info"><i class="fas fa-edit"></i></a> 
+                                        <a href="../../functions/user_delete.php?id_user=<?=$user['id_user']; ?>" class="text-primary" onclick = "return confirm ('Apakah anda yakin untuk menghapus data ini ?');"><i class="fas fa-trash"></i>
                                         </a>
                                   </div>
                                 </td>
@@ -173,9 +173,10 @@
                         </button>
                     </div>
                         <div class="modal-body">
-                            <form action="../../functions/add_new_user.php" method="post">
+                            <form action="../../functions/user_insert.php" method="post">
                                 <input class="form-control mb-3" name="id_user" type="text" value="<?= $idNewUser; ?>" readonly>
-                                <input type="text" name="username" class="form-control mb-3" placeholder="Username" required autofocus autocomplete="off" minlength="6" maxlength="20">
+                                <input type="text" name="username" id="username" class="form-control mb-3" placeholder="Username" required autofocus autocomplete="off" minlength="6" maxlength="20">
+                                <span id="pesan"></span>
                                 <input type="text" name="fname" class="form-control mb-3" placeholder="Fullname" minlength="8" required>
                                 <select name="level" id="level" class="form-control mb-3" required>
                                     <option value="" disabled selected hidden>Select Level User</option>
@@ -194,5 +195,24 @@
             </div>
             <!-- end modal -->
      <?php include "../master/footer.php" ?>
+     <!-- Fungsi untuk mengecek ketersediaan username  -->
+          <script>
+            $(document).ready(function(){
+                $('#username').blur(function(){
+                    $('#pesan').html('<p>Cek username...</p>');
+                    var username = $(this).val();
+
+                    $.ajax({
+                        type	: 'POST',
+                        url 	: 'user_cek_username.php', //cek di file user_cek_username.php
+                        data 	: 'username='+username,
+                        success	: function(data){
+                            $('#pesan').html(data);
+                        }
+                    })
+
+                });
+            });
+          </script>
 </body>
 </html>
