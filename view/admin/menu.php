@@ -1,76 +1,16 @@
 <?php
-  session_start();
-    //membuat kode makanan otomatis
+    session_start();
+    
     include "../../conn/koneksi.php";
 
-    $query = "SELECT max(kode) as kodeMenu FROM menu";
-    $hasil = mysqli_query($conn, $query);
-    $data = mysqli_fetch_array($hasil);
-
-    $maxkode = $data['kodeMenu'];
-    $noUrut = (int) substr($maxkode, 3, 3);
-    
-    $noUrut++;
-    $char = 'DPK';
-    $kode = $char . sprintf("%03s", $noUrut);
-
     //tampilkan data menu kedalam table
-    $getData = mysqli_query($conn, "SELECT * FROM menu");
+    $query = $conn->query("SELECT * FROM menu");
     $menus = array();
-    while ($data = mysqli_fetch_array($getData)){
+    while ($data = $query->fetch_array()){
       $menus[] = $data;
     }
 
-    //cek pesan masuk
-    if(isset($_GET['pesan'])){
-      if($_GET['pesan'] == "sukses"){
-        $alert = "
-                <div class='alert alert-success alert-dismissible fade show' role='alert'>
-                    <strong>Menu baru berhasil ditambahkan</strong>
-                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                    <span aria-hidden='true'>&times;</span>
-                    </button>
-                </div>
-            ";
-      }else{
-        $alert = "
-                <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-                    <strong>Menu baru gagal ditambahkan</strong>
-                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                    <span aria-hidden='true'>&times;</span>
-                    </button>
-                </div>
-            ";
-      }
-    }
-
-    //cek hapus menu
-    if( isset($_GET['hapus'])){
-      if($_GET['hapus'] == "sukses"){
-        $alert = "
-          <div class='alert alert-success alert-dismissible fade show' role='alert'>
-              <strong>Menu baru berhasil dihapus</strong>
-              <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-              <span aria-hidden='true'>&times;</span>
-              </button>
-          </div>
-          ";
-      }
-    }
-
-    //cek update menu
-    if( isset($_GET['update'])){
-      if($_GET['update'] == "sukses"){
-        $alert = "
-        <div class='alert alert-success alert-dismissible fade show' role='alert'>
-            <strong>Menu baru berhasil diubah</strong>
-            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-            <span aria-hidden='true'>&times;</span>
-            </button>
-        </div>
-        ";
-      }
-    }
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -174,8 +114,8 @@
                           ?>
                             <tr>
                                 <th scope="row"><?=$no; ?></th>
-                                <td><?=$menu['kode']; ?></td>
-                                <td><?=$menu['nama_makanan']; ?></td>
+                                <td><?=$menu['id']; ?></td>
+                                <td><?=$menu['makanan']; ?></td>
                                 <td><?=$menu['varian_rasa']; ?></td>
                                 <td><?="Rp." . " " . $menu['harga']; ?></td>
                             </tr>

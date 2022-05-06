@@ -65,9 +65,10 @@
               <li class="nav-item">
                 <a href="dashboard.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
               </li>
-              <li class=""><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
+              <li class=""><a class="nav-link" href="orders.php"><i class="fas fa-shopping-bag"></i><span>Orders</span></a></li>
               <li class="active"><a class="nav-link" href="stock.php"><i class="fas fa-layer-group"></i><span>Stock</span></a></li>
-              <li class=""><a class="nav-link" href="data_penjualan.php"><i class="fas fa-chart-line"></i><span>Data Penjualan</span></a></li>
+              <li class=""><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
+              <li class=""><a class="nav-link" href="data_penjualan.php"><i class="fas fa-chart-line"></i><span>Penjualan</span></a></li>
               <li class=""><a class="nav-link" href="profit.php"><i class="fas fa-coins"></i><span>Profit</span></a></li>
               <li class=""><a class="nav-link" href="laporan.php"><i class="fas fa-file-excel"></i> <span>Laporan</span></a></li>
               <li class="nav-item dropdown">
@@ -100,7 +101,7 @@
                             <div class="card-body">
                                 <form action="../../functions/stock_update.php" method="post">
                                    <input type="hidden" name="id" value="<?=$data['id']; ?>">
-                                   <input type="text" name="kode_menu" class="form-control mb-3" value="<?=$data['kode_menu']; ?>" readonly>
+                                   <input type="hidden" name="kode_menu" class="form-control mb-3" value="<?=$data['kode_menu']; ?>" readonly>
                                    <select name="nama_makanan" class="form-control mb-3" required>
                                       <option value="" disabled selected hidden>Select Makanan</option>
                                       <option value="Dimsum">Dimsum</option>

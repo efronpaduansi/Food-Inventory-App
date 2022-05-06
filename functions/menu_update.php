@@ -1,16 +1,16 @@
 <?php
     include "../conn/koneksi.php";
 
-    $kode = $_POST['kode'];
-    $nama_makanan = $_POST['nama_makanan'];
-    $varian_rasa = $_POST['varian_rasa'];
-    $harga = $_POST['harga'];
+    $id             = $_POST['id'];
+    $makanan        = $_POST['makanan'];
+    $varian_rasa    = $_POST['varian_rasa'];
+    $harga          = $_POST['harga'];
 
     $query = $conn->query("UPDATE menu SET
-                nama_makanan = '$nama_makanan',
-                varian_rasa  = '$varian_rasa',
-                harga       = '$harga'
-                WHERE kode = '$kode'");
+                makanan         = '$makanan',
+                varian_rasa     = '$varian_rasa',
+                harga           = '$harga'
+                WHERE id        = '$id'");
     if($query){
         header("location:../view/superadmin/menu.php?update=sukses");
     }else{

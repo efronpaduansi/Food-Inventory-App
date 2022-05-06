@@ -2,24 +2,25 @@
 
     session_start();
     include "../../conn/koneksi.php";
-    //tampil data kedalam table
-    $data = $conn->query("SELECT menu.nama_makanan, menu.varian_rasa, stock.id, stock.hrg_beli, stock.jumlah, stock.tgl_order, stock.administrator FROM (menu LEFT JOIN stock ON menu.kode = stock.kode_menu)");
    
+    //tampilkan data kedalam table
+    $getlastUpdate = $conn->query("SELECT menu.makanan, menu.varian_rasa, orders.id, orders.hrg_beli, orders.jumlah, orders.tgl_order, orders.administrator FROM (menu INNER JOIN orders ON menu.id = orders.id_menu) ORDER BY id DESC LIMIT 3");
+    
     
     //hitung jumlah data berdasarkan varian rasa
-    $getRasaAyam = $conn->query("SELECT SUM(jumlah) AS jml FROM stock WHERE kode_menu = 'DPK001'");
+    $getRasaAyam = $conn->query("SELECT SUM(total) AS jml FROM stock WHERE id_menu = 'DPK001'");
     $result = mysqli_fetch_array($getRasaAyam);
     $jmlRasaAyam = $result['jml'];
 
-    $getRasabBeef = $conn->query("SELECT SUM(jumlah) AS jml FROM stock WHERE kode_menu = 'DPK002'");
+    $getRasabBeef = $conn->query("SELECT SUM(total) AS jml FROM stock WHERE id_menu = 'DPK002'");
     $result = mysqli_fetch_array($getRasabBeef);
     $jmlRasaBeef = $result['jml'];
 
-    $getRasaCumi = $conn->query("SELECT SUM(jumlah) AS jml FROM stock WHERE kode_menu = 'DPK003'");
+    $getRasaCumi = $conn->query("SELECT SUM(total) AS jml FROM stock WHERE id_menu = 'DPK003'");
     $result = mysqli_fetch_array($getRasaCumi);
     $jmlRasaCumi = $result['jml'];
 
-    $getRasaUdang = $conn->query("SELECT SUM(jumlah) AS jml FROM stock WHERE kode_menu = 'DPK004'");
+    $getRasaUdang = $conn->query("SELECT SUM(total) AS jml FROM stock WHERE id_menu = 'DPK004'");
     $result = mysqli_fetch_array($getRasaUdang);
     $jmlRasaUdang = $result['jml'];
 
@@ -124,9 +125,10 @@
               <li class="nav-item">
                 <a href="dashboard.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
               </li>
-              <li class=""><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
+              <li class=""><a class="nav-link" href="orders.php"><i class="fas fa-shopping-bag"></i><span>Orders</span></a></li>
               <li class="active"><a class="nav-link" href="stock.php"><i class="fas fa-layer-group"></i><span>Stock</span></a></li>
-              <li class=""><a class="nav-link" href="data_penjualan.php"><i class="fas fa-chart-line"></i><span>Data Penjualan</span></a></li>
+              <li class=""><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
+              <li class=""><a class="nav-link" href="data_penjualan.php"><i class="fas fa-chart-line"></i><span>Penjualan</span></a></li>
               <li class=""><a class="nav-link" href="profit.php"><i class="fas fa-coins"></i><span>Profit</span></a></li>
               <li class=""><a class="nav-link" href="laporan.php"><i class="fas fa-file-excel"></i> <span>Laporan</span></a></li>
               <li class="nav-item dropdown">
@@ -155,9 +157,6 @@
                     <div class="col-12">
                         <?=@$alert; ?>
                         <div class="form-inline mb-3">
-                          <button type="button" class="btn btn-primary mr-3" data-toggle="modal" data-target="#stokModal">
-                              Tambahkan ke Stok
-                            </button>
                               <a href="../../functions/stock_report.php" target="_blank" class="btn btn-info"><i class="fas fa-print"></i> Cetak Laporan</a>
                               <input type="text" class="form-control ml-3 bg-dark text-light" value="<?="Total" . " ". $total . " " . "Pcs"; ?>" readonly>
                           </div>
@@ -229,89 +228,43 @@
                                       </div>
                                   </div>
                               </div>
+                             <h4 class="alert alert-info">Terakhir ditambahkan</h4>
                               <table class="table table-bordered table-secondary">
                                     <thead class="thead-dark">
                                       <tr>
                                         <th scope="col">NO</th>
-                                        <th scope="col">NAMA MAKANAN</th>
+                                        <th scope="col">ID ORDER</th>
+                                        <th scope="col">MAKANAN</th>
                                         <th scope="col">VARIAN RASA</th>
                                         <th scope="col">HARGA BELI / <sub>Pcs</sub></th>
                                         <th scope="col">JUMLAH</th>
                                         <th scope="col">TGL ORDER</th>
                                         <th scope="col">ADMIN</th>
-                                        <th scope="col">AKSI</th>
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      <?php 
-                                          $no = 1;
-                                          while( $tampil = $data->fetch_array()) {
-                                        ?>
-                                        <tr>
-                                          <th scope="row"><?= $no; ?></th>
-                                          <td><?=$tampil['nama_makanan']; ?></td>
-                                          <td><?=$tampil['varian_rasa']; ?></td>
-                                          <td><?=$tampil['hrg_beli']; ?></td>
-                                          <td><?=$tampil['jumlah']; ?></td>
-                                          <td><?=$tampil['tgl_order']; ?></td>
-                                          <td><?=$tampil['administrator']; ?></td>
-                                          <td>
-                                              <div class="form-inline">
-                                                <a href="stock_edit.php?id=<?=$tampil['id']; ?>" class="mr-1"><i class="fas fa-edit"></i></a>
-                                               <a href="../../functions/stock_delete.php?id=<?=$tampil['id']; ?>" onclick = "return confirm ('Apakah anda yakin untuk menghapus data ini ?');"><i class="fas fa-trash"></i></a>
-                                              </div>
-                                          </td>
-                                        </tr>
-                                        <?php 
-                                          $no++; 
-                                          }
-                                        ?>
-                                    <tbody>
+                                      <?php
+                                        $no = 1;
+                                        while($stock = $getlastUpdate->fetch_array()) {
+                                      ?>
+                                      <tr>
+                                        <td><?=$no; ?></td>
+                                        <td><?=$stock['id']; ?></td>
+                                        <td><?=$stock['makanan']; ?></td>
+                                        <td><?=$stock['varian_rasa']; ?></td>
+                                        <td><?=$stock['hrg_beli']; ?></td>
+                                        <td><?=$stock['jumlah']; ?></td>
+                                        <td><?=$stock['tgl_order']; ?></td>
+                                        <td><?=$stock['administrator']; ?></td>
+                                      </tr>
+                                      <?php $no++; } ?>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
                       </div>
            </div>
         </section>
-        <!-- Modal -->
-          <div class="modal fade" id="stokModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Tambahkan ke Stok</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                    <form action="../../functions/stock_insert.php" method="post">
-                      <select name="nama_makanan" class="form-control mb-3" required>
-                        <option value="" disabled selected hidden>Select Makanan</option>
-                        <option value="Dimsum">Dimsum</option>
-                      </select>
-                      <select name="varian_rasa" class="form-control mb-3" required>
-                        <option value="" disabled selected hidden>Select Varian Rasa</option>
-                         <!-- Ambil data makanan dari table tb_makanan -->
-                           <?php
-                              $sql = $conn->query("SELECT varian_rasa FROM menu");
-                              while( $data = $sql->fetch_array()) {
-                            ?>
-                        <option value="<?=$data['varian_rasa']; ?>"><?=$data['varian_rasa']; ?></option>
-                        <?php } ?>
-                      </select>
-                      <input type="number" name="hrg_beli" class="form-control mb-3" placeholder="Harga per pcs" required>
-                      <input type="number" name="jumlah" class="form-control mb-3" placeholder="Jumlah" required>
-                      <input type="date" name="tgl_order" class="form-control mb-3"  required>
-                      <input type="text" name="administrator" class="form-control mb-5" value="<?= $_SESSION['fname'];?>"  readonly>
-                        <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
-                      </div>
-                    </form>
-                </div>
-              </div>
-            </div>
-          </div>
       </div>
       <?php include "../master/footer.php"; ?>
 </body>

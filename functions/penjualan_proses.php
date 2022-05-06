@@ -1,12 +1,13 @@
 <?php
 
     include "../conn/koneksi.php";
+   
 
     $id         = $_POST['id'];
     $nama_makanan = $_POST['nama_makanan'];
     $varian_rasa  = $_POST['varian_rasa'];
     $jumlah        = $_POST['jumlah'];
-    $tgl            = date('Ymd');
+    $tgl            = date('Y-m-d');
     $administrator  = $_POST['administrator'];
 
 
@@ -26,6 +27,14 @@
      $jumlahStock = $resultStock['jmlStock'];
      //hitung sisa stock makanan pada tabel stock
       $sisa = $jumlahStock - $jumlah;
+      echo $sisa;
+
+      $hitungSisa = $conn-query("SELECT SUM(jumlah) AS hitungSisa FROM stock WHERE kode_menu = '$kode_menu'");
+      $resultSisa = $hitungSisa->fetch_array();
+      $sisaStok = $resultSisa['hitungsisa'];
+      echo $sisaStok;
+      die();
+
       
 
     //cek apakah jumlah input lebih dari jumlah stock

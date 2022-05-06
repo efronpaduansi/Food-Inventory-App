@@ -2,9 +2,9 @@
 
         include "../conn/koneksi.php";
 
-        $kode = $_GET['kode'];
+        $id = $_GET['id'];
 
-        $query = $conn->query("DELETE FROM tb_makanan WHERE kode = '$kode'");
+        $query = $conn->query("DELETE FROM menu WHERE id = '$id'");
 
         if($query){
                 header("location:../view/superadmin/menu.php?hapus=sukses");

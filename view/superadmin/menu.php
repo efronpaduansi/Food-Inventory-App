@@ -3,16 +3,16 @@
     //membuat kode menu otomatis
     include "../../conn/koneksi.php";
 
-    $query = "SELECT max(kode) as kodeMenu FROM menu";
+    $query = "SELECT max(id) as idMenu FROM menu";
     $hasil = mysqli_query($conn, $query);
     $data = mysqli_fetch_array($hasil);
 
-    $maxkode = $data['kodeMenu'];
+    $maxkode = $data['idMenu'];
     $noUrut = (int) substr($maxkode, 3, 3);
     
     $noUrut++;
     $char = 'DPK';
-    $kode = $char . sprintf("%03s", $noUrut);
+    $idMenu = $char . sprintf("%03s", $noUrut);
 
     //tampilkan data menu kedalam table
     $getData = mysqli_query($conn, "SELECT * FROM menu");
@@ -128,9 +128,10 @@
               <li class="nav-item">
                 <a href="dashboard.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
               </li>
-              <li class="active"><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
+              <li class=""><a class="nav-link" href="orders.php"><i class="fas fa-shopping-bag"></i><span>Orders</span></a></li>
               <li class=""><a class="nav-link" href="stock.php"><i class="fas fa-layer-group"></i><span>Stock</span></a></li>
-              <li class=""><a class="nav-link" href="data_penjualan.php"><i class="fas fa-chart-line"></i><span>Data Penjualan</span></a></li>
+              <li class="active"><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
+              <li class=""><a class="nav-link" href="data_penjualan.php"><i class="fas fa-chart-line"></i><span>Penjualan</span></a></li>
               <li class=""><a class="nav-link" href="profit.php"><i class="fas fa-coins"></i><span>Profit</span></a></li>
               <li class=""><a class="nav-link" href="laporan.php"><i class="fas fa-file-excel"></i> <span>Laporan</span></a></li>
               <li class="nav-item dropdown">
@@ -167,7 +168,7 @@
                         <thead class="bg-primary">
                           <tr>
                             <th scope="col" class="text-light">NO</th>
-                            <th scope="col" class="text-light">KODE</th>
+                            <th scope="col" class="text-light">ID</th>
                             <th scope="col" class="text-light">NAMA MAKANAN</th>
                             <th scope="col" class="text-light">VARIAN RASA</th>
                             <th scope="col" class="text-light">HARGA/ <sub>Pcs</sub></th>
@@ -181,14 +182,14 @@
                           ?>
                             <tr>
                                 <th scope="row"><?=$no; ?></th>
-                                <td><?=$menu['kode']; ?></td>
-                                <td><?=$menu['nama_makanan']; ?></td>
+                                <td><?=$menu['id']; ?></td>
+                                <td><?=$menu['makanan']; ?></td>
                                 <td><?=$menu['varian_rasa']; ?></td>
                                 <td><?= "Rp.". " " . $menu['harga']; ?></td>
                                 <td>
                                   <div class="form-inline">
-                                      <a href="menu_edit.php?kode=<?=$menu['kode']; ?>"><i class="fas fa-edit"></i></a>
-                                      <a href="../../functions/menu_delete.php?kode=<?=$menu['kode']; ?>" onclick = "return confirm ('Apakah anda yakin untuk menghapus data ini ?');"><i class="fas fa-trash"></i></a>
+                                      <a href="menu_edit.php?id=<?=$menu['id']; ?>"><i class="fas fa-edit"></i></a>
+                                      <a href="../../functions/menu_delete.php?id=<?=$menu['id']; ?>" onclick = "return confirm ('Apakah anda yakin untuk menghapus data ini ?');"><i class="fas fa-trash"></i></a>
                                   </div>
                                 </td>
                             </tr>
@@ -222,10 +223,10 @@
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
-                        <input type="text" name="kode" class="form-control mb-3" value="<?=$kode; ?>" readonly>
-                        <input type="text" name="nama_makanan" placeholder="Nama Makanan" class="form-control mb-3" required autocomplete="off">
+                        <input type="text" name="id" class="form-control mb-3" value="<?=$idMenu; ?>" readonly>
+                        <input type="text" name="makanan" placeholder="Makanan" class="form-control mb-3" required autocomplete="off">
                         <input type="text" name="varian_rasa" placeholder="Varian Rasa" class="form-control mb-3" required autocomplete="off">
-                        <input type="number" name="harga" placeholder="Harga Jual" class="form-control mb-5" min="3500" max="999999" required autocomplete="off">
+                        <input type="number" name="harga" placeholder="Harga Jual (Rp)" class="form-control mb-5" min="3500" max="999999" required autocomplete="off">
                         <div class="modal-footer">
                           <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                           <button type="submit" name="simpan" class="btn btn-primary">Simpan</button>

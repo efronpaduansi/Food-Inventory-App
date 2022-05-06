@@ -32,7 +32,7 @@
   }
  
   //Menampilkan data kedalam tabel
-  $getData = $conn->query("SELECT menu.nama_makanan, menu.varian_rasa, menu.harga, penjualan.id, penjualan.tgl, penjualan.jumlah, penjualan.administrator FROM (menu INNER JOIN penjualan ON menu.kode = penjualan.kode_menu)");
+  $getData = $conn->query("SELECT menu.nama_makanan, menu.varian_rasa, menu.harga, penjualan.id, penjualan.tgl, penjualan.jumlah, penjualan.administrator FROM (menu INNER JOIN penjualan ON menu.kode = penjualan.kode_menu) ORDER BY penjualan.id DESC");
   $dtPenjualan = array();
   while($data = $getData->fetch_array()){
     $dtPenjualan[] = $data;
