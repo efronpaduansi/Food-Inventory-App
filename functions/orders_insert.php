@@ -14,21 +14,20 @@
     $fetchIdMenu = $getIdMenu->fetch_assoc();
     $id_menu = $fetchIdMenu['idMenu'];
 
-  
     //insert data
     $query = $conn->query("INSERT INTO orders(id, id_menu, hrg_beli, jumlah, tgl_order, administrator) VALUES ('$id', '$id_menu', '$hrg_beli', '$jumlah', '$tgl_order', '$admin')");
     if($query){
-
         //menghitung total stock
         $total = $conn->query("SELECT SUM(jumlah) AS total FROM orders WHERE id_menu = '$id_menu'");
         $row = $total->fetch_assoc();
         $total = $row['total'];
         
-        //update table stock 
-        $update = $conn->query("UPDATE stock SET
-                    id_menu = '$id_menu',
-                    total   = '$total' 
-                    WHERE id_menu = '$id_menu'");
+        $updateStok = $conn->query("UPDATE stock SET
+                        id_menu     = '$id_menu',
+                        total       = '$total'
+                        WHERE id_menu = '$id_menu'
+                        ");
+
         header("location:../view/superadmin/orders.php?simpan=sukses");
     }else{
         header("location:../view/superadmin/orders.php?simpan=gagal");

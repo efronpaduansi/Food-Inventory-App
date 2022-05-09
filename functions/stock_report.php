@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/components.css">
 
-    <title>Stock Report|Dimsum Pawon Kulo</title>
+    <title>Stock Report - Dimsum Pawon Kulo</title>
 </head>
 <body>
     <div class="container">
@@ -30,49 +30,47 @@
         </div>
         <div class="title text-center">
             <h2 class="text-primary">DIMSUM PAWON KULO</h2>
-            <h4><strong>LAPORAN STOK MAKANAN</strong></h4>
+            <h4><strong>LAPORAN PERSEDIAAN STOK MAKANAN</strong></h4>
             <p class="mb-4">Jl. Ampera Poncol Babakan Setu Tangsel - Tlp : 081xxxxxx</p>
         </div>
        <table class="table table-bordered">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">NO</th>
-                    <th scope="col">NAMA MAKANAN</th>
+                    <th scope="col">ID MENU</th>
+                    <th scope="col">MAKANAN</th>
                     <th scope="col">VARIAN RASA</th>
                     <th scope="col">HRG/Pcs (Rp)</th>
-                    <th scope="col">JUMLAH (Pcs)</th>
-                    <th scope="col">TGL ORDER</th>
-                    <th scope="col">ADMIN</th>
+                    <th scope="col">TOTAL STOCK (Pcs)</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                     $no = 1;
-                    $sql = mysqli_query($conn,"SELECT * FROM stock");
+                    $sql = mysqli_query($conn,"SELECT menu.id, menu.makanan, menu.varian_rasa, menu.harga, stock.total FROM(menu INNER JOIN stock ON menu.id = stock.id_menu)");
                     while($data = mysqli_fetch_array($sql)){
                 ?>
                 <tr>
                     <th scope="row"><?= $no++;?></th>
-                    <td><?=$data['nama_makanan'];?></td>
+                    <td><?=$data['id'];?></td>
+                    <td><?=$data['makanan'];?></td>
                     <td><?=$data['varian_rasa'];?></td>
-                    <td><?= "Rp.". " " . $data['hrg_beli'];?></td>
-                    <td><?=$data['jumlah'];?></td>
-                    <td><?=$data['tgl_order'];?></td>
-                    <td><?=$data['administrator'];?></td>
+                    <td><?= "Rp.". " " . $data['harga'];?></td>
+                    <td><?=$data['total'] . " " . "Pcs";?></td>
                 </tr>
                 <?php } ?>
             </tbody>
        </table>
         <!-- Hitung total data -->
         <?php
-            $getTotal = mysqli_query($conn, "SELECT SUM(jumlah) AS total FROM stock");
-            $getPengeluaran = mysqli_query($conn, "SELECT SUM(hrg_beli * jumlah) AS pengeluaran FROM stock");
+            $getTotal = mysqli_query($conn, "SELECT SUM(total) AS total FROM stock");
+            // $getPengeluaran = mysqli_query($conn, "SELECT SUM(hrg_beli * jumlah) AS pengeluaran FROM stock");
             $result = mysqli_fetch_array($getTotal);
-            $hasilPengeluaran = mysqli_fetch_array($getPengeluaran);
+            // $hasilPengeluaran = mysqli_fetch_array($getPengeluaran);
             $total = $result['total'];
-            $totalPengeluaran = $hasilPengeluaran['pengeluaran'];
+            // $totalPengeluaran = $hasilPengeluaran['pengeluaran'];
             echo "<strong>" . "Total Makanan : ". " " . $total . " " . "pcs" . "</strong>" . "<br>";
-            echo "<strong>" . "Total Pengeluaran : " . " " . "Rp. " . " " . $totalPengeluaran . "</strong>";
+            // echo "<strong>" . "Total Pengeluaran : " . " " . "Rp. " . " " . $totalPengeluaran . "</strong>";
         ?>
         
        <br> <br> <br>

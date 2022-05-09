@@ -15,7 +15,7 @@
   <?php 
     include "../master/header.php";
   ?>
-  <title>Edit Data Stock | Dimsum Pawonkulo</title>
+  <title>Edit Data Stock - Dimsum Pawonkulo</title>
 </head>
 <body>
   <div id="app">

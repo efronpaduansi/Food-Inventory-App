@@ -75,7 +75,7 @@
 <html lang="en">
 <head>
   <?php include "../master/header.php"; ?>
-  <title>Stock | Dimsum Pawonkulo</title>
+  <title>Stock - Dimsum Pawonkulo</title>
 </head>
 <body>
   <div id="app">

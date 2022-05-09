@@ -28,7 +28,7 @@
   <?php 
     include "../master/header.php";
   ?>
-  <title>Orders | Dimsum Pawonkulo</title>
+  <title>Orders - Dimsum Pawonkulo</title>
 </head>
 <body>
   <div id="app">

@@ -8,7 +8,7 @@
   <?php 
     include "../master/header.php";
   ?>
-  <title>Dashboard | Dimsum Pawonkulo</title>
+  <title>Dashboard - Dimsum Pawonkulo</title>
 </head>
 <body>
   <div id="app">
