@@ -82,7 +82,7 @@ session_start();
           <div class="section-body">
             <div class="row">
                 <div class="col-lg-8">
-                   <div class="card">
+                   <div class="card" data-aos="fade-up" data-aos-duration="1000">
                        <div class="card-header bg-dark text-light">
                         <i class="fas fa-user mr-2"></i> <span>Pengaturan Akun</span> 
                        </div>

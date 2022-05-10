@@ -11,5 +11,5 @@ Web-based food inventory application at DIMSUM PAWON KULO using PHP Native, MySQ
     - Cetak Laporan (PDF & Excel)
     - Preferencess (Account Setting, Add new user)
 
- Contact Me : hellofrond@yahoo.com
+ Contact Me : efronius@programmer.net
 

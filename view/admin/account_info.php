@@ -83,7 +83,7 @@
                <div class="row">
                      <!-- Profile informasi -->
                     <div class="col-lg-6">
-                        <div class="card shadow-lg">
+                        <div class="card shadow-lg" data-aos="fade-up" data-aos-duration="1000">
                             <div class="card-header bg-dark text-light">
                                 Anda login sebagai : @<?=$_SESSION['username'] ." " . "[" . $_SESSION['id_user'] . "]";?> 
                             </div>

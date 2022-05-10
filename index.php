@@ -43,6 +43,8 @@
   <!-- Template CSS -->
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/components.css">
+  <!-- DATA AOS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
   <style>
     body{
@@ -60,7 +62,7 @@
             <div class="login-brand mb-5">
               <h4 class="text-center text-light">DIMSUM PAWONKULO</h4>
             </div>
-            <div class="card card-primary">
+            <div class="card card-primary" data-aos="fade-up" data-aos-duration="3000">
              <div class="title mt-3 text-center text-primary"><h3>Login</h3></div>
               <div class="card-body shadow-lg">
                 <form method="POST" action="auth/proses_login.php" class="needs-validation" novalidate="">
@@ -109,6 +111,11 @@
   <script src="assets/js/scripts.js"></script>
   <script src="assets/js/custom.js"></script>
 
-  <!-- Page Specific JS File -->
+ <!-- DATA AOS -->
+ <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+
 </body>
 </html>

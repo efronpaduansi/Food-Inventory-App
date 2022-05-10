@@ -23,4 +23,10 @@
   <script src="../../assets/js/scripts.js"></script>
   <script src="../../assets/js/custom.js"></script>
 
+  <!-- AOS -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+
   <!-- Page Specific JS File -->

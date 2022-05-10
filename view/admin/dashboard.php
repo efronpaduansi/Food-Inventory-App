@@ -81,7 +81,12 @@
           </div>
 
           <div class="section-body">
-            <p class="alert alert-success">Selamat datang <?= $_SESSION['fname'];?></p>
+            <div class="alert alert-success alert-dismissible fade show" role="alert" data-aos="fade-left" data-aos-duration="3000">
+              <strong><?= "Hi,". " " .$_SESSION['fname'] . "."; ?></strong> Selamat datang kembali.
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
           </div>
         </section>
       </div>

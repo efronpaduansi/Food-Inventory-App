@@ -89,7 +89,7 @@
           </div>
           <div class="section-body">
               <div class="container">
-                <div class="row">
+                <div class="row" data-aos="fade-up" data-aos-duration="1000">
                   <div class="col-lg-9">
                     <?=@$alert; ?>
                     <!-- tombol cari menu -->
