@@ -24,7 +24,7 @@
     $result = mysqli_fetch_array($getRasaUdang);
     $jmlRasaUdang = $result['jml'];
 
-    $getTotal = $conn->query("SELECT SUM(jumlah) AS total FROM stock");
+    $getTotal = $conn->query("SELECT SUM(total) AS total FROM stock");
     $result = mysqli_fetch_array($getTotal);
     $total = $result['total'];
 

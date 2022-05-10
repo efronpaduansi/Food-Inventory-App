@@ -78,7 +78,7 @@
   <?php 
     include "../master/header.php";
   ?>
-  <title>Menu | Dimsum Pawonkulo</title>
+  <title>Menu - Dimsum Pawonkulo</title>
 </head>
 <body>
   <div id="app">
@@ -188,8 +188,8 @@
                                 <td><?= "Rp.". " " . $menu['harga']; ?></td>
                                 <td>
                                   <div class="form-inline">
-                                      <a href="menu_edit.php?id=<?=$menu['id']; ?>"><i class="fas fa-edit"></i></a>
-                                      <a href="../../functions/menu_delete.php?id=<?=$menu['id']; ?>" onclick = "return confirm ('Apakah anda yakin untuk menghapus data ini ?');"><i class="fas fa-trash"></i></a>
+                                      <a href="menu_edit.php?id=<?=$menu['id']; ?>" data-toggle="tooltip" data-placement="top" title="Ubah data"><i class="fas fa-edit"></i></a>
+                                      <a href="../../functions/menu_delete.php?id=<?=$menu['id']; ?>" onclick = "return confirm ('Tindakan ini akan menghapus data secara permanen. Yakin ?');" data-toggle="tooltip" data-placement="top" title="Hapus data"><i class="fas fa-trash"></i></a>
                                   </div>
                                 </td>
                             </tr>

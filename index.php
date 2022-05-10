@@ -43,20 +43,26 @@
   <!-- Template CSS -->
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/components.css">
+
+  <style>
+    body{
+      background:#6777EF;
+    }
+  </style>
 </head>
 
 <body>
   <div id="app">
     <section class="section">
-      <div class="container mt-5">
-        <div class="row">
+      <div class="container">
+        <div class="row mt-5">
           <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
-            <div class="login-brand">
-              <img src="assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
+            <div class="login-brand mb-5">
+              <h4 class="text-center text-light">DIMSUM PAWONKULO</h4>
             </div>
             <div class="card card-primary">
              <div class="title mt-3 text-center text-primary"><h3>Login</h3></div>
-              <div class="card-body">
+              <div class="card-body shadow-lg">
                 <form method="POST" action="auth/proses_login.php" class="needs-validation" novalidate="">
                   <?= @$alert; ?>
                   <div class="form-group">
