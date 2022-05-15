@@ -1,5 +1,14 @@
 <?php
   session_start();
+  include "../../conn/koneksi.php";
+
+
+  $id_user = $_SESSION['id_user'];
+
+  $getDataUser = $conn->query("SELECT * FROM user WHERE id_user = '$id_user'");
+  $fetchDataUser = $getDataUser->fetch_assoc();
+  
+  
 
 ?>
 <!DOCTYPE html>
@@ -110,7 +119,7 @@
                                    </div>
                                  </div>
                                 <div class="form-inline d-flex justify-content-center mt-5">
-                                  <a href="account_edit.php" class="btn btn-primary mr-4">Edit Akun</a>
+                                  <a href="user_edit.php?id_user=<?=$fetchDataUser['id_user']; ?>" class="btn btn-primary mr-4">Edit Akun</a>
                                   <a href="account_setting.php" class="btn btn-danger">Kembali</a>
                               </div>
                         </div>

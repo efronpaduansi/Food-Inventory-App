@@ -155,8 +155,8 @@
                                 <td><?= $user['level']; ?></td>
                                 <td>
                                   <div class="form-inline row">
-                                        <a href="user_edit.php?id_user=<?=$user['id_user']; ?>" class="mr-2 text-info"><i class="fas fa-edit"></i></a> 
-                                        <a href="../../functions/user_delete.php?id_user=<?=$user['id_user']; ?>" class="text-primary" onclick = "return confirm ('Apakah anda yakin untuk menghapus data ini ?');"><i class="fas fa-trash"></i>
+                                        <a href="user_edit.php?id_user=<?=$user['id_user']; ?>" class="mr-2 text-info" data-toggle="tooltip" data-placement="top" title="Ubah Data User"><i class="fas fa-edit"></i></a> 
+                                        <a href="../../functions/user_delete.php?id_user=<?=$user['id_user']; ?>" data-toggle="tooltip" data-placement="top" title="Hapus data user" class="text-primary" onclick = "return confirm ('Tindakan ini akan menghapus data secara permanen. Yakin ?');"><i class="fas fa-trash"></i>
                                         </a>
                                   </div>
                                 </td>
@@ -199,7 +199,12 @@
                                     <option value="Admin">Admin</option>
                                     <option value="Superadmin">Superadmin</option>
                                 </select>
-                                <input type="password" name="password" class="form-control mb-3" placeholder="Password" minlength="5" required>
+                                <div class="input-group mb-5" id="show_hide_password">
+                                    <input type="password" name='password' class="form-control" autocomplete="off" required>
+                                    <div class="input-group-append">
+                                        <a href="" class="btn btn-outline-secondary"><i class="fas fa-eye-slash" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -230,5 +235,23 @@
                 });
             });
           </script>
+
+          <!-- show hide password functions -->
+        <script>
+            $(document).ready(function() {
+            $("#show_hide_password a").on('click', function(event) {
+                event.preventDefault();
+                if($('#show_hide_password input').attr("type") == "text"){
+                    $('#show_hide_password input').attr('type', 'password');
+                    $('#show_hide_password i').addClass( "bi bi-eye-slash" );
+                    $('#show_hide_password i').removeClass( "bi bi-eye" );
+                }else if($('#show_hide_password input').attr("type") == "password"){
+                    $('#show_hide_password input').attr('type', 'text');
+                    $('#show_hide_password i').removeClass( "bi bi-eye-slash" );
+                    $('#show_hide_password i').addClass( "bi bi-eye" );
+                }
+            });
+            });
+        </script>
 </body>
 </html>

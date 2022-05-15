@@ -1,6 +1,17 @@
 <?php
   session_start();
 
+  include "../../conn/koneksi.php";
+
+
+  $id_user = $_SESSION['id_user'];
+
+  $getDataUser = $conn->query("SELECT * FROM user WHERE id_user = '$id_user'");
+  $fetchDataUser = $getDataUser->fetch_assoc();
+  
+  
+  
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -88,7 +99,7 @@
                         <div class="card-body">
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item"><a href="account_info.php"><span>Informasi Akun Anda</span></a></li>
-                                <li class="list-group-item"><a href=""><span>Edit Akun</span></a></li>
+                                <li class="list-group-item"><a href="user_edit.php?id_user=<?=$fetchDataUser['id_user']; ?>"><span>Edit Akun</span></a></li>
                                 <li class="list-group-item"><a href=""><span>Ganti Password</span></a></li>
                             </ul>
                         </div>

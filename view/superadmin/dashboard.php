@@ -1,5 +1,6 @@
 <?php
   session_start();
+  include "../../conn/koneksi.php";
 
 ?>
 <!DOCTYPE html>
@@ -9,6 +10,7 @@
     include "../master/header.php";
   ?>
   <title>Dashboard - Dimsum Pawonkulo</title>
+  <script src="../../assets/js/Chart.js"></script>
 </head>
 <body>
   <div id="app">
@@ -81,8 +83,126 @@
             <h1>Dashboard</h1>
           </div>
           <div class="section-body">
-              <p class="alert alert-success">Selamat datang <?= $_SESSION['fname'];?></p>
-          </div>
+            <div class="welcome" data-aos="fade-left" data-aos-duration="3000"  data-aos-once="true">
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Hi, <?=$_SESSION['fname']; ?>!</strong> Welcome back.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </div>
+            <div class="container">
+              <div class="row">
+                <div class="col-md-3">
+                    <div class="card bg-success">
+                      <div class="card-header">Stock</div>
+                      <div class="card-body">
+                        <h1 class="text-light">18</h1>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-warning">
+                      <div class="card-header">Stock</div>
+                      <div class="card-body">
+                        <h1 class="text-light">18</h1>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-danger">
+                      <div class="card-header">Stock</div>
+                      <div class="card-body">
+                        <h1 class="text-light">18</h1>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-info">
+                      <div class="card-header">Stock</div>
+                      <div class="card-body">
+                        <h1 class="text-light">18</h1>
+                      </div>
+                    </div>
+                </div>
+              </div>
+                <div class="row" data-aos="fade-up" data-aos-duration="3000">
+                        <div class="col-md-6 stock-grafik">
+                          <div class="title">Stock Makanan</div>
+                            <!-- Grafik -->
+                              <div style="width: 500px;height: 500px">
+                                <canvas id="myChart"></canvas>
+                              </div>
+                              <script>
+                                  var ctx = document.getElementById("myChart").getContext('2d');
+                                  var myChart = new Chart(ctx, {
+                                    type: 'doughnut',
+                                    data: {
+                                      labels: ["Ayam", "Beef", "Cumi", "Udang"],
+                                      datasets: [{
+                                        label: '',
+                                        data: [
+                                        <?php 
+                                        $stockAyam = $conn->query("SELECT SUM(total) AS totalAyam FROM stock WHERE id_menu = 'DPK001'");
+                                        $fethData = $stockAyam->fetch_array();
+                                        $jmlAyam = $fethData['totalAyam'];
+                                        echo $jmlAyam;
+                                        ?>, 
+                                        <?php 
+                                        $stockBeef = $conn->query("SELECT SUM(total) AS totalBeef FROM stock WHERE id_menu = 'DPK002'");
+                                        $fethData2 = $stockBeef->fetch_array();
+                                        $jmlBeef = $fethData2['totalBeef'];
+                                        echo $jmlBeef;
+                                        ?>, 
+                                        <?php 
+                                        $stockCumi = $conn->query("SELECT SUM(total) AS totalCumi FROM stock WHERE id_menu = 'DPK003'");
+                                        $fethData3 = $stockCumi->fetch_array();
+                                        $jmlCumi = $fethData3['totalCumi'];
+                                        echo $jmlCumi;
+                                        ?>, 
+                                        <?php 
+                                        $stockUdang = $conn->query("SELECT SUM(total) AS totalUdang FROM stock WHERE id_menu = 'DPK004'");
+                                        $fethData4 = $stockUdang->fetch_array();
+                                        $jmlUdang = $fethData4['totalUdang'];
+                                        echo $jmlUdang;
+                                        ?>
+                                        ],
+                                        backgroundColor: [
+                                          'rgba(255, 99, 132, 0.2)',
+                                          'rgba(54, 162, 235, 0.2)',
+                                          'rgba(255, 206, 86, 0.2)',
+                                          'rgba(75, 192, 192, 0.2)',
+                                          'rgba(153, 102, 255, 0.2)',
+                                          'rgba(255, 159, 64, 0.2)'
+                                        ],
+                                        borderColor: [
+                                          'rgba(255, 99, 132, 1)',
+                                          'rgba(54, 162, 235, 1)',
+                                          'rgba(255, 206, 86, 1)',
+                                          'rgba(75, 192, 192, 1)',
+                                          'rgba(153, 102, 255, 1)',
+                                          'rgba(255, 159, 64, 1)'
+                                        ],
+                                        borderWidth: 1
+                                      }]
+                                    },
+                                    options: {
+                                      scales: {
+                                        yAxes: [{
+                                          ticks: {
+                                            beginAtZero:true
+                                          }
+                                        }]
+                                      }
+                                    }
+                                  });
+                                </script>
+                              <!-- End of Grafik -->
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
       </div>
      <?php include "../master/footer.php" ?>

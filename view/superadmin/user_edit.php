@@ -5,7 +5,9 @@
     $id_user = $_GET['id_user'];
 
     $query = $conn->query("SELECT * FROM user WHERE id_user = '$id_user'");
+    
     while($user = $query->fetch_assoc()) {
+    
 ?>
 <?php
   session_start();
@@ -110,15 +112,9 @@
                                             <option value="Admin">Admin</option>
                                             <option value="Superadmin">Superadmin</option>
                                         </select>
-                                        <div class="input-group mb-5" id="show_hide_password">
-                                            <input type="password" name='password' value="<?=$user['password']; ?>" class="form-control" required autocomplete="current-password">
-                                            <div class="input-group-append">
-                                                <a href="" class="btn btn-outline-secondary"><i class="fas fa-eye-slash" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
                                         <div class="card-footer d-flex">
                                             <div class="form-inline">
-                                                <a href="users.php" class="btn btn-danger mr-3">Batal</a>
+                                                <a href="account_setting.php" class="btn btn-danger mr-3">Batal</a>
                                                 <button type="submit" name="update" class="btn btn-primary">Update</button>
                                             </div>
                                         </div>
@@ -134,7 +130,7 @@
      <?php include "../master/footer.php" ?>
 
      <!-- show hide password functions -->
-        <script>
+        <!-- <script>
             $(document).ready(function() {
             $("#show_hide_password a").on('click', function(event) {
                 event.preventDefault();
@@ -149,7 +145,7 @@
                 }
             });
             });
-        </script>
+        </script> -->
        
 </body>
 </html>
