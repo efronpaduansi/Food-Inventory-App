@@ -3,28 +3,28 @@
     include "../../conn/koneksi.php";
 
     //Ambil jumlah persediaan dimsum rasa ayam
-    $getDataAyam = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlRasaAyam FROM (stock INNER JOIN menu ON menu.kode = stock.kode_menu) WHERE varian_rasa = 'Ayam'");
-    $resultDataAyam = mysqli_fetch_array($getDataAyam);
-    $jmlRasaAyam = $resultDataAyam['jmlRasaAyam'];
+    $getDataAyam = $conn->query("SELECT total AS total_rasa_ayam FROM stock WHERE id_menu = 'DPK001'");
+    $resultDataAyam = $getDataAyam->fetch_array();
+    $jmlRasaAyam = $resultDataAyam['total_rasa_ayam'];
 
     //Ambil jumlah persediaan dimsum rasa beef
-    $getDataBeef = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlRasaBeef FROM (stock INNER JOIN menu ON menu.kode = stock.kode_menu) WHERE varian_rasa = 'Beef'");
-    $resultDataBeef = mysqli_fetch_array($getDataBeef);
-    $jmlRasaBeef = $resultDataBeef['jmlRasaBeef'];
+    $getDataBeef = $conn->query("SELECT total AS total_rasa_beef FROM stock WHERE id_menu = 'DPK002'");
+    $resultDataBeef = $getDataBeef->fetch_array();
+    $jmlRasaBeef = $resultDataBeef['total_rasa_beef'];
 
     //Ambil jumlah persediaan dimsum rasa cumi
-    $getDataCumi = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlRasaCumi FROM (stock INNER JOIN menu ON menu.kode = stock.kode_menu) WHERE varian_rasa = 'Cumi'");
-    $resultDataCumi = mysqli_fetch_array($getDataCumi);
-    $jmlRasaCumi = $resultDataCumi['jmlRasaCumi'];
+    $getDataCumi = $conn->query("SELECT total AS total_rasa_cumi FROM stock WHERE id_menu = 'DPK003'");
+    $resultDataCumi = $getDataCumi->fetch_array();
+    $jmlRasaCumi = $resultDataCumi['total_rasa_cumi'];
 
     //Ambil jumlah persediaan dimsum rasa udang
-    $getDataUdang = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlRasaUdang FROM (stock INNER JOIN menu ON menu.kode = stock.kode_menu) WHERE varian_rasa = 'Udang'");
-    $resultDataUdang = mysqli_fetch_array($getDataUdang);
-    $jmlRasaUdang = $resultDataUdang['jmlRasaUdang'];
+    $getDataUdang = $conn->query("SELECT total AS total_rasa_udang FROM stock WHERE id_menu = 'DPK004'");
+    $resultDataUdang = $getDataUdang->fetch_array();
+    $jmlRasaUdang = $resultDataUdang['total_rasa_udang'];
 
     //Menghitung total persediaan makanan
-    $getDataMakanan = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlPersediaan FROM stock");
-    $resultDataMakanan = mysqli_fetch_array($getDataMakanan);
+    $getDataMakanan = $conn->query("SELECT SUM(total) AS jmlPersediaan FROM stock");
+    $resultDataMakanan = $getDataMakanan->fetch_array();
     $jmlPersediaan = $resultDataMakanan['jmlPersediaan'];
 
 ?>
@@ -33,7 +33,7 @@
 <html lang="en">
 <head>
   <?php include "../master/header.php"; ?>
-  <title>Stok Barang | Dimsum Pawonkulo</title>
+  <title>Stok Barang - Dimsum Pawonkulo</title>
 </head>
 <body>
   <div id="app">
@@ -110,7 +110,7 @@
                 </form>
                 <!-- Table stock makanan -->
                   <div class="row">
-                      <div class="col-lg-9">
+                      <div class="col-lg-9" data-aos="fade-up" data-aos-duration="2000">
                           <table class="table table-bordered table-secondary">
                               <thead class="thead-dark">
                                   <tr>
@@ -199,19 +199,13 @@
                               </tbody>
                           </table>
                       </div>
-                      <div class="col-lg-3">
-                          <?php
-                              $getLastUpdate = $conn->query("SELECT menu.varian_rasa, stock.hrg_beli, stock.jumlah, stock.administrator FROM (menu INNER JOIN stock ON menu.kode = stock.kode_menu) ORDER BY id DESC LIMIT 1");
-                              $result = mysqli_fetch_array($getLastUpdate);
-                          ?>
-                        <strong>Terakhir ditambahkan</strong> <br><br>    
-                        <p>Varian Rasa : <?= $result['varian_rasa']; ?></p>
-                        <p>Harga : <?= "Rp." . " " . $result['hrg_beli']; ?></p>
-                        <p>Jumlah : <?= $result['jumlah']; ?></p>
-                        <p>Penerima : <?= $result['administrator']; ?></p>
-                      </div>
                       <div class="total ml-3">
-                          <strong><?= "Total Persediaan : " . " " . $jmlPersediaan . " " . "Pcs"; ?></strong>
+                          <div class="card bg-primary shadow-lg rounded" data-aos="fade-left" data-aos-duration="3000">
+                            <div class="card-header">Total Persediaan</div>
+                            <div class="card-body text-center">
+                              <h1><?=$jmlPersediaan; ?> <sub>Pcs</sub></h1>
+                            </div>
+                          </div>
                       </div>
                   </div>
               </div>

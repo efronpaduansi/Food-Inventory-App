@@ -196,7 +196,7 @@
                                       }
                                     }
                                   });
-                                </script>
+                              </script>
                               <!-- End of Grafik -->
                           </div>
                         </div>
