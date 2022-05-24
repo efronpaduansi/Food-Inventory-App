@@ -119,76 +119,108 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-8">
-              <!-- Grafik -->
-              <div style="width: 500px;height: 500px">
-                                <canvas id="myChart"></canvas>
-                              </div>
-                              <script>
-                                  var ctx = document.getElementById("myChart").getContext('2d');
-                                  var myChart = new Chart(ctx, {
-                                    type: 'line',
-                                    data: {
-                                      labels: ["Ayam", "Beef", "Cumi", "Udang"],
-                                      datasets: [{
-                                        label: '',
-                                        data: [
-                                        <?php 
-                                        $stockAyam = $conn->query("SELECT SUM(total) AS totalAyam FROM stock WHERE id_menu = 'DPK001'");
-                                        $fethData = $stockAyam->fetch_array();
-                                        $jmlAyam = $fethData['totalAyam'];
-                                        echo $jmlAyam;
-                                        ?>, 
-                                        <?php 
-                                        $stockBeef = $conn->query("SELECT SUM(total) AS totalBeef FROM stock WHERE id_menu = 'DPK002'");
-                                        $fethData2 = $stockBeef->fetch_array();
-                                        $jmlBeef = $fethData2['totalBeef'];
-                                        echo $jmlBeef;
-                                        ?>, 
-                                        <?php 
-                                        $stockCumi = $conn->query("SELECT SUM(total) AS totalCumi FROM stock WHERE id_menu = 'DPK003'");
-                                        $fethData3 = $stockCumi->fetch_array();
-                                        $jmlCumi = $fethData3['totalCumi'];
-                                        echo $jmlCumi;
-                                        ?>, 
-                                        <?php 
-                                        $stockUdang = $conn->query("SELECT SUM(total) AS totalUdang FROM stock WHERE id_menu = 'DPK004'");
-                                        $fethData4 = $stockUdang->fetch_array();
-                                        $jmlUdang = $fethData4['totalUdang'];
-                                        echo $jmlUdang;
-                                        ?>
-                                        ],
-                                        backgroundColor: [
-                                          'rgba(255, 99, 132, 0.2)',
-                                          'rgba(54, 162, 235, 0.2)',
-                                          'rgba(255, 206, 86, 0.2)',
-                                          'rgba(75, 192, 192, 0.2)',
-                                          'rgba(153, 102, 255, 0.2)',
-                                          'rgba(255, 159, 64, 0.2)'
-                                        ],
-                                        borderColor: [
-                                          'rgba(255, 99, 132, 1)',
-                                          'rgba(54, 162, 235, 1)',
-                                          'rgba(255, 206, 86, 1)',
-                                          'rgba(75, 192, 192, 1)',
-                                          'rgba(153, 102, 255, 1)',
-                                          'rgba(255, 159, 64, 1)'
-                                        ],
-                                        borderWidth: 1
-                                      }]
-                                    },
-                                    options: {
-                                      scales: {
-                                        yAxes: [{
-                                          ticks: {
-                                            beginAtZero:true
-                                          }
-                                        }]
-                                      }
-                                    }
-                                  });
-                              </script>
-                              <!-- End of Grafik -->
+            <div class="row">
+              <div class="col-lg-6">
+                  <h5>Grafik Data Penjualan</h5>
+                  <!-- Grafik -->
+                    <div style="width: 500px;height: 200px">
+                          <canvas id="myChart"></canvas>
+                    </div>
+                      <script>
+                          var ctx = document.getElementById("myChart").getContext('2d');
+                          var myChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                              labels: ["Ayam", "Beef", "Cumi", "Udang"],
+                              datasets: [{
+                                label: '',
+                                data: [
+                                <?php 
+                                $stockAyam = $conn->query("SELECT SUM(jumlah) AS totalAyam FROM penjualan WHERE id_menu = 'DPK001'");
+                                $fethData = $stockAyam->fetch_array();
+                                $jmlAyam = $fethData['totalAyam'];
+                                echo $jmlAyam;
+                                ?>, 
+                                <?php 
+                                $stockBeef = $conn->query("SELECT SUM(jumlah) AS totalBeef FROM penjualan WHERE id_menu = 'DPK002'");
+                                $fethData2 = $stockBeef->fetch_array();
+                                $jmlBeef = $fethData2['totalBeef'];
+                                echo $jmlBeef;
+                                ?>, 
+                                <?php 
+                                $stockCumi = $conn->query("SELECT SUM(jumlah) AS totalCumi FROM penjualan WHERE id_menu = 'DPK003'");
+                                $fethData3 = $stockCumi->fetch_array();
+                                $jmlCumi = $fethData3['totalCumi'];
+                                echo $jmlCumi;
+                                ?>, 
+                                <?php 
+                                $stockUdang = $conn->query("SELECT SUM(jumlah) AS totalUdang FROM penjualan WHERE id_menu = 'DPK004'");
+                                $fethData4 = $stockUdang->fetch_array();
+                                $jmlUdang = $fethData4['totalUdang'];
+                                echo $jmlUdang;
+                                ?>
+                                ],
+                                backgroundColor: [
+                                  'rgba(255, 99, 132, 0.2)',
+                                  'rgba(54, 162, 235, 0.2)',
+                                  'rgba(255, 206, 86, 0.2)',
+                                  'rgba(75, 192, 192, 0.2)',
+                                  'rgba(153, 102, 255, 0.2)',
+                                  'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                  'rgba(255, 99, 132, 1)',
+                                  'rgba(54, 162, 235, 1)',
+                                  'rgba(255, 206, 86, 1)',
+                                  'rgba(75, 192, 192, 1)',
+                                  'rgba(153, 102, 255, 1)',
+                                  'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                              }]
+                            },
+                            options: {
+                              scales: {
+                                yAxes: [{
+                                  ticks: {
+                                    beginAtZero:true
+                                  }
+                                }]
+                              }
+                            }
+                          });
+                      </script>
+                    <!-- End of Grafik -->
+              </div>
+              <!-- Profile -->
+              <div class="col-lg-6" data-aos="fade-left" data-aos-duration="3000">
+                  <div class="card shadow-md rounded">
+                    <div class="card-header"><strong>My Profile - </strong>You're login as @<?=$_SESSION['username'] . " " . "[" . $_SESSION['id_user'] . "]"; ?></div>
+                    <div class="card-body text-center">
+                        <img alt="image" src="../../assets/img/avatar/avatar-1.png" class="rounded-circle mr-1" height=75>
+                        <div class="row d-flex justify-content-center mt-5">
+                          <div class="title text-left">
+                            <h5>ID</h5>
+                            <h5>USERNAME</h5>
+                            <h5>FULLNAME</h5>
+                            <h5>LEVEL</h5>
+                          </div>
+                          <div class="titik text-center ml-5">
+                            <h5>:</h5>
+                            <h5>:</h5>
+                            <h5>:</h5>
+                            <h5>:</h5>
+                          </div>
+                          <div class="identitas text-left ml-3">
+                            <h5><strong><?=$_SESSION['id_user']; ?></strong></h5>
+                            <h5><strong><?=$_SESSION['username']; ?></strong></h5>
+                            <h5><strong><?=$_SESSION['fname']; ?></strong></h5>
+                            <h5><strong><?=$_SESSION['level']; ?></strong></h5>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+              </div>
             </div>
           </div>
         </section>

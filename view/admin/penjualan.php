@@ -128,18 +128,18 @@
                                 </button>
                             </div>
                             <!-- Tabel data penjualan -->
-                            <table class="table">
-                                <thead class="thead-dark">
+                            <table class="table table-striped">
+                                <thead class="thead-dark bg-primary">
                                     <tr>
-                                        <th scope="col">NO</th>
-                                        <th scope="col">KODE TRX</th>
-                                        <th scope="col">TGL TRX</th>
-                                        <th scope="col">NAMA MAKANAN</th>
-                                        <th scope="col">VARIAN RASA</th>
-                                        <th scope="col">HRG JUAL / <sub>Pcs</sub></th>
-                                        <th scope="col">JML (Pcs)</th>
-                                        <th scope="col">ADMIN</th>
-                                        <th scope="col">AKSI</th>
+                                        <th scope="col" class="text-light">NO</th>
+                                        <th scope="col" class="text-light">KODE TRX</th>
+                                        <th scope="col" class="text-light">TGL TRX</th>
+                                        <th scope="col" class="text-light">NAMA MAKANAN</th>
+                                        <th scope="col" class="text-light">VARIAN RASA</th>
+                                        <th scope="col" class="text-light">HRG JUAL / <sub>Pcs</sub></th>
+                                        <th scope="col" class="text-light">JML (Pcs)</th>
+                                        <th scope="col" class="text-light">ADMIN</th>
+                                        <th scope="col" class="text-light">AKSI</th>
                                     </tr>
                                 </thead>
                                 <tbody>

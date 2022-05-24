@@ -184,7 +184,7 @@
                   <option value="<?=$varian_rasa['varian_rasa']; ?>"><?=$varian_rasa['varian_rasa']; ?></option>
                     <?php } ?>
                 </select>
-                <input type="number" name="hrg_beli" class="form-control mb-3" placeholder="Harga (Rp)"required min="1000" max="99000">
+                <input type="number" name="hrg_beli" class="form-control mb-3" placeholder="Harga beli (Rp)"required min="1000" max="99000">
                 <input type="number" name="jumlah" class="form-control mb-3" placeholder="Jumlah (Pcs)" required min="1">
                 <input type="date" name="tgl_order" class="form-control mb-3" required>
                 <input type="text" name="admin" class="form-control mb-5" value="<?=$_SESSION['fname']; ?>" readonly>

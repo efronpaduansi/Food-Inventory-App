@@ -168,7 +168,7 @@
                         </tbody>
                     </table>
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        <strong>Perhatian !</strong> Fitur ini hanya bisa digunakan oleh Superadmin.
+                        <strong>Perhatian !</strong> Fitur ini hanya bisa di lihat oleh Superadmin.
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
