@@ -1,7 +1,7 @@
 <?php
   session_start();
   include "../../conn/koneksi.php";
-  include "../../functions/kode_trx.php";
+  include "../../functions/penjualan_kode.php";
 
   
   //cek proses transaksi
@@ -32,7 +32,7 @@
   }
  
   //Menampilkan data kedalam tabel
-  $getData = $conn->query("SELECT menu.nama_makanan, menu.varian_rasa, menu.harga, penjualan.id, penjualan.tgl, penjualan.jumlah, penjualan.administrator FROM (menu INNER JOIN penjualan ON menu.kode = penjualan.kode_menu) ORDER BY penjualan.id DESC");
+  $getData = $conn->query("SELECT menu.makanan, menu.varian_rasa, menu.harga, penjualan.id, penjualan.tgl, penjualan.jumlah, penjualan.administrator FROM (menu INNER JOIN penjualan ON menu.id = penjualan.id_menu) ORDER BY penjualan.id DESC");
   $dtPenjualan = array();
   while($data = $getData->fetch_array()){
     $dtPenjualan[] = $data;

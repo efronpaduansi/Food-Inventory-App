@@ -9,10 +9,10 @@
   
     $maxkode = $data['kodeTrx'];
   
-    $noUrut = (int) substr($maxkode, 7, 3);
+    $noUrut = (int) substr($maxkode, 10, 3);
   
     $noUrut++;
-    $char = date('dmy');
+    $char = "DPK-" . date('dmy');
     $kodeTrx = $char . sprintf("%03s", $noUrut);
   
 ?>
