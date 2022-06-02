@@ -140,7 +140,7 @@
                     <div class="card bg-info">
                       <div class="card-header">Pendapatan IDR</div>
                       <div class="card-body">
-                        <h1 class="text-light mb-4"><?=$pendapatan; ?></h1>
+                        <h1 class="text-light mb-4"><?=@$totalPendapatan; ?></h1>
                       </div>
                     </div>
                 </div>
