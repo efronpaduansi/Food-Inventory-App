@@ -1,6 +1,7 @@
 <?php
   session_start();
   include "../../conn/koneksi.php";
+  include "../../functions/profit_count.php";
 
   //Menghitung total stok makanan pada tabel stock
   $getDataStock = $conn->query("SELECT SUM(total) AS totalStockMakanan FROM stock");
@@ -17,26 +18,7 @@
   $fetchJmlOrders = $getJmlOrders->fetch_array();
   $jmlOrders = $fetchJmlOrders['jmlOrders'];
   
-  //Menghitung pendapatan
-  //Mengambil hrg_beli pada table orders
-  $getDataHrgBeli = $conn->query("SELECT hrg_beli AS hrgBeli FROM orders");
-  $fetchDataHrgBeli = $getDataHrgBeli->fetch_array();
-  $hrgBeli = $fetchDataHrgBeli['hrgBeli'];
-
-  //Mengambil hrg jual pada table menu
-  $getDataHrgJual = $conn->query("SELECT harga AS hrgJual FROM menu");
-  $fetchDataHrgJual = $getDataHrgJual->fetch_array();
-  $hrgJual = $fetchDataHrgJual['hrgJual'];
-
-  //Mengambil jumlah makanan terjual dari tabel penjualan
-  $getJmlTerjual = $conn->query("SELECT SUM(jumlah) AS jmlTerjual FROM penjualan");
-  $fetchJmlTerjual = $getJmlTerjual->fetch_array();
-  $jmlTerjual = $fetchJmlTerjual['jmlTerjual'];
-
-  //Menghitung pendapatan (harga jual - harga beli * jumlah makanan terjual)
-  $pendapatan = ($hrgJual - $hrgBeli) * $jmlTerjual;
-
-
+  
 
 
 ?>

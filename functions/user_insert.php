@@ -8,6 +8,7 @@
   $level    = $_POST['level'];
   $password = $_POST['password'];
 
+  //enkripsi password
   $newPassword = password_hash($password, PASSWORD_DEFAULT);
 
   $sql = "INSERT INTO user(id_user, username, fname,level, password) VALUES

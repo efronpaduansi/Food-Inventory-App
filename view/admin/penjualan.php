@@ -151,7 +151,7 @@
                                     <th scope="row"><?=$no;  ?></th>
                                     <td><?=$data['id']; ?></td>
                                     <td><?=$data['tgl']; ?></td>
-                                    <td><?=$data['nama_makanan']; ?></td>
+                                    <td><?=$data['makanan']; ?></td>
                                     <td><?=$data['varian_rasa']; ?></td>
                                     <td><?=$data['harga']; ?></td>
                                     <td><?=$data['jumlah']; ?></td>
