@@ -117,7 +117,7 @@
                                   <?php
                                     if($jmlPenjualanRasaAyam == 0){
 
-                                      echo "<h1>" . "Belum ada yang terjual" . "</h1>";
+                                      echo "<h5>" . "Belum ada yang terjual" . "</h5>";
 
                                     }else{
 
@@ -136,7 +136,7 @@
                                 <?php
                                     if($jmlPenjualanRasaBeef == 0){
 
-                                      echo "<h1>" . "Belum ada yang terjual" . "</h1>";
+                                      echo "<h5>" . "Belum ada yang terjual" . "</h5>";
 
                                     }else{
 
