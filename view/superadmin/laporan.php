@@ -2,12 +2,20 @@
   session_start();
 
   include "../../conn/koneksi.php";
+  include "../../functions/laporan_count.php";
 
-  //Mengambil jumlah makanan masuk
-    $queryDataMasuk = mysqli_query($conn, "SELECT SUM(jumlah) AS total FROM stock");
-    $resultDataMasuk = mysqli_fetch_array($queryDataMasuk);
-    $jmlDataMasuk = $resultDataMasuk['total'];
+  $getAllOrders = $conn->query("SELECT SUM(jumlah) AS totalOrders FROM orders");
+  $resultAllOrders = $getAllOrders->fetch_array();
+  $allOrders = $resultAllOrders['totalOrders'];
 
+  $getAllPenjualan = $conn->query("SELECT SUM(jumlah) AS totalPenjualan FROM penjualan");
+  $resultAllPenjualan = $getAllPenjualan->fetch_array();
+  $allPenjualan = $resultAllPenjualan['totalPenjualan'];
+
+  $getDataStock = mysqli_query($conn, "SELECT SUM(total) AS totalStock FROM stock");
+  $resultDataStock = mysqli_fetch_array($getDataStock);
+  $jmlDataStock = $resultDataStock['totalStock'];
+  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -95,15 +103,44 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                    <!-- Form cari data -->
+                    <form action="" method="post">
+                      <div class="form-row">
+                        <div class="form-group col-md-3">
+                          <select name="select_data" id="select_data" class="form-control" required>
+                            <option value="" disabled selected hidden>--Pilih Data--</option>
+                            <option value="Orders">Data Orders</option>
+                            <option value="Penjualan">Data Penjualan</option>
+                          </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <input type="date" id="keyword" name="keyword"  class="form-control" required>
+                        </div>
+                        <div class="form-group col-md-2">
+                          <button type="submit" name="cari" class="btn btn-primary">Cari data</button>
+                        </div>
+                      </div>
+                    </form>
                     <div class="row">
                         <div class="col-lg-4">
                            <div class="card shadow-lg">
-                               <div class="card-header bg-primary text-light"><strong>Stock Masuk</strong></div>
+                               <div class="card-header bg-primary text-light"><strong>Orders</strong></div>
                                <div class="card-body text-center">
-                                    <h1 class="text-success"><?=$jmlDataMasuk . " " . Pcs; ?></h1>
-                                    <div class="form-inline mt-5">
-                                        <button class="btn btn-dark mr-3">Export to PDF</button>
-                                        <button class="btn btn-info">Export to Excel</button>
+                                    <h1 class="text-success">
+                                      <?php
+                                        if($jmlDataOrders == 0){
+                                          echo "<h1 class='text-danger'>0</h1>"; 
+                                        }else{
+                                          echo @$jmlDataOrders; 
+                                        }
+                                      ?>
+                                    </h1>
+                                    <p>
+                                      Total data : <?=$allOrders; ?>
+                                    </p>
+                                    <div class="form-inline mt-5 d-block justify-content-center">
+                                        <button class="btn btn-dark mr-3"><i class="fas fa-file-pdf"></i> Cetak PDF</button>
+                                        <button class="btn btn-success"> <i class="fas fa-file-excel"></i> Cetak XLS</button>
                                     </div>
                                </div>
                            </div>
@@ -111,19 +148,37 @@
                         <div class="col-lg-4">
                            <div class="card shadow-lg">
                                <div class="card-header bg-primary text-light"><strong>Penjualan</strong></div>
-                               <div class="card-body">
-                                   12345
+                               <div class="card-body text-center">
+                                 <h1 class="text-success">
+                                  <?php
+                                      if($jmlDataPenjualan == 0){
+                                        echo "<h1 class='text-danger'>0</h1>"; 
+                                      }else{
+                                        echo @$jmlDataPenjualan; 
+                                      }
+                                    ?>
+                                 </h1>
+                                 <p>
+                                   Total data : <?=$allPenjualan; ?>
+                                 </p>
+                                    <div class="form-inline mt-5 d-block justify-content-center">
+                                        <button class="btn btn-dark mr-3"><i class="fas fa-file-pdf"></i> Cetak PDF</button>
+                                        <button class="btn btn-success"> <i class="fas fa-file-excel"></i> Cetak XLS</button>
+                                    </div>
                                </div>
                            </div>
                         </div>
                         <div class="col-lg-4">
                            <div class="card shadow-lg">
-                               <div class="card-header bg-primary text-light"><strong>Total Persediaan</strong></div>
+                               <div class="card-header bg-primary text-light"><strong>Total Stock</strong></div>
                                <div class="card-body text-center">
-                                    <h1 class="text-success"><?=$jmlDataMasuk . " " . Pcs; ?></h1>
-                                    <div class="form-inline mt-5">
-                                                <button class="btn btn-dark mr-3">Export to PDF</button>
-                                                <button class="btn btn-info">Export to Excel</button>
+                                    <h1 class="text-success"><?=$jmlDataStock; ?></h1>
+                                    <p>
+                                      Total data : <?=$jmlDataStock; ?>
+                                    </p>
+                                    <div class="form-inline mt-5 d-block justify-content-center">
+                                        <button class="btn btn-dark mr-3"><i class="fas fa-file-pdf"></i> Cetak PDF</button>
+                                        <button class="btn btn-success"> <i class="fas fa-file-excel"></i> Cetak XLS</button>
                                     </div>
                                </div>
                            </div>

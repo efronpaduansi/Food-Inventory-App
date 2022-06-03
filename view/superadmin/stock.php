@@ -152,7 +152,8 @@
                     <div class="col-12">
                         <?=@$alert; ?>
                         <div class="form-inline mb-3">
-                              <a href="../../functions/stock_report.php" target="_blank" class="btn btn-info"><i class="fas fa-print"></i> Cetak Laporan</a>
+                              <a href="../../functions/stock_report_pdf.php" target="_blank" class="btn btn-dark"><i class="fas fa-file-pdf"></i> Cetak Laporan PDF</a>
+                              <a href="../../functions/stock_report_xls.php" target="_blank" class="btn btn-success ml-3"><i class="fas fa-file-excel"></i> Cetak Laporan XLS</a>
                               <input type="text" class="form-control ml-3 bg-dark text-light" value="<?="Total" . " ". $total . " " . "Pcs"; ?>" readonly>
                           </div>
                         <div class="row">
