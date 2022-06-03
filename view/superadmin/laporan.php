@@ -104,6 +104,7 @@
                         </button>
                     </div>
                     <!-- Form cari data -->
+                    <p>Silahkan pilih data yang ingin ditampilkan.</p>
                     <form action="" method="post">
                       <div class="form-row">
                         <div class="form-group col-md-3">

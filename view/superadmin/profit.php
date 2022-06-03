@@ -4,16 +4,7 @@
     include "../../conn/koneksi.php";
     include "../../functions/profit_count.php";
 
-    $query = "SELECT max(id) as idMenu FROM menu";
-    $hasil = mysqli_query($conn, $query);
-    $data = mysqli_fetch_array($hasil);
-
-    $maxkode = $data['idMenu'];
-    $noUrut = (int) substr($maxkode, 3, 3);
-
-    $noUrut++;
-    $char = 'DPK';
-    $idMenu = $char . sprintf("%03s", $noUrut);
+    
 
     //tampilkan data menu kedalam table
     $getData = mysqli_query($conn, "SELECT * FROM menu");
@@ -160,6 +151,17 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
+                <p>Lihat profit berdasarkan tgl :</p>
+                <form action="" method="post">
+                  <div class="form-row">
+                    <div class="form-group col-md-3">
+                      <input type="date" name="keyword" class="form-control">
+                    </div>
+                    <div class="form-group col-md-3">
+                     <button type="submit" name="cari" class="btn btn-primary">Cari</button>
+                    </div>
+                  </div>
+                </form>
                 <div class="row">
                   <div class="col-lg-3">
                       <div class="card bg-success shadow-lg" data-aos="fade-up" data-aos-duration="3000">

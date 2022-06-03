@@ -1,6 +1,7 @@
 <?php
 
     include "../conn/koneksi.php";
+    include "profit_count.php";
    
 
     $id             = $_POST['id'];
@@ -53,7 +54,14 @@
                             id_menu = '$idMenu', 
                             total = '$sisa' 
                             WHERE id_menu = '$idMenu'");
-               header("location:../view/admin/penjualan.php?transaksi=sukses");
+                if($update){
+                    //update tabel profit
+                    $updateProfit = $conn->query("UPDATE profit SET
+                                                id_menu = '$idMenu',
+                                                total_profit = '$profitRasaAyam'
+                                                WHERE id_menu = '$idMenu'");
+                    header("location:../view/admin/penjualan.php?transaksi=sukses");
+                }
             }else{
                 header("location:../view/admin/penjualan.php?transaksi=gagal");
             }
@@ -74,7 +82,14 @@
                                 id_menu = '$idMenu', 
                                 total = '$sisa' 
                                 WHERE id_menu = '$idMenu'");
-                header("location:../view/admin/penjualan.php?transaksi=sukses");
+                     if($update){
+                        //update tabel profit
+                        $updateProfit = $conn->query("UPDATE profit SET
+                                                    id_menu = '$idMenu',
+                                                    total_profit = '$profitRasaBeef'
+                                                    WHERE id_menu = '$idMenu'");
+                        header("location:../view/admin/penjualan.php?transaksi=sukses");
+                    }
             }else{
                 header("location:../view/admin/penjualan.php?transaksi=gagal");
             }
@@ -95,7 +110,14 @@
                             id_menu = '$idMenu', 
                             total = '$sisa' 
                             WHERE id_menu = '$idMenu'");
-                header("location:../view/admin/penjualan.php?transaksi=sukses");
+                if($update){
+                    //update tabel profit
+                    $updateProfit = $conn->query("UPDATE profit SET
+                                                id_menu = '$idMenu',
+                                                total_profit = '$profitRasaCumi'
+                                                WHERE id_menu = '$idMenu'");
+                    header("location:../view/admin/penjualan.php?transaksi=sukses");
+                }
             }else{
                 header("location:../view/admin/penjualan.php?transaksi=gagal");
             }
@@ -116,7 +138,14 @@
                             id_menu = '$idMenu', 
                             total = '$sisa' 
                             WHERE id_menu = '$idMenu'");
-                header("location:../view/admin/penjualan.php?transaksi=sukses");
+                 if($update){
+                    //update tabel profit
+                    $updateProfit = $conn->query("UPDATE profit SET
+                                                id_menu = '$idMenu',
+                                                total_profit = '$profitRasaUdang'
+                                                WHERE id_menu = '$idMenu'");
+                    header("location:../view/admin/penjualan.php?transaksi=sukses");
+                }
            }else{
             header("location:../view/admin/penjualan.php?transaksi=gagal");
            }
