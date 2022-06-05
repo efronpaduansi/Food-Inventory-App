@@ -1,10 +1,6 @@
 <?php
     session_start();
     include "../conn/koneksi.php";
-       // fungsi header dengan mengirimkan raw data excel
-       header("Content-type: application/vnd-ms-excel");      
-       // membuat nama file ekspor "data-anggota.xls"
-       header("Content-Disposition: attachment; filename=dimsum-pawonkulo.xls");    
 
 ?>
 
@@ -34,24 +30,26 @@
         </div>
         <div class="title text-center">
             <h2 class="text-primary">DIMSUM PAWON KULO</h2>
-            <h4><strong>LAPORAN PERSEDIAAN STOK MAKANAN</strong></h4>
+            <h4><strong>LAPORAN PENJUALAN MAKANAN</strong></h4>
             <p class="mb-4">Jl. Ampera Poncol Babakan Setu Tangsel - Tlp : 081xxxxxx</p>
         </div>
        <table class="table table-bordered">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">NO</th>
-                    <th scope="col">ID MENU</th>
+                    <th scope="col">ID</th>
                     <th scope="col">MAKANAN</th>
                     <th scope="col">VARIAN RASA</th>
-                    <th scope="col">HRG/Pcs (Rp)</th>
-                    <th scope="col">TOTAL STOCK (Pcs)</th>
+                    <th scope="col">HARGA</th>
+                    <th scope="col">JML</th>
+                    <th scope="col">TGL</th>
+                    <th scope="col">ADMIN</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                     $no = 1;
-                    $sql = mysqli_query($conn,"SELECT menu.id, menu.makanan, menu.varian_rasa, menu.harga, stock.total FROM(menu INNER JOIN stock ON menu.id = stock.id_menu)");
+                    $sql = mysqli_query($conn,"SELECT menu.id, menu.makanan, menu.varian_rasa, menu.harga, penjualan.id, penjualan.jumlah, penjualan.tgl, penjualan.administrator FROM(menu INNER JOIN penjualan ON menu.id = penjualan.id_menu)");
                     while($data = mysqli_fetch_array($sql)){
                 ?>
                 <tr>
@@ -60,20 +58,22 @@
                     <td><?=$data['makanan'];?></td>
                     <td><?=$data['varian_rasa'];?></td>
                     <td><?= "Rp.". " " . $data['harga'];?></td>
-                    <td><?=$data['total'] . " " . "Pcs";?></td>
+                    <td><?=$data['jumlah'] . " " . "Pcs";?></td>
+                    <td><?=date('d/m/y', strtotime($data['tgl']));?></td>
+                    <td><?=$data['administrator'] ?></td>
                 </tr>
                 <?php } ?>
             </tbody>
        </table>
         <!-- Hitung total data -->
         <?php
-            $getTotal = mysqli_query($conn, "SELECT SUM(total) AS total FROM stock");
+            $getTotal = mysqli_query($conn, "SELECT SUM(jumlah) AS total FROM penjualan");
             // $getPengeluaran = mysqli_query($conn, "SELECT SUM(hrg_beli * jumlah) AS pengeluaran FROM stock");
             $result = mysqli_fetch_array($getTotal);
             // $hasilPengeluaran = mysqli_fetch_array($getPengeluaran);
             $total = $result['total'];
             // $totalPengeluaran = $hasilPengeluaran['pengeluaran'];
-            echo "<strong>" . "Total Makanan : ". " " . $total . " " . "pcs" . "</strong>" . "<br>";
+            echo "<strong>" . "Total Makanan Terjual: ". " " . $total . " " . "pcs" . "</strong>" . "<br>";
             // echo "<strong>" . "Total Pengeluaran : " . " " . "Rp. " . " " . $totalPengeluaran . "</strong>";
         ?>
         

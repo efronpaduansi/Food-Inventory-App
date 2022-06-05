@@ -23,7 +23,7 @@
   <?php 
     include "../master/header.php";
   ?>
-  <title>Laporan</title>
+  <title>Laporan - Dimsum Pawonkulo</title>
 </head>
 <body>
   <div id="app">
@@ -140,8 +140,8 @@
                                       Total data : <?=$allOrders; ?>
                                     </p>
                                     <div class="form-inline mt-5 d-block justify-content-center">
-                                        <button class="btn btn-dark mr-3"><i class="fas fa-file-pdf"></i> Cetak PDF</button>
-                                        <button class="btn btn-success"> <i class="fas fa-file-excel"></i> Cetak XLS</button>
+                                        <a  href="../../functions/orders_report_pdf.php" target="_blank" class="btn btn-dark mr-3"><i class="fas fa-file-pdf"></i> Cetak PDF</a>
+                                        <a href="../../functions/orders_report_pdf.php" target="_blank" class="btn btn-success"> <i class="fas fa-file-excel"></i> Cetak XLS</a>
                                     </div>
                                </div>
                            </div>
@@ -163,8 +163,8 @@
                                    Total data : <?=$allPenjualan; ?>
                                  </p>
                                     <div class="form-inline mt-5 d-block justify-content-center">
-                                        <button class="btn btn-dark mr-3"><i class="fas fa-file-pdf"></i> Cetak PDF</button>
-                                        <button class="btn btn-success"> <i class="fas fa-file-excel"></i> Cetak XLS</button>
+                                        <a href="../../functions/penjualan_report_pdf.php" target="_blank" class="btn btn-dark mr-3"><i class="fas fa-file-pdf"></i> Cetak PDF</a>
+                                        <a href="../../functions/penjualan_report_xls.php" target="_blank" class="btn btn-success"> <i class="fas fa-file-excel"></i> Cetak XLS</a>
                                     </div>
                                </div>
                            </div>
@@ -178,8 +178,8 @@
                                       Total data : <?=$jmlDataStock; ?>
                                     </p>
                                     <div class="form-inline mt-5 d-block justify-content-center">
-                                        <button class="btn btn-dark mr-3"><i class="fas fa-file-pdf"></i> Cetak PDF</button>
-                                        <button class="btn btn-success"> <i class="fas fa-file-excel"></i> Cetak XLS</button>
+                                        <a href="../../functions/stock_report_pdf.php" target="_blank" class="btn btn-dark mr-3"><i class="fas fa-file-pdf"></i> Cetak PDF</a>
+                                        <a href="../../functions/stock_report_xls.php" target="_blank" class="btn btn-success"> <i class="fas fa-file-excel"></i> Cetak XLS</a>
                                     </div>
                                </div>
                            </div>
