@@ -4,11 +4,12 @@
     include "../../conn/koneksi.php";
 
     //Menampilkan data kedalam tabel
-    $getData = $conn->query("SELECT menu.makanan, menu.varian_rasa, penjualan.hrg_jual, penjualan.jumlah, penjualan.tgl, penjualan.administrator FROM (menu INNER JOIN penjualan ON menu.id = penjualan.id_menu)");
+    $getData = $conn->query("SELECT menu.makanan, menu.varian_rasa, penjualan.id, penjualan.hrg_jual, penjualan.jumlah, penjualan.tgl, penjualan.administrator FROM (menu INNER JOIN penjualan ON menu.id = penjualan.id_menu)");
     $array = array();
     while ($data = $getData->fetch_array()) {
        $array[] = $data;
     }
+
 
     //menghitung total terjual
     $dataTerjualRasaAyam = $conn->query("SELECT SUM(jumlah) AS jmlTerjualRasaAyam FROM penjualan WHERE id_menu = 'DPK001'");
@@ -27,7 +28,19 @@
     $numData4 = $dataTerjualRasaUdang->fetch_array();
     $jmlPenjualanRasaUdang = $numData4['jmlTerjualRasaudang'];
 
-
+    //cek hapus
+    if(isset($_GET['hapus'])){
+      if($_GET['hapus']== "sukses"){
+        $hapusAlert = "
+              <div class='alert alert-success alert-dismissible fade show' role='alert'>
+                  <strong>Data berhasil dihapus</strong>
+                  <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                  <span aria-hidden='true'>&times;</span>
+                  </button>
+              </div>
+          ";
+      }
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -109,6 +122,7 @@
           </div>
           <div class="section-body">
               <div class="container">
+                <?=@$hapusAlert; ?>
                   <div class="row">
                       <div class="col-lg-3">
                           <div class="card bg-success shadow-lg">
@@ -187,7 +201,7 @@
                   </div>
                   <div class="row">
                       <!-- Tabel Penjualan -->
-                      <div class="col-lg-8">
+                      <div class="col-lg-12">
                         <h5>Tabel Penjualan</h5>
                         <table class="table table-striped">
                             <thead class="thead-dark bg-primary">
@@ -199,6 +213,7 @@
                                     <th scope="col" class="text-light">JML</th>
                                     <th scope="col" class="text-light">TGL</th>
                                     <th scope="col" class="text-light">ADMIN</th>
+                                    <th scope="col" class="text-light">AKSI</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -214,6 +229,9 @@
                                     <td><?=$data['jumlah']; ?></td>
                                     <td><?=$data['tgl']; ?></td>
                                     <td><?=$data['administrator']; ?></td>
+                                    <td>
+                                        <a href="../../functions/penjualan_delete.php?id=<?=$data['id']; ?>" class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Hapus Data" onclick="return confirm('Tindakan ini akan menghapus data secara permanen. Yakin ?')">Hapus</a>
+                                    </td>
                                 </tr>
                                 <?php
                                     $no++;
@@ -221,10 +239,6 @@
                                 ?>
                             </tbody>
                         </table>
-                      </div>
-                      <!-- Grafik Penjualan -->
-                      <div class="col-lg-4">
-                          <h5>Grafik Penjualan</h5>
                       </div>
                   </div>
               </div>

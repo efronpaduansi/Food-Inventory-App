@@ -130,18 +130,17 @@
                     </div>
                     <!-- Tabel orders -->
                     <table class="table">
-                      <thead class="thead-dark">
+                      <thead class="thead-dark bg-primary">
                         <tr>
-                          <th scope="col">NO</th>
-                          <th scope="col">ID ORDER</th>
-                          <th scope="col">MAKANAN</th>
-                          <th scope="col">RASA</th>
-                          <th scope="col">HARGA/
-                          <sub>Pcs</sub></th>
-                          <th scope="col">JUMLAH (Pcs)</th>
-                          <th scope="col">TGL ORDER</th>
-                          <th scope="col">ADMIN</th>
-                          <th scope="col">AKSI</th>
+                          <th scope="col" class="text-light">NO</th>
+                          <th scope="col" class="text-light">ID</th>
+                          <th scope="col" class="text-light">MAKANAN</th>
+                          <th scope="col" class="text-light">RASA</th>
+                          <th scope="col" class="text-light">HARGA</th>
+                          <th scope="col" class="text-light">JML</th>
+                          <th scope="col" class="text-light">TGL</th>
+                          <th scope="col" class="text-light">ADMIN</th>
+                          <th scope="col" class="text-light">AKSI</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -160,8 +159,8 @@
                           <td><?=$orders['administrator']; ?></td>
                           <td>
                             <div class="form-inline">
-                              <a href="" data-toggle="tooltip" data-placement="left" title="Ubah Data"><i class="fas fa-edit"></i></a>
-                              <a href="" data-toggle="tooltip" data-placement="left" title="Hapus Data" onclick="return confirm('Tindakan ini akan menghapus data secara permanen. Yakin ?')"><i class="fas fa-trash"></i></a>
+                              <a href="../../functions/orders_edit.php?id=<?=$orders['id']; ?>" data-toggle="tooltip" data-placement="left" title="Ubah Data"><i class="fas fa-edit"></i></a>
+                              <a href="../../functions/orders_delete.php?id=<?=$orders['id']; ?>" data-toggle="tooltip" data-placement="left" title="Hapus Data" onclick="return confirm('Tindakan ini akan menghapus data secara permanen. Yakin ?')"><i class="fas fa-trash"></i></a>
                             </div>
                           </td>
                         </tr>
