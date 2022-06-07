@@ -30,7 +30,7 @@
         </div>
         <div class="title text-center">
             <h2 class="text-primary">DIMSUM PAWON KULO</h2>
-            <h4><strong>LAPORAN PENJUALAN MAKANAN</strong></h4>
+            <h4><strong>LAPORAN ORDERS MAKANAN</strong></h4>
             <p class="mb-4">Jl. Ampera Poncol Babakan Setu Tangsel - Tlp : 081xxxxxx</p>
         </div>
        <table class="table table-bordered">

@@ -3,8 +3,22 @@
   include "../../conn/koneksi.php";
   include "../../functions/orders_id.php";
 
-  //tampil data ke dalam tabel
+  if(isset($_POST['cari'])){
+    $keyword = $_POST['keyword'];
+
+    $query = $conn->query("SELECT menu.makanan, menu.varian_rasa, orders.id, orders.hrg_beli, orders.jumlah, orders.tgl_order, orders.administrator FROM (menu INNER JOIN orders ON menu.id = orders.id_menu) 
+    WHERE 
+    menu.makanan = '$keyword' OR
+    menu.varian_rasa = '$keyword'
+     ");
+
+  }else{
+    //tampil data ke dalam tabel
   $query = $conn->query("SELECT menu.makanan, menu.varian_rasa, orders.id, orders.hrg_beli, orders.jumlah, orders.tgl_order, orders.administrator FROM (menu INNER JOIN orders ON menu.id = orders.id_menu) ORDER BY id DESC");
+  
+
+  }
+
   
 
   //cek simpan sukses
@@ -109,8 +123,10 @@
                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ordersModal">
                             Tambahkan ke Orders
                           </button>
-                        <input type="text" name="search" class="form-control ml-4 mr-2" placeholder="Telusuri data..." autofocus>
-                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Cari</button>
+                        <form action="" method="post">
+                          <input type="text" name="keyword" class="form-control ml-4 mr-2" placeholder="Telusuri data..." autofocus>
+                          <button type="submit" name="cari" class="btn btn-primary"><i class="fas fa-search"></i> Cari</button>
+                        </form>
                     </div>
                     <!-- Tabel orders -->
                     <table class="table">

@@ -141,7 +141,7 @@
                                     </p>
                                     <div class="form-inline mt-5 d-block justify-content-center">
                                         <a  href="../../functions/orders_report_pdf.php" target="_blank" class="btn btn-dark mr-3"><i class="fas fa-file-pdf"></i> Cetak PDF</a>
-                                        <a href="../../functions/orders_report_pdf.php" target="_blank" class="btn btn-success"> <i class="fas fa-file-excel"></i> Cetak XLS</a>
+                                        <a href="../../functions/orders_report_xls.php" target="_blank" class="btn btn-success"> <i class="fas fa-file-excel"></i> Cetak XLS</a>
                                     </div>
                                </div>
                            </div>
