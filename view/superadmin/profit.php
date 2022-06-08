@@ -151,49 +151,50 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <p>Lihat profit berdasarkan tgl :</p>
-                <form action="" method="post">
-                  <div class="form-row">
-                    <div class="form-group col-md-3">
-                      <input type="date" name="keyword" class="form-control">
+                <div class="col-lg-12">
+                  <p>Lihat profit berdasarkan tgl :</p>
+                  <form action="" method="post">
+                    <div class="form-row">
+                      <div class="form-group col-md-3">
+                        <input type="date" name="keyword" class="form-control">
+                      </div>
+                      <div class="form-group col-md-3">
+                      <button type="submit" name="cari" class="btn btn-primary">Cari</button>
+                      </div>
                     </div>
-                    <div class="form-group col-md-3">
-                     <button type="submit" name="cari" class="btn btn-primary">Cari</button>
+                  </form>
+                  <div class="card">
+                    <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6 text-left">
+                          <h1 class="text-primary">Profit</h1>
+                        </div>
+                        <div class="col-lg-6 text-right">
+                          <h5><?php echo "#" . date('d/m/y'); ?></h5>
+                        </div>
+                      </div>
+                    </div> <hr>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-lg-6 text-left">
+                          <h5>Varian Rasa</h5> <hr>
+                          <p>Rasa Ayam </p>
+                          <p>Rasa Beef  </p>
+                          <p>Rasa Cumi </p>
+                          <p>Rasa Udang </p>
+                        </div>
+                        <div class="col-lg-6 text-right">
+                          <h5>Profit</h5> <hr>
+                          <p>IDR : <?=@$profitRasaAyam . ",00"; ?> </p>
+                          <p>IDR : <?=@$profitRasaBeef . ",00"; ?> </p>
+                          <p>IDR : <?=@$profitRasaCumi . ",00"; ?> </p>
+                          <p>IDR : <?=@$profitRasaUdang . ",00"; ?> </p> <br>
+                          <p class="font-weight-bold">Total</p> <hr>
+                          <h5>IDR. <?=@$totalPendapatan .",00"; ?></h5>
+                          <a href="" class="btn btn-warning mt-5"><i class="fas fa-print"></i> Cetak</a>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </form>
-                <div class="row">
-                  <div class="col-lg-3">
-                      <div class="card bg-success shadow-lg" data-aos="fade-up" data-aos-duration="3000">
-                        <div class="card-header">Rasa Ayam</div>
-                        <div class="card-body">
-                          <h1><sub>IDR</sub><?=@$profitRasaAyam ?></h1>
-                        </div>
-                      </div>
-                  </div>
-                  <div class="col-lg-3">
-                      <div class="card bg-warning shadow-lg" data-aos="fade-up" data-aos-duration="3000">
-                        <div class="card-header">Rasa Beef</div>
-                        <div class="card-body">
-                          <h1><sub>IDR</sub><?=@$profitRasaBeef; ?></h1>
-                        </div>
-                      </div>
-                  </div>
-                  <div class="col-lg-3">
-                      <div class="card bg-danger shadow-lg" data-aos="fade-up" data-aos-duration="3000">
-                        <div class="card-header">Rasa Cumi</div>
-                        <div class="card-body">
-                          <h1><sub>IDR</sub><?=@$profitRasaCumi; ?></h1>
-                        </div>
-                      </div>
-                  </div>
-                  <div class="col-lg-3">
-                      <div class="card bg-info shadow-lg" data-aos="fade-up" data-aos-duration="3000">
-                        <div class="card-header">Rasa Udang</div>
-                        <div class="card-body">
-                            <h1><sub>IDR</sub><?=@$profitRasaUdang; ?></h1>
-                        </div>
-                      </div>
                   </div>
                 </div>
               </div>

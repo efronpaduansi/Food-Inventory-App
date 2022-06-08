@@ -133,11 +133,11 @@
                                     <tr>
                                         <th scope="col" class="text-light">NO</th>
                                         <th scope="col" class="text-light">KODE TRX</th>
-                                        <th scope="col" class="text-light">TGL TRX</th>
-                                        <th scope="col" class="text-light">NAMA MAKANAN</th>
+                                        <th scope="col" class="text-light">TGL</th>
+                                        <th scope="col" class="text-light">MAKANAN</th>
                                         <th scope="col" class="text-light">VARIAN RASA</th>
-                                        <th scope="col" class="text-light">HRG JUAL / <sub>Pcs</sub></th>
-                                        <th scope="col" class="text-light">JML (Pcs)</th>
+                                        <th scope="col" class="text-light">HRG</th>
+                                        <th scope="col" class="text-light">JML</th>
                                         <th scope="col" class="text-light">ADMIN</th>
                                         <th scope="col" class="text-light">AKSI</th>
                                     </tr>

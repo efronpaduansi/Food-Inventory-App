@@ -24,7 +24,7 @@
   //cek simpan sukses
   if(isset($_GET['simpan'])){
     if($_GET['simpan']== "sukses"){
-          $alert = "
+          $simpanAlert = "
               <div class='alert alert-success alert-dismissible fade show' role='alert'>
                   <strong>Data berhasil ditambahkan</strong>
                   <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
@@ -35,6 +35,19 @@
     }
   }
 
+  //cek hapus sukses
+  if(isset($_GET['hapus'])){
+    if($_GET['hapus']== "sukses"){
+          $hapusAlert = "
+              <div class='alert alert-success alert-dismissible fade show' role='alert'>
+                  <strong>Data berhasil dihapus</strong>
+                  <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                  <span aria-hidden='true'>&times;</span>
+                  </button>
+              </div>
+          ";
+    }
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -115,7 +128,8 @@
             <h1>Orders</h1>
           </div>
           <div class="section-body">
-              <?=$alert; ?>   
+              <?=@$simpanAlert; ?>
+              <?=@$hapusAlert; ?>     
               <div class="container" data-aos="fade-up" data-aos-duration="1000">
                 <div class="row">
                     <div class="form-inline mb-5">
