@@ -4,14 +4,26 @@
     include "../../conn/koneksi.php";
     include "../../functions/profit_count.php";
 
-    
+    //fungsi mencari profit
+    if(isset($_POST['cari'])){
+      $tanggal = $_POST['tanggal'];
+      $showProfit = $conn->query("SELECT profit FROM penjualan WHERE tgl = '$tanggal' AND (id_menu = 'DPK001' OR id_menu ='DPK002' OR id_menu = 'DPK003' OR id_menu = 'DPK004')");
+      $array = array();
+      while($data = $showProfit->fetch_array()){
+        $array[] = $data;
+      }
 
-    //tampilkan data menu kedalam table
-    $getData = mysqli_query($conn, "SELECT * FROM menu");
-    $menus = array();
-    while ($data = mysqli_fetch_array($getData)){
-      $menus[] = $data;
+    }else{
+      $showProfit = $conn->query("SELECT profit FROM penjualan WHERE tgl = date('d/m/y') AND (id_menu = 'DPK001' OR id_menu ='DPK002' OR id_menu = 'DPK003' OR id_menu = 'DPK004')");
+      $array = array();
+      while($data = $showProfit->fetch_array()){
+        $array[] = $data;
+      }
+
     }
+
+    
+    
 
     //cek pesan masuk
     if(isset($_GET['pesan'])){
@@ -156,7 +168,7 @@
                   <form action="" method="post">
                     <div class="form-row">
                       <div class="form-group col-md-3">
-                        <input type="date" name="keyword" class="form-control">
+                        <input type="date" name="tanggal" class="form-control">
                       </div>
                       <div class="form-group col-md-3">
                       <button type="submit" name="cari" class="btn btn-primary">Cari</button>
@@ -170,7 +182,13 @@
                           <h1 class="text-primary">Profit</h1>
                         </div>
                         <div class="col-lg-6 text-right">
-                          <h5><?php echo "#" . date('d/m/y'); ?></h5>
+                          <?php if(isset($_POST['cari'])){
+                            $tanggal = $_POST['tanggal'];
+                            echo "<h5 class='text-primary'>"."Date : ".date('d/m/Y', strtotime($tanggal))."</h5>";
+                          }else{
+                            echo "<h5 class='text-primary'>" ."Today : ".date('d/m/Y') ."</h5>";
+                          }
+                          ?>
                         </div>
                       </div>
                     </div> <hr>
@@ -185,12 +203,25 @@
                         </div>
                         <div class="col-lg-6 text-right">
                           <h5>Profit</h5> <hr>
-                          <p>IDR : <?=@$profitRasaAyam . ",00"; ?> </p>
-                          <p>IDR : <?=@$profitRasaBeef . ",00"; ?> </p>
-                          <p>IDR : <?=@$profitRasaCumi . ",00"; ?> </p>
-                          <p>IDR : <?=@$profitRasaUdang . ",00"; ?> </p> <br>
+                            <?php foreach($array as $myProfit) : ?>
+                              <p><?= "IDR. " . $myProfit['profit'] .",00"; ?></p>
+                            <?php endforeach ?>
                           <p class="font-weight-bold">Total</p> <hr>
-                          <h5>IDR. <?=@$totalPendapatan .",00"; ?></h5>
+                          <?php
+                            if(isset($_POST['cari'])){
+                              $tanggal = $_POST['tanggal'];
+                              $getTotalProfit = $conn->query("SELECT SUM(profit) AS totalProfit FROM penjualan WHERE tgl ='$tanggal'");
+                              $fetch = $getTotalProfit->fetch_array();
+                              $totalProfit = $fetch['totalProfit'];
+                            }else{
+                              //Menghitung total pendapatan
+                              $getTotalProfit = $conn->query("SELECT SUM(profit) AS totalProfit FROM penjualan WHERE tgl = date('d/m/Y')");
+                              $fetch = $getTotalProfit->fetch_array();
+                              $totalProfit = $fetch['totalProfit'];
+
+                            }
+                            ?>
+                          <h5>IDR. <?=$totalProfit .",00"; ?></h5>
                           <a href="" class="btn btn-warning mt-5"><i class="fas fa-print"></i> Cetak</a>
                         </div>
                       </div>

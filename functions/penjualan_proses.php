@@ -22,11 +22,19 @@
     $resultIdStock = $getIdStock->fetch_array();
     $idStock = $resultIdStock['id_stock'];
    
+    //ambil harga beli dari tabel orders
+    $getHargaBeli = $conn->query("SELECT hrg_beli AS hrgBeli FROM orders WHERE id_menu = '$idMenu'");
+    $resultHargaBeli = $getHargaBeli->fetch_array();
+    $hrgBeli = $resultHargaBeli['hrgBeli'];
+   
 
     //ambil harga jual dari tabel menu
     $getHarga = $conn->query("SELECT harga AS hrgJual FROM menu WHERE varian_rasa = '$varian_rasa'");
     $resultHarga = $getHarga->fetch_array();
     $hrgJual = $resultHarga['hrgJual'];
+
+    //menghitung profit
+    $profit = ($hrgJual - $hrgBeli) * $jumlah;
  
 
      //mengambil jumlah stock makanan pada tabel stock
@@ -46,8 +54,8 @@
             header("location:../view/admin/penjualan.php?stock=kurang");
        }else{
            //masukan data ke tabel penjualan
-           $insertData = $conn->query("INSERT INTO penjualan(id, id_stock, id_menu, hrg_jual, jumlah, tgl, administrator) VALUES
-            ('$id', '$idStock', '$idMenu', '$hrgJual', '$jumlah', '$tgl', '$administrator')");
+           $insertData = $conn->query("INSERT INTO penjualan(id, id_stock, id_menu, hrg_jual, jumlah, profit, tgl, administrator) VALUES
+            ('$id', '$idStock', '$idMenu', '$hrgJual', '$jumlah', '$profit', '$tgl', '$administrator')");
             if($insertData){
                 // update tabel stock
                 $update = $conn->query("UPDATE stock SET
@@ -74,8 +82,8 @@
         header("location:../view/admin/penjualan.php?stock=kurang");
        }else{
             //masukan data ke tabel penjualan
-            $insertData = $conn->query("INSERT INTO penjualan(id, id_stock, id_menu, hrg_jual, jumlah, tgl, administrator) VALUES
-            ('$id', '$idStock', '$idMenu', '$hrgJual', '$jumlah', '$tgl', '$administrator')");
+            $insertData = $conn->query("INSERT INTO penjualan(id, id_stock, id_menu, hrg_jual, jumlah, profit, tgl, administrator) VALUES
+            ('$id', '$idStock', '$idMenu', '$hrgJual', '$jumlah', '$profit', '$tgl', '$administrator')");
             if($insertData){
                 // update tabel stock
                 $update = $conn->query("UPDATE stock SET
@@ -102,8 +110,8 @@
             header("location:../view/admin/penjualan.php?stock=kurang");
         }else{
             //masukan data ke tabel penjualan
-            $insertData = $conn->query("INSERT INTO penjualan(id, id_stock, id_menu, hrg_jual, jumlah, tgl, administrator) VALUES
-            ('$id', '$idStock', '$idMenu', '$hrgJual', '$jumlah', '$tgl', '$administrator')");
+            $insertData = $conn->query("INSERT INTO penjualan(id, id_stock, id_menu, hrg_jual, jumlah, profit, tgl, administrator) VALUES
+            ('$id', '$idStock', '$idMenu', '$hrgJual', '$jumlah', '$profit', '$tgl', '$administrator')");
             if($insertData){
                 // update tabel stock
                 $update = $conn->query("UPDATE stock SET
@@ -130,8 +138,8 @@
             header("location:../view/admin/penjualan.php?stock=kurang");
         }else{
              //masukan data ke tabel penjualan
-           $insertData = $conn->query("INSERT INTO penjualan(id, id_stock, id_menu, hrg_jual, jumlah, tgl, administrator) VALUES
-           ('$id','$idStock', '$idMenu', '$hrgJual', '$jumlah', '$tgl', '$administrator')");
+           $insertData = $conn->query("INSERT INTO penjualan(id, id_stock, id_menu, hrg_jual, jumlah, profit, tgl, administrator) VALUES
+           ('$id','$idStock', '$idMenu', '$hrgJual', '$jumlah', '$profit', '$tgl', '$administrator')");
            if($insertData){
                // update tabel stock
                $update = $conn->query("UPDATE stock SET
