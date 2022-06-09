@@ -1,7 +1,7 @@
 <?php
   session_start();
   include "../../conn/koneksi.php";
-  include "../../functions/profit_count.php";
+
 
   //Menghitung total stok makanan pada tabel stock
   $getDataStock = $conn->query("SELECT SUM(total) AS totalStockMakanan FROM stock");
@@ -17,10 +17,13 @@
   $getJmlOrders = $conn->query("SELECT SUM(jumlah) AS jmlOrders FROM orders");
   $fetchJmlOrders = $getJmlOrders->fetch_array();
   $jmlOrders = $fetchJmlOrders['jmlOrders'];
+
+  //Menghitung total profit dari tabel penjualan
+  $getTotalProfit = $conn->query("SELECT SUM(profit) AS totalProfit FROM penjualan WHERE tgl = date('d/m/y')");
+  $fetchTotalProfit = $getTotalProfit->fetch_array();
+  $totalProfit = $fetchTotalProfit['totalProfit'];
   
   
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -111,45 +114,78 @@
               </div>
             </div>
             <div class="container">
-              <div class="row">
-                <div class="col-md-3">
-                    <div class="card bg-success">
-                      <div class="card-header">Total Persediaan</div>
-                      <div class="card-body">
-                        <h1 class="text-light"><?=$totalStockMakanan; ?> <sub>Pcs</sub></h1> <br>
+                <!-- Card -->
+                <div class="row">
+                  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                      <div class="card-icon bg-primary">
+                      <i class="fas fa-layer-group"></i>
+                      </div>
+                      <div class="card-wrap">
+                        <div class="card-header">
+                          <h4>Total Stok</h4>
+                        </div>
+                        <div class="card-body">
+                          <?=$totalStockMakanan; ?>
+                        </div>
                       </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card bg-warning">
-                      <div class="card-header">Jumlah Makanan Terjual</div>
-                      <div class="card-body">
-                        <h1 class="text-light"><?=$dataPenjualan; ?><sub> Pcs</sub></h1> <br>
+                  </div>
+                  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                      <div class="card-icon bg-danger">
+                      <i class="fas fa-chart-line"></i>
+                      </div>
+                      <div class="card-wrap">
+                        <div class="card-header">
+                          <h4>Terjual</h4>
+                        </div>
+                        <div class="card-body">
+                          <?=$dataPenjualan; ?>
+                        </div>
                       </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card bg-danger">
-                      <div class="card-header">Jumlah Orders</div>
-                      <div class="card-body">
-                        <h1 class="text-light mb-4"><?=$jmlOrders; ?> <sub>Pcs</sub></h1>
+                  </div>
+                  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                      <div class="card-icon bg-warning">
+                      <i class="fas fa-shopping-cart"></i>
+                      </div>
+                      <div class="card-wrap">
+                        <div class="card-header">
+                          <h4>Orders</h4>
+                        </div>
+                        <div class="card-body">
+                          <?=$jmlOrders; ?>
+                        </div>
                       </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card bg-info">
-                      <div class="card-header">Pendapatan IDR</div>
-                      <div class="card-body">
-                        <h1 class="text-light mb-4"><?=@$totalPendapatan; ?></h1>
+                  </div>
+                  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                      <div class="card-icon bg-success">
+                      <i class="fas fa-coins"></i>
+                      </div>
+                      <div class="card-wrap">
+                        <div class="card-header">
+                          <h4>Profit</h4>
+                        </div>
+                        <div class="card-body">
+                          <?php if($totalProfit == 0){
+                            echo "0";
+                          }else{
+                            echo $totalProfit;
+                          } ?>
+                        </div>
                       </div>
                     </div>
+                  </div>
                 </div>
-              </div>
                   <div class="row" data-aos="fade-up" data-aos-duration="3000">
-                          <div class="col-md-6 stock-grafik">
+                          <div class="col-lg-6 col-md-12 col-12 col-sm-12 stock-grafik">
                             <div class="title"><h5>Grafik Persediaan Makanan</h5></div>
                               <!-- Grafik -->
-                                <div style="width: 450px;height: 300px">
+                                <div style="width: 400px;height: 300px">
                                   <canvas id="myChart"></canvas>
                                 </div>
                                 <script>
@@ -218,7 +254,7 @@
                                 </script>
                                 <!-- End of Grafik -->
                           </div>
-                          <div class="col-lg-6">
+                          <div class="col-lg-6 col-md-12 col-12 col-sm-12">
                             <div class="card shadow-md rounded">
                               <div class="card-header"><strong>My Profile - </strong> You're login as @<?=$_SESSION['username'] . " ". "[" . $_SESSION['id_user'] . "]" ?></div>
                               <div class="card-body text-center">

@@ -153,47 +153,49 @@
           <div class="section-body">
               <div class="container">
                 <div class="row">
-                  <div class="col-lg-9" data-aos="fade-up" data-aos-duration="1000">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-12" data-aos="fade-up" data-aos-duration="1000">
                     <?=@$alert; ?>
                     <!-- tombol tambah menu -->
                     <button type="button" class="btn btn-primary mb-4" data-toggle="modal" data-target="#menuModal">
                         Tambah Menu Baru
                     </button>
-                    <table class="table table-striped">
-                        <thead class="bg-primary">
-                          <tr>
-                            <th scope="col" class="text-light">NO</th>
-                            <th scope="col" class="text-light">ID</th>
-                            <th scope="col" class="text-light">NAMA MAKANAN</th>
-                            <th scope="col" class="text-light">VARIAN RASA</th>
-                            <th scope="col" class="text-light">HARGA/ <sub>Pcs</sub></th>
-                            <th scope="col" class="text-light">AKSI</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <?php
-                            $no = 1;
-                            foreach($menus as $menu) :
-                          ?>
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                          <thead class="bg-primary">
                             <tr>
-                                <th scope="row"><?=$no; ?></th>
-                                <td><?=$menu['id']; ?></td>
-                                <td><?=$menu['makanan']; ?></td>
-                                <td><?=$menu['varian_rasa']; ?></td>
-                                <td><?= "Rp.". " " . $menu['harga']; ?></td>
-                                <td>
-                                  <div class="form-inline">
-                                      <a href="menu_edit.php?id=<?=$menu['id']; ?>" data-toggle="tooltip" data-placement="top" title="Ubah data"><i class="fas fa-edit"></i></a>
-                                      <a href="../../functions/menu_delete.php?id=<?=$menu['id']; ?>" onclick = "return confirm ('Tindakan ini akan menghapus data secara permanen. Yakin ?');" data-toggle="tooltip" data-placement="top" title="Hapus data"><i class="fas fa-trash"></i></a>
-                                  </div>
-                                </td>
+                              <th scope="col" class="text-light">NO</th>
+                              <th scope="col" class="text-light">ID MAKANAN</th>
+                              <th scope="col" class="text-light">NAMA MAKANAN</th>
+                              <th scope="col" class="text-light">VARIAN RASA</th>
+                              <th scope="col" class="text-light">HARGA/ <sub>Pcs</sub></th>
+                              <th scope="col" class="text-light text-center">AKSI</th>
                             </tr>
+                          </thead>
+                          <tbody>
                             <?php
-                              $no++;
-                              endforeach
+                              $no = 1;
+                              foreach($menus as $menu) :
                             ?>
-                        </tbody>
-                    </table>
+                              <tr>
+                                  <th scope="row"><?=$no; ?></th>
+                                  <td><?=$menu['id']; ?></td>
+                                  <td><?=$menu['makanan']; ?></td>
+                                  <td><?=$menu['varian_rasa']; ?></td>
+                                  <td><?= "Rp.". " " . $menu['harga']; ?></td>
+                                  <td class="d-flex justify-content-center">
+                                    <div class="form-inline">
+                                        <a class="btn btn-success mr-2" href="menu_edit.php?id=<?=$menu['id']; ?>" data-toggle="tooltip" data-placement="top" title="Ubah data">Ubah</a>
+                                        <a class="btn btn-danger" href="../../functions/menu_delete.php?id=<?=$menu['id']; ?>" onclick = "return confirm ('Tindakan ini akan menghapus data secara permanen. Yakin ?');" data-toggle="tooltip" data-placement="top" title="Hapus data">Hapus</a>
+                                    </div>
+                                  </td>
+                              </tr>
+                              <?php
+                                $no++;
+                                endforeach
+                              ?>
+                          </tbody>
+                      </table>
+                      </div>
                   </div>
                 </div>
               </div>

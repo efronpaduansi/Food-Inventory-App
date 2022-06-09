@@ -231,38 +231,6 @@
               </div>
           </div>
         </section>
-        <!-- Menu Modal -->
-          <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Tambah Menu Baru</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                    <!-- form input -->
-                    <form action="../../functions/menu_insert.php" method="post">
-                          <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                            <strong>Perhatian!</strong> Fitur ini hanya bisa diakses oleh superadmin.
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                        <input type="text" name="id" class="form-control mb-3" value="<?=$idMenu; ?>" readonly>
-                        <input type="text" name="makanan" placeholder="Makanan" class="form-control mb-3" required autocomplete="off">
-                        <input type="text" name="varian_rasa" placeholder="Varian Rasa" class="form-control mb-3" required autocomplete="off">
-                        <input type="number" name="harga" placeholder="Harga Jual (Rp)" class="form-control mb-5" min="3500" max="999999" required autocomplete="off">
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                          <button type="submit" name="simpan" class="btn btn-primary">Simpan</button>
-                        </div>
-                    </form>
-                </div>
-              </div>
-            </div>
-          </div>
       </div>
      <?php include "../master/footer.php" ?>
 </body>
