@@ -159,72 +159,88 @@
                         <div class="row">
                             <div class="col-lg-12" data-aos="fade-up" data-aos-duration="1000">
                               <div class="row">
-                                  <div class="col-lg-3">
-                                      <div class="card bg-danger">
-                                        <div class="card-header">Rasa Ayam</div>
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                                  <div class="card card-statistic-1">
+                                      <div class="card-icon bg-primary">
+                                      <i class="fas fa-layer-group"></i>
+                                      </div>
+                                      <div class="card-wrap">
+                                        <div class="card-header">
+                                          <h4>Rasa Ayam</h4>
+                                        </div>
                                         <div class="card-body">
-                                            <?php 
-                                                if($jmlRasaAyam == 0){
-                                                  echo "<h1>0</h1>" . "Pcs" . "<br>";
-                                                  echo "Ket. Habis";
-                                                }else{
-                                                  echo "<h1>". $jmlRasaAyam . "</h1>" . "Pcs" . "<br>";
-                                                  echo "Ket. Tersedia";
-                                                }
-                                            ?> 
+                                          <?php if($jmlRasaAyam == 0){
+                                              echo "<h1 class='text-danger'>0</h1>" . "<br>";
+                                          }else{
+                                              echo "<h1>". $jmlRasaAyam . "</h1>" . "<br>";
+                                          } ?>
                                         </div>
                                       </div>
+                                    </div>
                                   </div>
-                                  <div class="col-lg-3">
-                                     <div class="card bg-success">
-                                          <div class="card-header">Rasa Beef</div>
-                                          <div class="card-body">
-                                          <?php 
-                                                if($jmlRasaBeef == 0){
-                                                  echo "<h1>0</h1>" . "Pcs" . "<br>";
-                                                  echo "Ket. Habis";
-                                                }else{
-                                                  echo "<h1>". $jmlRasaBeef . "</h1>" . "Pcs" . "<br>";
-                                                  echo "Ket. Tersedia";
-                                                }
-                                            ?> 
-                                          </div>
-                                     </div>
-                                  </div>
-                                  <div class="col-lg-3">
-                                      <div class="card bg-warning">
-                                          <div class="card-header">Rasa Cumi</div>
-                                          <div class="card-body">
-                                          <?php 
-                                                if($jmlRasaCumi == 0){
-                                                  echo "<h1>0</h1>" . "Pcs" . "<br>";
-                                                  echo "Ket. Habis";
-                                                }else{
-                                                  echo "<h1>". $jmlRasaCumi . "</h1>" . "Pcs" . "<br>";
-                                                  echo "Ket. Tersedia";
-                                                }
-                                            ?> 
-                                          </div>
+                                  <!-- Card II -->
+                                  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                                  <div class="card card-statistic-1">
+                                      <div class="card-icon bg-danger">
+                                      <i class="fas fa-layer-group"></i>
                                       </div>
-                                  </div>
-                                  <div class="col-lg-3">
-                                      <div class="card bg-info">
-                                            <div class="card-header">Rasa Udang</div>
-                                            <div class="card-body">
-                                            <?php 
-                                                if($jmlRasaUdang == 0){
-                                                  echo "<h1>0</h1>" . "Pcs" . "<br>";
-                                                  echo "Ket. Habis";
-                                                }else{
-                                                  echo "<h1>". $jmlRasaUdang . "</h1>" . "Pcs" . "<br>";
-                                                  echo "Ket. Tersedia";
-                                                }
-                                            ?> 
-                                            </div>
+                                      <div class="card-wrap">
+                                        <div class="card-header">
+                                          <h4>Rasa Beef</h4>
+                                        </div>
+                                        <div class="card-body">
+                                          <?php if($jmlRasaBeef == 0){
+                                              echo "<h1 class='text-danger'>0</h1>" . "<br>";
+                                          }else{
+                                              echo "<h1>". $jmlRasaBeef . "</h1>" . "<br>";
+                                          } ?>
+                                        </div>
                                       </div>
+                                    </div>
                                   </div>
+                                  <!-- Card III -->
+                                  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                                  <div class="card card-statistic-1">
+                                      <div class="card-icon bg-warning">
+                                      <i class="fas fa-layer-group"></i>
+                                      </div>
+                                      <div class="card-wrap">
+                                        <div class="card-header">
+                                          <h4>Rasa Cumi</h4>
+                                        </div>
+                                        <div class="card-body">
+                                          <?php if($jmlRasaCumi == 0){
+                                              echo "<h1 class='text-danger'>0</h1>" . "<br>";
+                                          }else{
+                                              echo "<h1>". $jmlRasaCumi . "</h1>" . "<br>";
+                                          } ?>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- Card IV -->
+                                  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                                  <div class="card card-statistic-1">
+                                      <div class="card-icon bg-success">
+                                      <i class="fas fa-layer-group"></i>
+                                      </div>
+                                      <div class="card-wrap">
+                                        <div class="card-header">
+                                          <h4>Rasa Udang</h4>
+                                        </div>
+                                        <div class="card-body">
+                                          <?php if($jmlRasaUdang == 0){
+                                              echo "<h1 class='text-danger'>0</h1>" . "<br>";
+                                          }else{
+                                              echo "<h1>". $jmlRasaUdang . "</h1>" . "<br>";
+                                          } ?>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>  
                               </div>
-                             <h4 class="alert alert-info">Terakhir ditambahkan</h4>
+                             <h6 class="alert alert-info">Terakhir ditambahkan</h6>
+                             <div class="table-responsive">
                               <table class="table table-bordered table-secondary">
                                     <thead class="thead-dark">
                                       <tr>
@@ -257,6 +273,7 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
                         </div>
                       </div>
            </div>

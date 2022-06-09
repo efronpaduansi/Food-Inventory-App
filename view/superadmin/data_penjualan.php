@@ -10,7 +10,6 @@
        $array[] = $data;
     }
 
-
     //menghitung total terjual
     $dataTerjualRasaAyam = $conn->query("SELECT SUM(jumlah) AS jmlTerjualRasaAyam FROM penjualan WHERE id_menu = 'DPK001'");
     $numData1 = $dataTerjualRasaAyam->fetch_array();
@@ -26,7 +25,7 @@
 
     $dataTerjualRasaUdang = $conn->query("SELECT SUM(jumlah) AS jmlTerjualRasaUdang FROM penjualan WHERE id_menu = 'DPK004'");
     $numData4 = $dataTerjualRasaUdang->fetch_array();
-    $jmlPenjualanRasaUdang = $numData4['jmlTerjualRasaudang'];
+    $jmlPenjualanRasaUdang = $numData4['jmlTerjualRasaUdang'];
 
     //cek hapus
     if(isset($_GET['hapus'])){
@@ -124,79 +123,87 @@
               <div class="container">
                 <?=@$hapusAlert; ?>
                   <div class="row">
-                      <div class="col-lg-3">
-                          <div class="card bg-success shadow-lg">
-                              <div class="card-header">Rasa Ayam</div>
-                              <div class="card-body">
-                                  <?php
-                                    if($jmlPenjualanRasaAyam == 0){
-
-                                      echo "<h5>" . "Belum ada yang terjual" . "</h5>";
-
-                                    }else{
-
-                                      echo "<h1>". $jmlPenjualanRasaAyam ."<sub> Pcs </sub>" ."</h1>";
-                                    }
-
-                                   ?>
-                                </div>
+                     <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                        <div class="card card-statistic-1">
+                          <div class="card-icon bg-primary">
+                            <i class="fas fa-chart-line"></i>
                           </div>
+                          <div class="card-wrap">
+                            <div class="card-header">
+                              <h4>Rasa Ayam</h4>
+                            </div>
+                            <div class="card-body">
+                              <?php
+                                  if($jmlPenjualanRasaAyam == 0){
+                                      echo "<small class='text-danger'>" ."0" . "</small>";
+                                  }else{
+                                    echo $jmlPenjualanRasaAyam;
+                                  } 
+                                ?>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div class="col-lg-3">
-                          <div class="card bg-warning shadow-lg">
-                              <div class="card-header">Rasa Beef</div>
-                              <div class="card-body">
-
-                                <?php
-                                    if($jmlPenjualanRasaBeef == 0){
-
-                                      echo "<h5>" . "Belum ada yang terjual" . "</h5>";
-
-                                    }else{
-
-                                      echo "<h1>". $jmlPenjualanRasaBeef ."<sub> Pcs </sub>"."</h1>";
-                                    }
-
-                                   ?>
-
-                              </div>
+                      <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                        <div class="card card-statistic-1">
+                          <div class="card-icon bg-danger">
+                            <i class="fas fa-chart-line"></i>
                           </div>
+                          <div class="card-wrap">
+                            <div class="card-header">
+                              <h4>Rasa Beef</h4>
+                            </div>
+                            <div class="card-body">
+                                <?php
+                                  if($jmlPenjualanRasaBeef == 0){
+                                      echo "<small class='text-danger'>" ."0" . "</small>";
+                                  }else{
+                                    echo $jmlPenjualanRasaBeef;
+                                  } 
+                                ?>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div class="col-lg-3">
-                          <div class="card bg-danger shadow-lg">
-                              <div class="card-header">Rasa Cumi</div>
-                              <div class="card-body">
-                                <?php
-                                    if($jmlPenjualanRasaCumi == 0){
-
-                                      echo "<h5>" . "Belum ada yang terjual" . "</h5>";
-
-                                    }else{
-
-                                      echo "<h1>". $jmlPenjualanRasaCumi ."<sub> Pcs </sub>"."</h1>";
-                                    }
-
-                                   ?>
-                              </div>
+                      <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                        <div class="card card-statistic-1">
+                          <div class="card-icon bg-warning">
+                            <i class="fas fa-chart-line"></i>
                           </div>
+                          <div class="card-wrap">
+                            <div class="card-header">
+                              <h4>Rasa Cumi</h4>
+                            </div>
+                            <div class="card-body">
+                              <?php
+                                if($jmlPenjualanRasaCumi == 0){
+                                    echo "<small class='text-danger'>" ."0" . "</small>";
+                                }else{
+                                  echo $jmlPenjualanRasaCumi;
+                                } 
+                              ?>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div class="col-lg-3">
-                          <div class="card bg-info shadow-lg">
-                              <div class="card-header">Rasa Udang</div>
-                              <div class="card-body">
-                                <?php
-                                    if($jmlPenjualanRasaUdang == 0){
-
-                                      echo "<h5>" . "Belum ada yang terjual" . "</h5>";
-
-                                    }else{
-
-                                      echo "<h1>". $jmlPenjualanRasaUdang ."<sub> Pcs </sub>"."</h1>";
-                                    }
-
-                                   ?>
-                              </div>
+                      <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                        <div class="card card-statistic-1">
+                          <div class="card-icon bg-success">
+                            <i class="fas fa-chart-line"></i>
                           </div>
+                          <div class="card-wrap">
+                            <div class="card-header">
+                              <h4>Rasa Udang</h4>
+                            </div>
+                            <div class="card-body">
+                              <?php if($jmlPenjualanRasaUdang == 0){
+                                echo "<small class='text-danger'>" ."0" . "</small>";
+                              }else{
+                                 echo $jmlPenjualanRasaUdang;
+                              } ?>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                   </div>
                   <div class="row">
