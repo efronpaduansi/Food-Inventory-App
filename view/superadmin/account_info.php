@@ -2,6 +2,11 @@
   session_start();
   include "../../conn/koneksi.php";
 
+  if(!isset($_SESSION['login'])){
+    header("location:../../index.php?session=false");
+  }
+
+
 
   $id_user = $_SESSION['id_user'];
 

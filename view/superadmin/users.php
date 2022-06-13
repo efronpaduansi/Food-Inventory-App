@@ -1,6 +1,12 @@
 <?php
 
     session_start();
+
+    if(!isset($_SESSION['login'])){
+    header("location:../../index.php?session=false");
+  }
+
+
     include "../../conn/koneksi.php";
     include "../../functions/user_autocode.php";
 

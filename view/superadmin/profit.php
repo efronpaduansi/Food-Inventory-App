@@ -4,6 +4,11 @@
     include "../../conn/koneksi.php";
     include "../../functions/profit_count.php";
 
+    if(!isset($_SESSION['login'])){
+    header("location:../../index.php?session=false");
+  }
+
+
     //fungsi mencari profit
     if(isset($_POST['cari'])){
       $tanggal = $_POST['tanggal'];

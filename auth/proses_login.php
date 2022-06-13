@@ -15,6 +15,7 @@
           $getLevel = $getData['level'];
 
           if(password_verify($password, $getData['password'])){
+              $_SESSION['login'] = true;
               //cek login berdasarkan level admin dan superadmin
               if($getLevel == "Admin"){
                 $_SESSION['id_user'] = $getData['id_user'];

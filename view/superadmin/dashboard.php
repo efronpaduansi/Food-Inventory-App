@@ -1,5 +1,10 @@
 <?php
   session_start();
+
+  if(!isset($_SESSION['login'])){
+    header("location:../../index.php?session=false");
+  }
+
   include "../../conn/koneksi.php";
 
 
@@ -156,7 +161,11 @@
                           <h4>Orders</h4>
                         </div>
                         <div class="card-body">
-                          <?=$jmlOrders; ?>
+                          <?php if($jmlOrders == 0){
+                             echo 0;
+                          }else{
+                              echo $jmlOrders;
+                          } ?>
                         </div>
                       </div>
                     </div>
@@ -172,7 +181,7 @@
                         </div>
                         <div class="card-body">
                           <?php if($totalProfit == 0){
-                            echo "0";
+                            echo 0;
                           }else{
                             echo $totalProfit;
                           } ?>

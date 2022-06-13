@@ -3,6 +3,11 @@
   include "../../conn/koneksi.php";
   include "../../functions/orders_id.php";
 
+  if(!isset($_SESSION['login'])){
+    header("location:../../index.php?session=false");
+  }
+
+
   if(isset($_POST['cari'])){
     $keyword = $_POST['keyword'];
 

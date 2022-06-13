@@ -2,6 +2,11 @@
 
     include "../../conn/koneksi.php";
 
+    if(!isset($_SESSION['login'])){
+    header("location:../../index.php?session=false");
+  }
+
+
     $id_user = $_GET['id_user'];
 
     $query = $conn->query("SELECT * FROM user WHERE id_user = '$id_user'");

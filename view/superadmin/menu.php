@@ -3,6 +3,11 @@
     //membuat kode menu otomatis
     include "../../conn/koneksi.php";
 
+    if(!isset($_SESSION['login'])){
+    header("location:../../index.php?session=false");
+  }
+
+
     $query = "SELECT max(id) as idMenu FROM menu";
     $hasil = mysqli_query($conn, $query);
     $data = mysqli_fetch_array($hasil);

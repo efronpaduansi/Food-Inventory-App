@@ -1,6 +1,23 @@
 <?php
 
   session_start();
+
+  
+
+    if(isset($_GET['session'])){
+      if($_GET['session']== "false"){
+         $sessionAlert = "
+                <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                    <strong>Upsss! Kamu harus login dulu!</strong>
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+            ";
+       
+      }
+    }
+
   if(isset($_GET['pesan'])){
     if($_GET['pesan'] == "gagallogin"){
       $alert = "
@@ -66,6 +83,7 @@
              <div class="title mt-3 text-center text-primary"><h3>Login</h3></div>
               <div class="card-body shadow-lg">
                 <form method="POST" action="auth/proses_login.php" class="needs-validation" novalidate="">
+                  <?= @$sessionAlert; ?>  
                   <?= @$alert; ?>
                   <div class="form-group">
                     <label for="username">Username</label>

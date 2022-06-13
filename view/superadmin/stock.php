@@ -2,6 +2,11 @@
 
     session_start();
     include "../../conn/koneksi.php";
+
+    if(!isset($_SESSION['login'])){
+    header("location:../../index.php?session=false");
+  }
+
    
     //tampilkan data kedalam table
     $getlastUpdate = $conn->query("SELECT menu.makanan, menu.varian_rasa, orders.id, orders.hrg_beli, orders.jumlah, orders.tgl_order, orders.administrator FROM (menu INNER JOIN orders ON menu.id = orders.id_menu) ORDER BY id DESC LIMIT 3");
