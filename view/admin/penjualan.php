@@ -3,6 +3,11 @@
   include "../../conn/koneksi.php";
   include "../../functions/penjualan_kode.php";
 
+  if(!isset($_SESSION['login'])){
+    header("location:../../index.php?session=false");
+  }
+
+
   
   //cek proses transaksi
   if( isset( $_GET['transaksi'])){

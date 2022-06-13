@@ -2,6 +2,11 @@
   session_start();
     include "../../conn/koneksi.php";
 
+    if(!isset($_SESSION['login'])){
+    header("location:../../index.php?session=false");
+  }
+
+
     //Ambil jumlah persediaan dimsum rasa ayam
     $getDataAyam = $conn->query("SELECT total AS total_rasa_ayam FROM stock WHERE id_menu = 'DPK001'");
     $resultDataAyam = $getDataAyam->fetch_array();

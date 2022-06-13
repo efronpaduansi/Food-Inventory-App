@@ -1,6 +1,12 @@
 <?php
   session_start();
   include "../../conn/koneksi.php";
+
+  //cek apakah user sudah login
+  if(!isset($_SESSION['login'])){
+    header("location:../../index.php?session=false");
+  }
+
   
  
 

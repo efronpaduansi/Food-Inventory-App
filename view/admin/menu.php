@@ -3,6 +3,11 @@
     
     include "../../conn/koneksi.php";
 
+    if(!isset($_SESSION['login'])){
+    header("location:../../index.php?session=false");
+  }
+
+
     //tampilkan data menu kedalam table
     $query = $conn->query("SELECT * FROM menu");
     $menus = array();
