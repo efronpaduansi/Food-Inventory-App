@@ -127,16 +127,15 @@
                                 </button>
                             </div>
                             <!-- Tabel data penjualan -->
-                            <table class="table table-striped">
-                                <thead class="thead-dark bg-primary">
+                            <table class="table table-striped table-responsive">
+                                <thead class="thead-dark bg-primary text-center">
                                     <tr>
                                         <th scope="col" class="text-light">NO</th>
                                         <th scope="col" class="text-light">KODE TRX</th>
-                                        <th scope="col" class="text-light">TGL</th>
-                                        <th scope="col" class="text-light">MAKANAN</th>
                                         <th scope="col" class="text-light">VARIAN RASA</th>
                                         <th scope="col" class="text-light">HRG</th>
                                         <th scope="col" class="text-light">JML</th>
+                                        <th scope="col" class="text-light">TGL</th>
                                         <th scope="col" class="text-light">ADMIN</th>
                                         <th scope="col" class="text-light">AKSI</th>
                                     </tr>
@@ -149,16 +148,14 @@
                                     <tr>
                                     <th scope="row"><?=$no;  ?></th>
                                     <td><?=$data['id']; ?></td>
-                                    <td><?=$data['tgl']; ?></td>
-                                    <td><?=$data['makanan']; ?></td>
                                     <td><?=$data['varian_rasa']; ?></td>
                                     <td><?=$data['harga']; ?></td>
                                     <td><?=$data['jumlah']; ?></td>
+                                    <td><?=$data['tgl']; ?></td>
                                     <td><?=$data['administrator']; ?></td>
                                     <td>
                                         <div class="form-inline">
-                                          <a href="" data-toggle="tooltip" data-placement="right" title="Lihat detail"><i class="fas fa-eye"></i></a>
-                                          <a href="" data-toggle="tooltip" data-placement="right" title="Cetak struk"><i class="fas fa-print"></i></a>
+                                          <a class="btn btn-info mr-1" href="penjualan_detail.php?id=<?=$data['id']; ?>" data-toggle="tooltip" data-placement="right" title="Lihat detail">Detail</a>
                                         </div>
                                     </td>
                                     </tr>
