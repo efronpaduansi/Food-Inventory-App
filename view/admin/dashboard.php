@@ -7,6 +7,19 @@
     header("location:../../index.php?session=false");
   }
 
+  $getDataStock = $conn->query("SELECT SUM(total) AS jmlStock FROM stock");
+  $fetchDataStock = $getDataStock->fetch_array();
+  $totalStockMakanan = $fetchDataStock['jmlStock'];
+
+  $tglHariIni = date('Y/m/d');
+  $getDataPenjualan = $conn->query("SELECT SUM(jumlah) AS totalPenjualan FROM penjualan WHERE tgl = '$tglHariIni'");
+  $fetcDataPenjualan = $getDataPenjualan->fetch_array();
+  $dataPenjualan = $fetcDataPenjualan['totalPenjualan'];
+
+  $getDataMenu = $conn->query("SELECT COUNT(makanan) AS jmlMenu FROM  menu");
+  $fetchDataMenu = $getDataMenu->fetch_array();
+  $jmlMenu = $fetchDataMenu['jmlMenu'];
+
   
  
 
@@ -29,11 +42,7 @@
             <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
             <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
           </ul>
-          <div class="search-element">
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
-            <button class="btn" type="submit"><i class="fas fa-search"></i></button>
-            <div class="search-backdrop"></div>
-          </div>
+         
         </form>
         <ul class="navbar-nav navbar-right">
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
@@ -67,10 +76,9 @@
               <li class="nav-item active">
                 <a href="dashboard.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
               </li>
-              <li class=""><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
-              <li class=""><a class="nav-link" href="stock.php"><i class="fas fa-layer-group"></i><span>Stock</span></a></li>
               <li class=""><a class="nav-link" href="penjualan.php"><i class="fas fa-shopping-bag"></i><span>Penjualan</span></a></li>
-              <li class=""><a class="nav-link" href="laporan.php"><i class="fas fa-file-excel"></i> <span>Laporan</span></a></li>
+              <li class=""><a class="nav-link" href="stock.php"><i class="fas fa-layer-group"></i><span>Stock</span></a></li>
+              <li class=""><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
               <li class=""><a class="nav-link" href="setting.php"><i class="fas fa-cog"></i> <span>Pengaturan</span></a></li>
             </ul>
             <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
@@ -93,37 +101,77 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="row">
-              <div class="col-lg-4">
-                <div class="card bg-success shadow-lg rounded">
-                  <div class="card-header">Stock</div>
-                  <div class="card-body">
-                    <div class="row justify-content-center">
-                    <img src="../../assets/img/calendar.svg" class="mr-3" height="50"><h1>18%</h1>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4">
-                <div class="card bg-danger shadow-lg rounded">
-                  <div class="card-header">Stock</div>
-                  <div class="card-body">
-                      <div class="row justify-content-center">
-                       <img src="../../assets/img/calendar.svg" class="mr-3" height="50"><h1>18%</h1>
+            <div class="container">
+               <!-- Card -->
+                <div class="row">
+                  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                      <div class="card-icon bg-primary">
+                      <i class="fas fa-layer-group"></i>
                       </div>
+                      <div class="card-wrap">
+                        <div class="card-header">
+                          <h4>Total Stok</h4>
+                        </div>
+                        <div class="card-body">
+                          <?=$totalStockMakanan; ?>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div class="col-lg-4">
-                <div class="card bg-warning shadow-lg rounded">
-                  <div class="card-header">Stock</div>
-                  <div class="card-body">
-                    <div class="row justify-content-center">
-                      <img src="../../assets/img/calendar.svg" class="mr-3" height="50"><h1>18%</h1>
+                  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                      <div class="card-icon bg-danger">
+                      <i class="fas fa-chart-line"></i>
+                      </div>
+                      <div class="card-wrap">
+                        <div class="card-header">
+                          <h4>Terjual</h4>
+                        </div>
+                        <div class="card-body">
+                          <?=$dataPenjualan; ?>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                      <div class="card-icon bg-warning">
+                      <i class="fas fa-shopping-bag"></i>
+                      </div>
+                      <div class="card-wrap">
+                        <div class="card-header">
+                          <h4>Menu</h4>
+                        </div>
+                        <div class="card-body">
+                          <?php if($jmlMenu == 0){
+                             echo 0;
+                          }else{
+                              echo $jmlMenu;
+                          } ?>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                      <div class="card-icon bg-success">
+                      <i class="fas fa-clock"></i>
+                      </div>
+                      <div class="card-wrap">
+                        <div class="card-header">
+                          <h4>Waktu</h4>
+                        </div>
+                        <div class="card-body">
+                          <?php
+                            date_default_timezone_set("Asia/jakarta");
+                          ?>
+                          <span id="jam"></span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
             </div>
             <div class="row">
               <div class="col-lg-6">
@@ -232,5 +280,27 @@
         </section>
       </div>
      <?php include "../master/footer.php" ?>
+
+     <!-- Jam Digital -->
+       <script type="text/javascript">
+              window.onload = function() { jam(); }
+            
+              function jam() {
+                  var e = document.getElementById('jam'),
+                  d = new Date(), h, m, s;
+                  h = d.getHours();
+                  m = set(d.getMinutes());
+                  s = set(d.getSeconds());
+            
+                  e.innerHTML = h +':'+ m +':'+ s;
+            
+                  setTimeout('jam()', 1000);
+              }
+            
+              function set(e) {
+                  e = e < 10 ? '0'+ e : e;
+                  return e;
+              }
+          </script>
 </body>
 </html>

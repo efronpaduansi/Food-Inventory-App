@@ -65,10 +65,9 @@
               <li class="nav-item">
                 <a href="dashboard.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
               </li>
-              <li class=""><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
+             <li class=""><a class="nav-link" href="penjualan.php"><i class="fas fa-shopping-bag"></i><span>Penjualan</span></a></li>
               <li class=""><a class="nav-link" href="stock.php"><i class="fas fa-layer-group"></i><span>Stock</span></a></li>
-              <li class=""><a class="nav-link" href="penjualan.php"><i class="fas fa-shopping-bag"></i><span>Penjualan</span></a></li>
-              <li class=""><a class="nav-link" href="laporan.php"><i class="fas fa-file-excel"></i> <span>Laporan</span></a></li>
+              <li class=""><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
               <li class="active"><a class="nav-link" href="setting.php"><i class="fas fa-cog"></i> <span>Pengaturan</span></a></li>
             </ul>
             <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
@@ -117,8 +116,7 @@
                                   </div>
                                 </div>
                                 <div class="form-inline d-flex justify-content-center mt-5">
-                                    <a href="account_edit.php" class="btn btn-primary mr-4">Edit Akun</a>
-                                    <a href="setting.php" class="btn btn-danger">Kembali</a>
+                                    <a href="setting.php" class="btn btn-block btn-danger">Kembali</a>
                                 </div>
                             </div>
                         </div>
