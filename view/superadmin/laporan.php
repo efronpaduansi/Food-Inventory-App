@@ -1,13 +1,27 @@
 <?php
   session_start();
 
-  include "../../functions/koneksi.php";
+  include "../../conn/koneksi.php";
+  include "../../functions/laporan_count.php";
 
-  //Mengambil jumlah makanan masuk
-    $queryDataMasuk = mysqli_query($conn, "SELECT SUM(jumlah) AS total FROM brg_masuk");
-    $resultDataMasuk = mysqli_fetch_array($queryDataMasuk);
-    $jmlDataMasuk = $resultDataMasuk['total'];
+  if(!isset($_SESSION['login'])){
+    header("location:../../index.php?session=false");
+  }
 
+
+
+  $getAllOrders = $conn->query("SELECT SUM(jumlah) AS totalOrders FROM orders");
+  $resultAllOrders = $getAllOrders->fetch_array();
+  $allOrders = $resultAllOrders['totalOrders'];
+
+  $getAllPenjualan = $conn->query("SELECT SUM(jumlah) AS totalPenjualan FROM penjualan");
+  $resultAllPenjualan = $getAllPenjualan->fetch_array();
+  $allPenjualan = $resultAllPenjualan['totalPenjualan'];
+
+  $getDataStock = mysqli_query($conn, "SELECT SUM(total) AS totalStock FROM stock");
+  $resultDataStock = mysqli_fetch_array($getDataStock);
+  $jmlDataStock = $resultDataStock['totalStock'];
+  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +29,7 @@
   <?php 
     include "../master/header.php";
   ?>
-  <title>Laporan</title>
+  <title>Laporan - Dimsum Pawonkulo</title>
 </head>
 <body>
   <div id="app">
@@ -27,11 +41,6 @@
             <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
             <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
           </ul>
-          <div class="search-element">
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
-            <button class="btn" type="submit"><i class="fas fa-search"></i></button>
-            <div class="search-backdrop"></div>
-          </div>
         </form>
         <ul class="navbar-nav navbar-right">
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
@@ -63,11 +72,13 @@
           <ul class="sidebar-menu">
               <li class="menu-header"><?= $_SESSION['level']; ?></li>
               <li class="nav-item">
-                <a href="superadmin_dashboard.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+                <a href="dashboard.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
               </li>
-              <li class=""><a class="nav-link" href="brg_stok.php"><i class="fas fa-shopping-bag"></i><span>Stock Barang</span></a></li>
-              <li class=""><a class="nav-link" href="brg_masuk.php"><i class="fas fa-arrow-alt-circle-down"></i> <span>Barang Masuk</span></a></li>
-              <li class=""><a class="nav-link" href="brg_keluar.php"> <i class="fas fa-upload"></i><span>Barang Keluar</span></a></li>
+              <li class=""><a class="nav-link" href="orders.php"><i class="fas fa-shopping-bag"></i><span>Orders</span></a></li>
+              <li class=""><a class="nav-link" href="stock.php"><i class="fas fa-layer-group"></i><span>Stock</span></a></li>
+              <li class=""><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
+              <li class=""><a class="nav-link" href="data_penjualan.php"><i class="fas fa-chart-line"></i><span>Penjualan</span></a></li>
+              <li class=""><a class="nav-link" href="profit.php"><i class="fas fa-coins"></i><span>Profit</span></a></li>
               <li class="active"><a class="nav-link" href="laporan.php"><i class="fas fa-file-excel"></i> <span>Laporan</span></a></li>
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-sliders-h"></i><span>Preferences</span></a>
@@ -98,35 +109,83 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                    <!-- Form cari data -->
+                    <p>Silahkan pilih data yang ingin ditampilkan.</p>
+                    <form action="" method="post">
+                      <div class="form-row">
+                        <div class="form-group col-md-3">
+                          <select name="select_data" id="select_data" class="form-control" required>
+                            <option value="" disabled selected hidden>--Pilih Data--</option>
+                            <option value="Orders">Data Orders</option>
+                            <option value="Penjualan">Data Penjualan</option>
+                          </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <input type="date" id="keyword" name="keyword"  class="form-control" required>
+                        </div>
+                        <div class="form-group col-md-2">
+                          <button type="submit" name="cari" class="btn btn-primary">Cari data</button>
+                        </div>
+                      </div>
+                    </form>
                     <div class="row">
                         <div class="col-lg-4">
                            <div class="card shadow-lg">
-                               <div class="card-header bg-primary text-light"><strong>Data Masuk</strong></div>
+                               <div class="card-header bg-primary text-light"><strong>Orders</strong></div>
                                <div class="card-body text-center">
-                                    <h1 class="text-success"><?=$jmlDataMasuk . " " . Pcs; ?></h1>
-                                    <div class="form-inline mt-5">
-                                        <button class="btn btn-dark mr-3">Export to PDF</button>
-                                        <button class="btn btn-info">Export to Excel</button>
+                                    <h1 class="text-success">
+                                      <?php
+                                        if($jmlDataOrders == 0){
+                                          echo "<h1 class='text-danger'>0</h1>"; 
+                                        }else{
+                                          echo @$jmlDataOrders; 
+                                        }
+                                      ?>
+                                    </h1>
+                                    <p>
+                                      Total data : <?=$allOrders; ?>
+                                    </p>
+                                    <div class="form-inline mt-5 d-block justify-content-center">
+                                        <a  href="../../functions/orders_report_pdf.php" target="_blank" class="btn btn-dark mr-3"><i class="fas fa-file-pdf"></i> Cetak PDF</a>
+                                        <a href="../../functions/orders_report_xls.php" target="_blank" class="btn btn-success"> <i class="fas fa-file-excel"></i> Cetak XLS</a>
                                     </div>
                                </div>
                            </div>
                         </div>
                         <div class="col-lg-4">
                            <div class="card shadow-lg">
-                               <div class="card-header bg-primary text-light"><strong>Data Keluar</strong></div>
-                               <div class="card-body">
-                                   12345
+                               <div class="card-header bg-primary text-light"><strong>Penjualan</strong></div>
+                               <div class="card-body text-center">
+                                 <h1 class="text-success">
+                                  <?php
+                                      if($jmlDataPenjualan == 0){
+                                        echo "<h1 class='text-danger'>0</h1>"; 
+                                      }else{
+                                        echo @$jmlDataPenjualan; 
+                                      }
+                                    ?>
+                                 </h1>
+                                 <p>
+                                   Total data : <?=$allPenjualan; ?>
+                                 </p>
+                                    <div class="form-inline mt-5 d-block justify-content-center">
+                                        <a href="../../functions/penjualan_report_pdf.php" target="_blank" class="btn btn-dark mr-3"><i class="fas fa-file-pdf"></i> Cetak PDF</a>
+                                        <a href="../../functions/penjualan_report_xls.php" target="_blank" class="btn btn-success"> <i class="fas fa-file-excel"></i> Cetak XLS</a>
+                                    </div>
                                </div>
                            </div>
                         </div>
                         <div class="col-lg-4">
                            <div class="card shadow-lg">
-                               <div class="card-header bg-primary text-light"><strong>Stok</strong></div>
+                               <div class="card-header bg-primary text-light"><strong>Total Stock</strong></div>
                                <div class="card-body text-center">
-                                    <h1 class="text-success"><?=$jmlDataMasuk . " " . Pcs; ?></h1>
-                                    <div class="form-inline mt-5">
-                                                <button class="btn btn-dark mr-3">Export to PDF</button>
-                                                <button class="btn btn-info">Export to Excel</button>
+                                    <h1 class="text-success"><?=$jmlDataStock; ?></h1>
+                                    <p>
+                                      Total data : <?=$jmlDataStock; ?>
+                                    </p>
+                                    <div class="form-inline mt-5 d-block justify-content-center">
+                                        <a href="../../functions/stock_report_pdf.php" target="_blank" class="btn btn-dark mr-3"><i class="fas fa-file-pdf"></i> Cetak PDF</a>
+                                        <a href="../../functions/stock_report_xls.php" target="_blank" class="btn btn-success"> <i class="fas fa-file-excel"></i> Cetak XLS</a>
                                     </div>
                                </div>
                            </div>

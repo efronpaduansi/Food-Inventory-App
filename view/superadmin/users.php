@@ -1,8 +1,14 @@
 <?php
 
     session_start();
+
+    if(!isset($_SESSION['login'])){
+    header("location:../../index.php?session=false");
+  }
+
+
     include "../../conn/koneksi.php";
-    include "../../functions/id_new_user.php";
+    include "../../functions/user_autocode.php";
 
 
     //ambil data user dari database
@@ -17,6 +23,20 @@
             $notif = "
                 <div class='alert alert-success alert-dismissible fade show' role='alert'>
                     <strong>User baru berhasil ditambahkan</strong>
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+            ";
+        }
+    }
+
+    //cek hapus
+    if(isset($_GET['hapus'])){
+        if($_GET['hapus']== "sukses"){
+          $notif = "
+                <div class='alert alert-success alert-dismissible fade show' role='alert'>
+                    <strong>User berhasil dihapus</strong>
                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                     <span aria-hidden='true'>&times;</span>
                     </button>
@@ -77,13 +97,15 @@
             <a href="index.html">DPK</a>
           </div>
           <ul class="sidebar-menu">
-              <li class="menu-header">Dashboard</li>
+              <li class="menu-header"><?= $_SESSION['level']; ?></li>
               <li class="nav-item">
-                <a href="superadmin_dashboard.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+                <a href="dashboard.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
               </li>
-              <li class=""><a class="nav-link" href="brg_stok.php"><i class="fas fa-shopping-bag"></i><span>Stock Barang</span></a></li>
-              <li class=""><a class="nav-link" href="brg_masuk.php"><i class="fas fa-arrow-alt-circle-down"></i> <span>Barang Masuk</span></a></li>
-              <li class=""><a class="nav-link" href="brg_keluar.php"> <i class="fas fa-upload"></i><span>Barang Keluar</span></a></li>
+              <li class=""><a class="nav-link" href="orders.php"><i class="fas fa-shopping-bag"></i><span>Orders</span></a></li>
+              <li class=""><a class="nav-link" href="stock.php"><i class="fas fa-layer-group"></i><span>Stock</span></a></li>
+              <li class=""><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
+              <li class=""><a class="nav-link" href="data_penjualan.php"><i class="fas fa-chart-line"></i><span>Penjualan</span></a></li>
+              <li class=""><a class="nav-link" href="profit.php"><i class="fas fa-coins"></i><span>Profit</span></a></li>
               <li class=""><a class="nav-link" href="laporan.php"><i class="fas fa-file-excel"></i> <span>Laporan</span></a></li>
               <li class="nav-item dropdown active">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-sliders-h"></i><span>Preferences</span></a>
@@ -138,8 +160,8 @@
                                 <td><?= $user['level']; ?></td>
                                 <td>
                                   <div class="form-inline row">
-                                        <a href="../../functions/edit_user.php?id_masuk=<?=$user['id_user']; ?>" class="mr-2 text-info"><i class="fas fa-edit"></i></a> 
-                                        <a href="../../functions/delete_user.php?id_masuk=<?=$user['id_user']; ?>" class="text-primary" onclick = "return confirm ('Apakah anda yakin untuk menghapus data ini ?');"><i class="fas fa-trash"></i>
+                                        <a href="user_edit.php?id_user=<?=$user['id_user']; ?>" class="mr-2 text-info" data-toggle="tooltip" data-placement="top" title="Ubah Data User"><i class="fas fa-edit"></i></a> 
+                                        <a href="../../functions/user_delete.php?id_user=<?=$user['id_user']; ?>" data-toggle="tooltip" data-placement="top" title="Hapus data user" class="text-primary" onclick = "return confirm ('Tindakan ini akan menghapus data secara permanen. Yakin ?');"><i class="fas fa-trash"></i>
                                         </a>
                                   </div>
                                 </td>
@@ -151,7 +173,7 @@
                         </tbody>
                     </table>
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        <strong>Perhatian !</strong> Fitur ini hanya bisa digunakan oleh Superadmin.
+                        <strong>Perhatian !</strong> Fitur ini hanya bisa di lihat oleh Superadmin.
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -172,16 +194,22 @@
                         </button>
                     </div>
                         <div class="modal-body">
-                            <form action="../../functions/add_new_user.php" method="post">
+                            <form action="../../functions/user_insert.php" method="post">
                                 <input class="form-control mb-3" name="id_user" type="text" value="<?= $idNewUser; ?>" readonly>
-                                <input type="text" name="username" class="form-control mb-3" placeholder="Username" required autofocus autocomplete="off" minlength="6" maxlength="20">
+                                <input type="text" name="username" id="username" class="form-control mb-3" placeholder="Username" required autofocus autocomplete="off" minlength="6" maxlength="20">
+                                <span id="pesan"></span>
                                 <input type="text" name="fname" class="form-control mb-3" placeholder="Fullname" minlength="8" required>
                                 <select name="level" id="level" class="form-control mb-3" required>
                                     <option value="" disabled selected hidden>Select Level User</option>
                                     <option value="Admin">Admin</option>
                                     <option value="Superadmin">Superadmin</option>
                                 </select>
-                                <input type="password" name="password" class="form-control mb-3" placeholder="Password" minlength="5" required>
+                                <div class="input-group mb-5" id="show_hide_password">
+                                    <input type="password" name='password' class="form-control" autocomplete="off" required>
+                                    <div class="input-group-append">
+                                        <a href="" class="btn btn-outline-secondary"><i class="fas fa-eye-slash" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -193,5 +221,42 @@
             </div>
             <!-- end modal -->
      <?php include "../master/footer.php" ?>
+     <!-- Fungsi untuk mengecek ketersediaan username  -->
+          <script>
+            $(document).ready(function(){
+                $('#username').blur(function(){
+                    $('#pesan').html('<p>Cek username...</p>');
+                    var username = $(this).val();
+
+                    $.ajax({
+                        type	: 'POST',
+                        url 	: 'user_cek_username.php', //cek di file user_cek_username.php
+                        data 	: 'username='+username,
+                        success	: function(data){
+                            $('#pesan').html(data);
+                        }
+                    })
+
+                });
+            });
+          </script>
+
+          <!-- show hide password functions -->
+        <script>
+            $(document).ready(function() {
+            $("#show_hide_password a").on('click', function(event) {
+                event.preventDefault();
+                if($('#show_hide_password input').attr("type") == "text"){
+                    $('#show_hide_password input').attr('type', 'password');
+                    $('#show_hide_password i').addClass( "bi bi-eye-slash" );
+                    $('#show_hide_password i').removeClass( "bi bi-eye" );
+                }else if($('#show_hide_password input').attr("type") == "password"){
+                    $('#show_hide_password input').attr('type', 'text');
+                    $('#show_hide_password i').removeClass( "bi bi-eye-slash" );
+                    $('#show_hide_password i').addClass( "bi bi-eye" );
+                }
+            });
+            });
+        </script>
 </body>
 </html>

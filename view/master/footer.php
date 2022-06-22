@@ -3,7 +3,7 @@
           Copyright &copy; 2022 <div class="bullet"></div> Dimsum Pawon Kulo
         </div>
         <div class="footer-right">
-         All right resevered
+          v.1.0.1
         </div>
       </footer>
     </div>
@@ -22,5 +22,11 @@
   <!-- Template JS File -->
   <script src="../../assets/js/scripts.js"></script>
   <script src="../../assets/js/custom.js"></script>
+
+  <!-- AOS -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
 
   <!-- Page Specific JS File -->

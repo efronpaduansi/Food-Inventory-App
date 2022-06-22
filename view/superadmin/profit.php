@@ -2,29 +2,33 @@
   session_start();
     //membuat kode menu otomatis
     include "../../conn/koneksi.php";
+    include "../../functions/profit_count.php";
 
     if(!isset($_SESSION['login'])){
     header("location:../../index.php?session=false");
   }
 
 
-    $query = "SELECT max(id) as idMenu FROM menu";
-    $hasil = mysqli_query($conn, $query);
-    $data = mysqli_fetch_array($hasil);
+    //fungsi mencari profit
+    if(isset($_POST['cari'])){
+      $tanggal = $_POST['tanggal'];
+      $showProfit = $conn->query("SELECT profit FROM penjualan WHERE tgl = '$tanggal' AND (id_menu = 'DPK001' OR id_menu ='DPK002' OR id_menu = 'DPK003' OR id_menu = 'DPK004')");
+      $array = array();
+      while($data = $showProfit->fetch_array()){
+        $array[] = $data;
+      }
 
-    $maxkode = $data['idMenu'];
-    $noUrut = (int) substr($maxkode, 3, 3);
-    
-    $noUrut++;
-    $char = 'DPK';
-    $idMenu = $char . sprintf("%03s", $noUrut);
+    }else{
+      $showProfit = $conn->query("SELECT profit FROM penjualan WHERE tgl = date('d/m/y') AND (id_menu = 'DPK001' OR id_menu ='DPK002' OR id_menu = 'DPK003' OR id_menu = 'DPK004')");
+      $array = array();
+      while($data = $showProfit->fetch_array()){
+        $array[] = $data;
+      }
 
-    //tampilkan data menu kedalam table
-    $getData = mysqli_query($conn, "SELECT * FROM menu");
-    $menus = array();
-    while ($data = mysqli_fetch_array($getData)){
-      $menus[] = $data;
     }
+
+    
+    
 
     //cek pesan masuk
     if(isset($_GET['pesan'])){
@@ -80,10 +84,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <?php 
+  <?php
     include "../master/header.php";
   ?>
-  <title>Menu - Dimsum Pawonkulo</title>
+  <title>Profit - Dimsum Pawonkulo</title>
 </head>
 <body>
   <div id="app">
@@ -130,9 +134,9 @@
               </li>
               <li class=""><a class="nav-link" href="orders.php"><i class="fas fa-shopping-bag"></i><span>Orders</span></a></li>
               <li class=""><a class="nav-link" href="stock.php"><i class="fas fa-layer-group"></i><span>Stock</span></a></li>
-              <li class="active"><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
+              <li class=""><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
               <li class=""><a class="nav-link" href="data_penjualan.php"><i class="fas fa-chart-line"></i><span>Penjualan</span></a></li>
-              <li class=""><a class="nav-link" href="profit.php"><i class="fas fa-coins"></i><span>Profit</span></a></li>
+              <li class="active"><a class="nav-link" href="profit.php"><i class="fas fa-coins"></i><span>Profit</span></a></li>
               <li class=""><a class="nav-link" href="laporan.php"><i class="fas fa-file-excel"></i> <span>Laporan</span></a></li>
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-sliders-h"></i><span>Preferences</span></a>
@@ -153,91 +157,85 @@
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>Daftar Menu</h1>
+            <h1>Pendapatan</h1>
           </div>
           <div class="section-body">
               <div class="container">
-                <div class="row">
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-12" data-aos="fade-up" data-aos-duration="1000">
-                    <?=@$alert; ?>
-                    <!-- tombol tambah menu -->
-                    <button type="button" class="btn btn-primary mb-4" data-toggle="modal" data-target="#menuModal">
-                        Tambah Menu Baru
-                    </button>
-                    <div class="table-responsive">
-                      <table class="table table-striped">
-                          <thead class="bg-primary">
-                            <tr>
-                              <th scope="col" class="text-light">NO</th>
-                              <th scope="col" class="text-light">ID MAKANAN</th>
-                              <th scope="col" class="text-light">NAMA MAKANAN</th>
-                              <th scope="col" class="text-light">VARIAN RASA</th>
-                              <th scope="col" class="text-light">HARGA/ <sub>Pcs</sub></th>
-                              <th scope="col" class="text-light text-center">AKSI</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <?php
-                              $no = 1;
-                              foreach($menus as $menu) :
-                            ?>
-                              <tr>
-                                  <th scope="row"><?=$no; ?></th>
-                                  <td><?=$menu['id']; ?></td>
-                                  <td><?=$menu['makanan']; ?></td>
-                                  <td><?=$menu['varian_rasa']; ?></td>
-                                  <td><?= "Rp.". " " . $menu['harga']; ?></td>
-                                  <td class="d-flex justify-content-center">
-                                    <div class="form-inline">
-                                        <a class="btn btn-success mr-2" href="menu_edit.php?id=<?=$menu['id']; ?>" data-toggle="tooltip" data-placement="top" title="Ubah data">Ubah</a>
-                                        <a class="btn btn-danger" href="../../functions/menu_delete.php?id=<?=$menu['id']; ?>" onclick = "return confirm ('Tindakan ini akan menghapus data secara permanen. Yakin ?');" data-toggle="tooltip" data-placement="top" title="Hapus data">Hapus</a>
-                                    </div>
-                                  </td>
-                              </tr>
-                              <?php
-                                $no++;
-                                endforeach
-                              ?>
-                          </tbody>
-                      </table>
+                <!-- Alert  -->
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <strong>Hi, <?=$_SESSION['fname']; ?>!</strong> Kamu bisa melihat pendapatan kamu dibawah ini.
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="col-lg-12">
+                  <p>Lihat profit berdasarkan tgl :</p>
+                  <form action="" method="post">
+                    <div class="form-row">
+                      <div class="form-group col-md-3">
+                        <input type="date" name="tanggal" class="form-control">
                       </div>
+                      <div class="form-group col-md-3">
+                      <button type="submit" name="cari" class="btn btn-primary">Cari</button>
+                      </div>
+                    </div>
+                  </form>
+                  <div class="card">
+                    <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6 text-left">
+                          <h1 class="text-primary">Profit</h1>
+                        </div>
+                        <div class="col-lg-6 text-right">
+                          <?php if(isset($_POST['cari'])){
+                            $tanggal = $_POST['tanggal'];
+                            echo "<h5 class='text-primary'>"."Date : ".date('d/m/Y', strtotime($tanggal))."</h5>";
+                          }else{
+                            echo "<h5 class='text-primary'>" ."Today : ".date('d/m/Y') ."</h5>";
+                          }
+                          ?>
+                        </div>
+                      </div>
+                    </div> <hr>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-lg-6 text-left">
+                          <h5>Varian Rasa</h5> <hr>
+                          <p>Rasa Ayam </p>
+                          <p>Rasa Beef  </p>
+                          <p>Rasa Cumi </p>
+                          <p>Rasa Udang </p>
+                        </div>
+                        <div class="col-lg-6 text-right">
+                          <h5>Profit</h5> <hr>
+                            <?php foreach($array as $myProfit) : ?>
+                              <p><?= "IDR. " . $myProfit['profit'] .",00"; ?></p>
+                            <?php endforeach ?>
+                          <p class="font-weight-bold">Total</p> <hr>
+                          <?php
+                            if(isset($_POST['cari'])){
+                              $tanggal = $_POST['tanggal'];
+                              $getTotalProfit = $conn->query("SELECT SUM(profit) AS totalProfit FROM penjualan WHERE tgl ='$tanggal'");
+                              $fetch = $getTotalProfit->fetch_array();
+                              $totalProfit = $fetch['totalProfit'];
+                            }else{
+                              //Menghitung total pendapatan
+                              $getTotalProfit = $conn->query("SELECT SUM(profit) AS totalProfit FROM penjualan WHERE tgl = date('d/m/Y')");
+                              $fetch = $getTotalProfit->fetch_array();
+                              $totalProfit = $fetch['totalProfit'];
+
+                            }
+                            ?>
+                          <h5>IDR. <?=$totalProfit .",00"; ?></h5>
+                          <a href="" class="btn btn-warning mt-5"><i class="fas fa-print"></i> Cetak</a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
           </div>
         </section>
-        <!-- Menu Modal -->
-          <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Tambah Menu Baru</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                    <!-- form input -->
-                    <form action="../../functions/menu_insert.php" method="post">
-                          <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                            <strong>Perhatian!</strong> Fitur ini hanya bisa diakses oleh superadmin.
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                        <input type="text" name="id" class="form-control mb-3" value="<?=$idMenu; ?>" readonly>
-                        <input type="text" name="makanan" placeholder="Makanan" class="form-control mb-3" required autocomplete="off">
-                        <input type="text" name="varian_rasa" placeholder="Varian Rasa" class="form-control mb-3" required autocomplete="off">
-                        <input type="number" name="harga" placeholder="Harga Jual (Rp)" class="form-control mb-5" min="3500" max="999999" required autocomplete="off">
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                          <button type="submit" name="simpan" class="btn btn-primary">Simpan</button>
-                        </div>
-                    </form>
-                </div>
-              </div>
-            </div>
-          </div>
       </div>
      <?php include "../master/footer.php" ?>
 </body>

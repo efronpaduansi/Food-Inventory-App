@@ -1,6 +1,11 @@
 <?php
   session_start();
-  include "../../functions/koneksi.php";
+  include "../../conn/koneksi.php";
+
+  if(!isset($_SESSION['login'])){
+    header("location:../../index.php?session=false");
+  }
+
   
 
 
@@ -56,14 +61,13 @@
             <a href="index.html">DPK</a>
           </div>
           <ul class="sidebar-menu">
-              <li class="menu-header">Dashboard</li>
+              <li class="menu-header"><?=$_SESSION['level']; ?></li>
               <li class="nav-item">
-                <a href="admin_dashboard.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+                <a href="dashboard.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
               </li>
-              <li class=""><a class="nav-link" href="brg_stok.php"><i class="fas fa-shopping-bag"></i><span>Stock Barang</span></a></li>
-              <li class=""><a class="nav-link" href="brg_masuk.php"><i class="fas fa-arrow-alt-circle-down"></i> <span>Barang Masuk</span></a></li>
-              <li class=""><a class="nav-link" href="brg_keluar.php"> <i class="fas fa-upload"></i><span>Barang Keluar</span></a></li>
-              <li class=""><a class="nav-link" href="laporan.php"><i class="fas fa-file-excel"></i> <span>Laporan</span></a></li>
+             <li class=""><a class="nav-link" href="penjualan.php"><i class="fas fa-shopping-bag"></i><span>Penjualan</span></a></li>
+              <li class=""><a class="nav-link" href="stock.php"><i class="fas fa-layer-group"></i><span>Stock</span></a></li>
+              <li class=""><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
               <li class="active"><a class="nav-link" href="setting.php"><i class="fas fa-cog"></i> <span>Pengaturan</span></a></li>
             </ul>
             <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
@@ -83,7 +87,7 @@
                <div class="row">
                      <!-- Profile informasi -->
                     <div class="col-lg-6">
-                        <div class="card shadow-lg">
+                        <div class="card shadow-lg" data-aos="fade-up" data-aos-duration="1000">
                             <div class="card-header bg-dark text-light">
                                 Anda login sebagai : @<?=$_SESSION['username'] ." " . "[" . $_SESSION['id_user'] . "]";?> 
                             </div>
@@ -112,8 +116,7 @@
                                   </div>
                                 </div>
                                 <div class="form-inline d-flex justify-content-center mt-5">
-                                    <a href="account_edit.php" class="btn btn-primary mr-4">Edit Akun</a>
-                                    <a href="setting.php" class="btn btn-danger">Kembali</a>
+                                    <a href="setting.php" class="btn btn-block btn-danger">Kembali</a>
                                 </div>
                             </div>
                         </div>

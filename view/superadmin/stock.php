@@ -1,40 +1,86 @@
 <?php
 
     session_start();
-    include "../../functions/koneksi.php";
+    include "../../conn/koneksi.php";
 
-    //Ambil jumlah persediaan dimsum rasa ayam
-    $getDataAyam = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlRasaAyam FROM brg_masuk WHERE varian_rasa = 'Ayam'");
-    $resultDataAyam = mysqli_fetch_array($getDataAyam);
-    $jmlRasaAyam = $resultDataAyam['jmlRasaAyam'];
+    if(!isset($_SESSION['login'])){
+    header("location:../../index.php?session=false");
+  }
 
-    //Ambil jumlah persediaan dimsum rasa beef
-    $getDataBeef = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlRasaBeef FROM brg_masuk WHERE varian_rasa = 'Beef'");
-    $resultDataBeef = mysqli_fetch_array($getDataBeef);
-    $jmlRasaBeef = $resultDataBeef['jmlRasaBeef'];
+   
+    //tampilkan data kedalam table
+    $getlastUpdate = $conn->query("SELECT menu.makanan, menu.varian_rasa, orders.id, orders.hrg_beli, orders.jumlah, orders.tgl_order, orders.administrator FROM (menu INNER JOIN orders ON menu.id = orders.id_menu) ORDER BY id DESC LIMIT 3");
+    
+    
+    //hitung jumlah data berdasarkan varian rasa
+    $getRasaAyam = $conn->query("SELECT SUM(total) AS jml FROM stock WHERE id_menu = 'DPK001'");
+    $result = mysqli_fetch_array($getRasaAyam);
+    $jmlRasaAyam = $result['jml'];
 
-    //Ambil jumlah persediaan dimsum rasa cumi
-    $getDataCumi = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlRasaCumi FROM brg_masuk WHERE varian_rasa = 'Cumi'");
-    $resultDataCumi = mysqli_fetch_array($getDataCumi);
-    $jmlRasaCumi = $resultDataCumi['jmlRasaCumi'];
+    $getRasabBeef = $conn->query("SELECT SUM(total) AS jml FROM stock WHERE id_menu = 'DPK002'");
+    $result = mysqli_fetch_array($getRasabBeef);
+    $jmlRasaBeef = $result['jml'];
 
-    //Ambil jumlah persediaan dimsum rasa udang
-    $getDataUdang = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlRasaUdang FROM brg_masuk WHERE varian_rasa = 'Udang'");
-    $resultDataUdang = mysqli_fetch_array($getDataUdang);
-    $jmlRasaUdang = $resultDataUdang['jmlRasaUdang'];
+    $getRasaCumi = $conn->query("SELECT SUM(total) AS jml FROM stock WHERE id_menu = 'DPK003'");
+    $result = mysqli_fetch_array($getRasaCumi);
+    $jmlRasaCumi = $result['jml'];
 
-    //Menghitung total persediaan makanan
-    $getDataMakanan = mysqli_query($conn, "SELECT SUM(jumlah) AS jmlPersediaan FROM brg_masuk");
-    $resultDataMakanan = mysqli_fetch_array($getDataMakanan);
-    $jmlPersediaan = $resultDataMakanan['jmlPersediaan'];
+    $getRasaUdang = $conn->query("SELECT SUM(total) AS jml FROM stock WHERE id_menu = 'DPK004'");
+    $result = mysqli_fetch_array($getRasaUdang);
+    $jmlRasaUdang = $result['jml'];
 
+    $getTotal = $conn->query("SELECT SUM(total) AS total FROM stock");
+    $result = mysqli_fetch_array($getTotal);
+    $total = $result['total'];
+
+    //cek insert data stock
+    if(isset($_GET['pesan'])){
+      if($_GET['pesan'] == "sukses"){
+        $alert = "
+        <div class='alert alert-success alert-dismissible fade show' role='alert'>
+            <strong>Data stock berhasil ditambahkan</strong>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+            </button>
+        </div>
+        ";
+      }
+    }
+
+    //cek update data stock
+    if(isset($_GET['update'])){
+      if($_GET['update'] == "sukses"){
+        $alert = "
+        <div class='alert alert-success alert-dismissible fade show' role='alert'>
+            <strong>Data stock berhasil diubah</strong>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+            </button>
+        </div>
+        ";
+      }
+    }
+
+    //cek hapus data stock
+    if(isset($_GET['hapus'])){
+      if($_GET['hapus'] == "sukses"){
+        $alert = "
+        <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+            <strong>Data stock berhasil dihapus</strong>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+            </button>
+        </div>
+        ";
+      }
+    }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <?php include "../master/header.php"; ?>
-  <title>Stock | Dimsum Pawonkulo</title>
+  <title>Stock - Dimsum Pawonkulo</title>
 </head>
 <body>
   <div id="app">
@@ -46,11 +92,6 @@
             <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
             <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
           </ul>
-          <div class="search-element">
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
-            <button class="btn" type="submit"><i class="fas fa-search"></i></button>
-            <div class="search-backdrop"></div>
-          </div>
         </form>
         <ul class="navbar-nav navbar-right">
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
@@ -84,9 +125,10 @@
               <li class="nav-item">
                 <a href="dashboard.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
               </li>
-              <li class=""><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
+              <li class=""><a class="nav-link" href="orders.php"><i class="fas fa-shopping-bag"></i><span>Orders</span></a></li>
               <li class="active"><a class="nav-link" href="stock.php"><i class="fas fa-layer-group"></i><span>Stock</span></a></li>
-              <li class=""><a class="nav-link" href="data_penjualan.php"><i class="fas fa-chart-line"></i><span>Data Penjualan</span></a></li>
+              <li class=""><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
+              <li class=""><a class="nav-link" href="data_penjualan.php"><i class="fas fa-chart-line"></i><span>Penjualan</span></a></li>
               <li class=""><a class="nav-link" href="profit.php"><i class="fas fa-coins"></i><span>Profit</span></a></li>
               <li class=""><a class="nav-link" href="laporan.php"><i class="fas fa-file-excel"></i> <span>Laporan</span></a></li>
               <li class="nav-item dropdown">
@@ -112,139 +154,135 @@
           </div>
           <div class="section-body">
               <!-- Table stok makanan -->
-                <div class="row">
-                    <div class="col-lg-9">
+                    <div class="col-12">
+                        <?=@$alert; ?>
                         <div class="form-inline mb-3">
-                          <button type="button" class="btn btn-primary mr-3" data-toggle="modal" data-target="#stokModal">
-                              Tambahkan ke Stok
-                            </button>
-                              <a href="../../functions/laporan_stok_brg.php" target="_blank" class="btn btn-info"><i class="fas fa-print"></i> Cetak Laporan</a>
+                              <a href="../../functions/stock_report_pdf.php" target="_blank" class="btn btn-dark"><i class="fas fa-file-pdf"></i> Cetak Laporan PDF</a>
+                              <a href="../../functions/stock_report_xls.php" target="_blank" class="btn btn-success ml-3"><i class="fas fa-file-excel"></i> Cetak Laporan XLS</a>
+                              <input type="text" class="form-control ml-3 bg-dark text-light" value="<?="Total" . " ". $total . " " . "Pcs"; ?>" readonly>
                           </div>
-                        <table class="table table-bordered table-secondary">
-                            <thead class="thead-dark">
-                                <tr>
-                                <th scope="col">NO</th>
-                                <th scope="col">NAMA MAKANAN</th>
-                                <th scope="col">VARIAN RASA</th>
-                                <th scope="col">JML PERSEDIAAN</th>
-                                <th scope="col">KETERANGAN</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                <td scope="row">1</td>
-                                <td>Dimsum</td>
-                                <td>Ayam</td>
-                                <?php
-                                    if($jmlRasaAyam == 0){
-                                        echo "<td>0</td>";
-                                    }else{
-                                        echo "<td>" . $jmlRasaAyam . "</td>";
-                                    }
-                                    if($jmlRasaAyam == 0){
-                                        echo "<td class='text-danger'><strong>Habis</strong></td>";
-                                    }else{
-                                        echo "<td class='text-success'><strong>Tersedia</strong></td>";
-                                    }
-                                ?>
-                                </tr>
-                            </tbody>
-                            <tbody>
-                                <tr>
-                                <td scope="row">2</td>
-                                <td>Dimsum</td>
-                                <td>Beef</td>
-                                <?php 
-                                    if($jmlRasaBeef == 0){
-                                        echo "<td>0</td>";
-                                    }else{
-                                        echo "<td>" . $jmlRasaBeef . "</td>";
-                                    }
-                                    if($jmlRasaBeef == 0){
-                                        echo "<td class='text-danger'><strong>Habis</strong></td>";
-                                    }else{
-                                        echo "<td class='text-success'><strong>Tersedia</strong></td>";
-                                    }
-                                ?>
-                                </tr>
-                            </tbody>
-                            <tbody>
-                                <tr>
-                                <td scope="row">3</td>
-                                <td>Dimsum</td>
-                                <td>Cumi</td>
-                                <?php 
-                                    if($jmlRasaCumi == 0){
-                                        echo "<td>0</td>";
-                                    }else{
-                                        echo "<td>" . $jmlRasaCumi . "</td>";
-                                    }
-                                    if($jmlRasaCumi == 0){
-                                        echo "<td class='text-danger'><strong>Habis</strong></td>";
-                                    }else{
-                                        echo "<td class='text-success'><strong>Tersedia</strong></td>";
-                                    }
-                                ?>
-                                </tr>
-                            </tbody>
-                            <tbody>
-                                <tr>
-                                <td scope="row">4</td>
-                                <td>Dimsum</td>
-                                <td>Udang</td>
-                                <?php 
-                                     if($jmlRasaUdang == 0){
-                                        echo "<td>0</td>";
-                                    }else{
-                                        echo "<td>" . $jmlRasaUdang . "</td>";
-                                    }
-                                    if($jmlRasaUdang == 0){
-                                        echo "<td class='text-danger'><strong>Habis</strong></td>";
-                                    }else{
-                                        echo "<td class='text-success'><strong>Tersedia</strong></td>";
-                                    }
-                                ?>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-lg-3">
-                        <?php
-                            $getLastUpdate = mysqli_query($conn, "SELECT * FROM brg_masuk ORDER BY id_masuk DESC LIMIT 1");
-                            $result = mysqli_fetch_array($getLastUpdate);
-                        ?>
-                       <strong>Terakhir ditambahkan</strong> <br><br>    
-                       <p>Varian Rasa : <?= $result['varian_rasa']; ?></p>
-                       <p>Harga Satuan : <?= $result['harga_satuan']; ?></p>
-                       <p>Jumlah : <?= $result['jumlah']; ?></p>
-                       <p>Penerima : <?= $result['penerima']; ?></p>
-                    </div>
-                    <div class="total ml-3">
-                        <strong><?= "Total Persediaan : " . " " . $jmlPersediaan . " " . "Pcs"; ?></strong>
-                    </div>
-                </div>
+                        <div class="row">
+                            <div class="col-lg-12" data-aos="fade-up" data-aos-duration="1000">
+                              <div class="row">
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                                  <div class="card card-statistic-1">
+                                      <div class="card-icon bg-primary">
+                                      <i class="fas fa-layer-group"></i>
+                                      </div>
+                                      <div class="card-wrap">
+                                        <div class="card-header">
+                                          <h4>Rasa Ayam</h4>
+                                        </div>
+                                        <div class="card-body">
+                                          <?php if($jmlRasaAyam == 0){
+                                              echo "<h1 class='text-danger'>0</h1>" . "<br>";
+                                          }else{
+                                              echo "<h1>". $jmlRasaAyam . "</h1>" . "<br>";
+                                          } ?>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- Card II -->
+                                  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                                  <div class="card card-statistic-1">
+                                      <div class="card-icon bg-danger">
+                                      <i class="fas fa-layer-group"></i>
+                                      </div>
+                                      <div class="card-wrap">
+                                        <div class="card-header">
+                                          <h4>Rasa Beef</h4>
+                                        </div>
+                                        <div class="card-body">
+                                          <?php if($jmlRasaBeef == 0){
+                                              echo "<h1 class='text-danger'>0</h1>" . "<br>";
+                                          }else{
+                                              echo "<h1>". $jmlRasaBeef . "</h1>" . "<br>";
+                                          } ?>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- Card III -->
+                                  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                                  <div class="card card-statistic-1">
+                                      <div class="card-icon bg-warning">
+                                      <i class="fas fa-layer-group"></i>
+                                      </div>
+                                      <div class="card-wrap">
+                                        <div class="card-header">
+                                          <h4>Rasa Cumi</h4>
+                                        </div>
+                                        <div class="card-body">
+                                          <?php if($jmlRasaCumi == 0){
+                                              echo "<h1 class='text-danger'>0</h1>" . "<br>";
+                                          }else{
+                                              echo "<h1>". $jmlRasaCumi . "</h1>" . "<br>";
+                                          } ?>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- Card IV -->
+                                  <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                                  <div class="card card-statistic-1">
+                                      <div class="card-icon bg-success">
+                                      <i class="fas fa-layer-group"></i>
+                                      </div>
+                                      <div class="card-wrap">
+                                        <div class="card-header">
+                                          <h4>Rasa Udang</h4>
+                                        </div>
+                                        <div class="card-body">
+                                          <?php if($jmlRasaUdang == 0){
+                                              echo "<h1 class='text-danger'>0</h1>" . "<br>";
+                                          }else{
+                                              echo "<h1>". $jmlRasaUdang . "</h1>" . "<br>";
+                                          } ?>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>  
+                              </div>
+                             <h6 class="alert alert-info">Terakhir ditambahkan</h6>
+                             <div class="table-responsive">
+                              <table class="table table-bordered table-secondary">
+                                    <thead class="thead-dark">
+                                      <tr>
+                                        <th scope="col">NO</th>
+                                        <th scope="col">ID ORDER</th>
+                                        <th scope="col">MAKANAN</th>
+                                        <th scope="col">VARIAN RASA</th>
+                                        <th scope="col">HARGA BELI / <sub>Pcs</sub></th>
+                                        <th scope="col">JUMLAH</th>
+                                        <th scope="col">TGL ORDER</th>
+                                        <th scope="col">ADMIN</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <?php
+                                        $no = 1;
+                                        while($stock = $getlastUpdate->fetch_array()) {
+                                      ?>
+                                      <tr>
+                                        <td><?=$no; ?></td>
+                                        <td><?=$stock['id']; ?></td>
+                                        <td><?=$stock['makanan']; ?></td>
+                                        <td><?=$stock['varian_rasa']; ?></td>
+                                        <td><?=$stock['hrg_beli']; ?></td>
+                                        <td><?=$stock['jumlah']; ?></td>
+                                        <td><?=$stock['tgl_order']; ?></td>
+                                        <td><?=$stock['administrator']; ?></td>
+                                      </tr>
+                                      <?php $no++; } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        </div>
+                      </div>
            </div>
         </section>
-        <!-- Modal -->
-          <div class="modal fade" id="stokModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Tambahkan ke Stok</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-              </div>
-            </div>
-          </div>
       </div>
       <?php include "../master/footer.php"; ?>
 </body>

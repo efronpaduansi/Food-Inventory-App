@@ -1,21 +1,21 @@
 <?php
-  session_start();
 
-  include "../../conn/koneksi.php";
+    include "../../conn/koneksi.php";
 
-  if(!isset($_SESSION['login'])){
+    if(!isset($_SESSION['login'])){
     header("location:../../index.php?session=false");
   }
 
 
+    $id_user = $_GET['id_user'];
 
-  $id_user = $_SESSION['id_user'];
-
-  $getDataUser = $conn->query("SELECT * FROM user WHERE id_user = '$id_user'");
-  $fetchDataUser = $getDataUser->fetch_assoc();
-  
-  
-  
+    $query = $conn->query("SELECT * FROM user WHERE id_user = '$id_user'");
+    
+    while($user = $query->fetch_assoc()) {
+    
+?>
+<?php
+  session_start();
 
 ?>
 <!DOCTYPE html>
@@ -24,7 +24,7 @@
   <?php 
     include "../master/header.php";
   ?>
-  <title>Pengaturan Akun</title>
+  <title>Edit User | Dimsum Pawonkulo</title>
 </head>
 <body>
   <div id="app">
@@ -36,6 +36,11 @@
             <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
             <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
           </ul>
+          <div class="search-element">
+            <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
+            <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+            <div class="search-backdrop"></div>
+          </div>
         </form>
         <ul class="navbar-nav navbar-right">
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
@@ -87,33 +92,66 @@
               <a href="../../logout.php" class="btn btn-danger btn-lg btn-block btn-icon-split">
               <i class="fas fa-sign-out"></i> Keluar
               </a>
-            </div>
+          </div>
         </aside>
       </div>
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>Pengaturan Akun</h1>
+            <h1>Edit User</h1>
           </div>
           <div class="section-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card" data-aos="fade-up" data-aos-duration="1000">
-                        <div class="card-header bg-dark text-light"> <i class="fas fa-user mr-2"></i><span>Pengaturan Akun</span></div>
-                        <div class="card-body">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><a href="account_info.php"><span>Informasi Akun Anda</span></a></li>
-                                <li class="list-group-item"><a href="user_edit.php?id_user=<?=$fetchDataUser['id_user']; ?>"><span>Edit Akun</span></a></li>
-                                <li class="list-group-item"><a href=""><span>Ganti Password</span></a></li>
-                            </ul>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">Edit User</div>
+                                <div class="card-body">
+                                    <form action="../../functions/user_update.php" method="post">
+                                        <input type="hidden" name="id_user" value="<?=$user['id_user']; ?>">
+                                        <input type="text" name="username" value="<?=$user['username']; ?>" class="form-control mb-3" readonly>
+                                        <input type="text" name="fname" value="<?=$user['fname']; ?>" class="form-control mb-3">
+                                        <select name="level" class="form-control mb-3">
+                                            <option value="<?=$user['level']; ?>" disabled selected hidden><?=$user['level']; ?></option>
+                                            <option value="Admin">Admin</option>
+                                            <option value="Superadmin">Superadmin</option>
+                                        </select>
+                                        <div class="card-footer d-flex">
+                                            <div class="form-inline">
+                                                <a href="account_setting.php" class="btn btn-danger mr-3">Batal</a>
+                                                <button type="submit" name="update" class="btn btn-primary">Update</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
           </div>
         </section>
       </div>
      <?php include "../master/footer.php" ?>
+
+     <!-- show hide password functions -->
+        <!-- <script>
+            $(document).ready(function() {
+            $("#show_hide_password a").on('click', function(event) {
+                event.preventDefault();
+                if($('#show_hide_password input').attr("type") == "text"){
+                    $('#show_hide_password input').attr('type', 'password');
+                    $('#show_hide_password i').addClass( "bi bi-eye-slash" );
+                    $('#show_hide_password i').removeClass( "bi bi-eye" );
+                }else if($('#show_hide_password input').attr("type") == "password"){
+                    $('#show_hide_password input').attr('type', 'text');
+                    $('#show_hide_password i').removeClass( "bi bi-eye-slash" );
+                    $('#show_hide_password i').addClass( "bi bi-eye" );
+                }
+            });
+            });
+        </script> -->
+       
 </body>
 </html>
+<?php } ?>

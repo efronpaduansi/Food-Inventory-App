@@ -2,6 +2,11 @@
 
 session_start();
 
+if(!isset($_SESSION['login'])){
+    header("location:../../index.php?session=false");
+  }
+
+
 
 ?>
 
@@ -55,14 +60,13 @@ session_start();
             <a href="index.html">DPK</a>
           </div>
           <ul class="sidebar-menu">
-              <li class="menu-header">Dashboard</li>
+              <li class="menu-header"><?=$_SESSION['level']; ?></li>
               <li class="nav-item">
-                <a href="admin_dashboard.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+                <a href="dashboard.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
               </li>
-              <li class=""><a class="nav-link" href="brg_stok.php"><i class="fas fa-shopping-bag"></i><span>Stock Barang</span></a></li>
-              <li class=""><a class="nav-link" href="brg_masuk.php"><i class="fas fa-arrow-alt-circle-down"></i> <span>Barang Masuk</span></a></li>
-              <li class=""><a class="nav-link" href="brg_keluar.php"> <i class="fas fa-upload"></i><span>Barang Keluar</span></a></li>
-              <li class=""><a class="nav-link" href="laporan.php"><i class="fas fa-file-excel"></i> <span>Laporan</span></a></li>
+            <li class=""><a class="nav-link" href="penjualan.php"><i class="fas fa-shopping-bag"></i><span>Penjualan</span></a></li>
+              <li class=""><a class="nav-link" href="stock.php"><i class="fas fa-layer-group"></i><span>Stock</span></a></li>
+              <li class=""><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
               <li class="active"><a class="nav-link" href="setting.php"><i class="fas fa-cog"></i> <span>Pengaturan</span></a></li>
             </ul>
             <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
@@ -82,14 +86,13 @@ session_start();
           <div class="section-body">
             <div class="row">
                 <div class="col-lg-8">
-                   <div class="card">
+                   <div class="card" data-aos="fade-up" data-aos-duration="1000">
                        <div class="card-header bg-dark text-light">
                         <i class="fas fa-user mr-2"></i> <span>Pengaturan Akun</span> 
                        </div>
                        <div class="card-body">
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item"><a href="account_info.php"><span>Informasi Akun Anda</span></a></li>
-                                <li class="list-group-item"><a href=""><span>Edit Akun</span></a></li>
                                 <li class="list-group-item"><a href=""><span>Ganti Password</span></a></li>
                             </ul>
                        </div>

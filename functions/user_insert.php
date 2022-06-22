@@ -8,10 +8,11 @@
   $level    = $_POST['level'];
   $password = $_POST['password'];
 
-  // $newPassword = password_hash($password, PASSWORD_DEFAULT);
+  //enkripsi password
+  $newPassword = password_hash($password, PASSWORD_DEFAULT);
 
   $sql = "INSERT INTO user(id_user, username, fname,level, password) VALUES
-        ('$id_user', '$username', '$fname', '$level', '$password')";
+        ('$id_user', '$username', '$fname', '$level', '$newPassword')";
   $simpan = mysqli_query($conn, $sql);
 
   if($simpan){

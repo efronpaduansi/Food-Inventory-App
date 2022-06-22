@@ -1,6 +1,23 @@
 <?php
 
   session_start();
+
+  
+
+    if(isset($_GET['session'])){
+      if($_GET['session']== "false"){
+         $sessionAlert = "
+                <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                    <strong>Upsss! Kamu harus login dulu!</strong>
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+            ";
+       
+      }
+    }
+
   if(isset($_GET['pesan'])){
     if($_GET['pesan'] == "gagallogin"){
       $alert = "
@@ -43,21 +60,30 @@
   <!-- Template CSS -->
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/components.css">
+  <!-- DATA AOS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+  <style>
+    body{
+      background:#6777EF;
+    }
+  </style>
 </head>
 
 <body>
   <div id="app">
     <section class="section">
-      <div class="container mt-5">
-        <div class="row">
+      <div class="container">
+        <div class="row mt-5">
           <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
-            <div class="login-brand">
-              <img src="assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
+            <div class="login-brand mb-5">
+              <h4 class="text-center text-light">DIMSUM PAWONKULO</h4>
             </div>
-            <div class="card card-primary">
+            <div class="card card-primary" data-aos="fade-up" data-aos-duration="3000">
              <div class="title mt-3 text-center text-primary"><h3>Login</h3></div>
-              <div class="card-body">
+              <div class="card-body shadow-lg">
                 <form method="POST" action="auth/proses_login.php" class="needs-validation" novalidate="">
+                  <?= @$sessionAlert; ?>  
                   <?= @$alert; ?>
                   <div class="form-group">
                     <label for="username">Username</label>
@@ -103,6 +129,11 @@
   <script src="assets/js/scripts.js"></script>
   <script src="assets/js/custom.js"></script>
 
-  <!-- Page Specific JS File -->
+ <!-- DATA AOS -->
+ <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+
 </body>
 </html>

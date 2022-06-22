@@ -1,21 +1,17 @@
 <?php
-  session_start();
+        session_start();
 
-  include "../../conn/koneksi.php";
-
-  if(!isset($_SESSION['login'])){
+        if(!isset($_SESSION['login'])){
     header("location:../../index.php?session=false");
   }
 
 
+        include "../../conn/koneksi.php";
 
-  $id_user = $_SESSION['id_user'];
+        $id = $_GET['id'];
 
-  $getDataUser = $conn->query("SELECT * FROM user WHERE id_user = '$id_user'");
-  $fetchDataUser = $getDataUser->fetch_assoc();
-  
-  
-  
+        $query = $conn->query("SELECT * FROM menu WHERE id = '$id'");
+        while( $menu = $query->fetch_assoc()) {
 
 ?>
 <!DOCTYPE html>
@@ -24,7 +20,7 @@
   <?php 
     include "../master/header.php";
   ?>
-  <title>Pengaturan Akun</title>
+  <title>Edit Menu | Dimsum Pawonkulo</title>
 </head>
 <body>
   <div id="app">
@@ -71,11 +67,11 @@
               </li>
               <li class=""><a class="nav-link" href="orders.php"><i class="fas fa-shopping-bag"></i><span>Orders</span></a></li>
               <li class=""><a class="nav-link" href="stock.php"><i class="fas fa-layer-group"></i><span>Stock</span></a></li>
-              <li class=""><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
+              <li class="active"><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
               <li class=""><a class="nav-link" href="data_penjualan.php"><i class="fas fa-chart-line"></i><span>Penjualan</span></a></li>
               <li class=""><a class="nav-link" href="profit.php"><i class="fas fa-coins"></i><span>Profit</span></a></li>
               <li class=""><a class="nav-link" href="laporan.php"><i class="fas fa-file-excel"></i> <span>Laporan</span></a></li>
-              <li class="nav-item dropdown active">
+              <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-sliders-h"></i><span>Preferences</span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="account_setting.php"><i class="fas fa-cog"></i>Pengaturan Akun</a></li>
@@ -87,33 +83,47 @@
               <a href="../../logout.php" class="btn btn-danger btn-lg btn-block btn-icon-split">
               <i class="fas fa-sign-out"></i> Keluar
               </a>
-            </div>
+          </div>
         </aside>
       </div>
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>Pengaturan Akun</h1>
+            <h1>Edit Menu</h1>
           </div>
           <div class="section-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card" data-aos="fade-up" data-aos-duration="1000">
-                        <div class="card-header bg-dark text-light"> <i class="fas fa-user mr-2"></i><span>Pengaturan Akun</span></div>
-                        <div class="card-body">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><a href="account_info.php"><span>Informasi Akun Anda</span></a></li>
-                                <li class="list-group-item"><a href="user_edit.php?id_user=<?=$fetchDataUser['id_user']; ?>"><span>Edit Akun</span></a></li>
-                                <li class="list-group-item"><a href=""><span>Ganti Password</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+             <div class="container">
+                     <div class="row">
+                             <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-header bg-secondary">Edit Menu</div>
+                                    <div class="card-body">
+                                        <form action="../../functions/menu_update.php" method="post">
+                                                <input type="hidden" name="id" class="form-control mb-3" value="<?=$menu['id']; ?>">
+                                                <input type="text" name="makanan" class="form-control mb-3" value="<?=$menu['makanan']; ?>">
+                                                <select name="varian_rasa" id="varian_rasa" class="form-control mb-3" required>
+                                                        <option value="" disabled selected hidden><?=$menu['varian_rasa']; ?></option>
+                                                        <option value="Ayam">Ayam</option>
+                                                        <option value="Beef">Beef</option>
+                                                        <option value="Cumi">Cumi</option>
+                                                        <option value="Udang">Udang</option>
+                                                </select>
+                                                <input type="number" name="harga" class="form-control mb-5" value="<?=$menu['harga']; ?>">
+                                                <div class="form-inline">
+                                                        <a href="menu.php"  class="btn btn-danger mr-2">Batal</a>
+                                                        <button type="submit" name="update" class="btn btn-primary">Update</button>
+                                                </div>
+                                        </form>
+                                    </div>
+                                </div>
+                             </div>
+                     </div>
+             </div>
           </div>
         </section>
       </div>
      <?php include "../master/footer.php" ?>
 </body>
 </html>
+<?php } ?>
