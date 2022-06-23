@@ -44,6 +44,20 @@
             ";
         }
     }
+    
+    //cek edit
+    if(isset($_GET['edit'])){
+      if($_GET['edit']== "sukses"){
+        $notif = "
+              <div class='alert alert-success alert-dismissible fade show' role='alert'>
+                  <strong>User berhasil diubah</strong>
+                  <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                  <span aria-hidden='true'>&times;</span>
+                  </button>
+              </div>
+          ";
+      }
+  }
 
 ?>
 
@@ -160,8 +174,8 @@
                                 <td><?= $user['level']; ?></td>
                                 <td>
                                   <div class="form-inline row">
-                                        <a href="user_edit.php?id_user=<?=$user['id_user']; ?>" class="mr-2 text-info" data-toggle="tooltip" data-placement="top" title="Ubah Data User"><i class="fas fa-edit"></i></a> 
-                                        <a href="../../functions/user_delete.php?id_user=<?=$user['id_user']; ?>" data-toggle="tooltip" data-placement="top" title="Hapus data user" class="text-primary" onclick = "return confirm ('Tindakan ini akan menghapus data secara permanen. Yakin ?');"><i class="fas fa-trash"></i>
+                                        <a href="user_edit.php?id=<?=$user['id']; ?>" class="mr-2 text-info" data-toggle="tooltip" data-placement="top" title="Ubah Data User"><i class="fas fa-edit"></i></a> 
+                                        <a href="../../functions/user_delete.php?id=<?=$user['id']; ?>" data-toggle="tooltip" data-placement="top" title="Hapus data user" class="text-primary" onclick = "return confirm ('Tindakan ini akan menghapus data secara permanen. Yakin ?');"><i class="fas fa-trash"></i>
                                         </a>
                                   </div>
                                 </td>

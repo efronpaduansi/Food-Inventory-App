@@ -2,7 +2,7 @@
 
     include "../conn/koneksi.php";
 
-    $id_user = $_POST['id_user'];
+    $id = $_POST['id'];
     $username = $_POST['username'];
     $fname  = $_POST['fname'];
     $password = $_POST['password'];
@@ -16,7 +16,7 @@
             fname       = '$fname',
             password    = '$password',
             level       = '$level'
-            WHERE id_user = '$id_user'");
+            WHERE id = '$id'");
     if($query){
         header("location:../view/superadmin/users.php?edit=sukses");
     }else{

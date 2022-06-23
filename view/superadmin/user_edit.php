@@ -2,14 +2,14 @@
 
     include "../../conn/koneksi.php";
 
-    if(!isset($_SESSION['login'])){
-    header("location:../../index.php?session=false");
-  }
+  //   if(!isset($_SESSION['login'])){
+  //   header("location:../../index.php?session=false");
+  // }
 
 
-    $id_user = $_GET['id_user'];
+    $id = $_GET['id'];
 
-    $query = $conn->query("SELECT * FROM user WHERE id_user = '$id_user'");
+    $query = $conn->query("SELECT * FROM user WHERE id = '$id'");
     
     while($user = $query->fetch_assoc()) {
     
@@ -109,7 +109,7 @@
                                 <div class="card-header">Edit User</div>
                                 <div class="card-body">
                                     <form action="../../functions/user_update.php" method="post">
-                                        <input type="hidden" name="id_user" value="<?=$user['id_user']; ?>">
+                                        <input type="hidden" name="id" value="<?=$user['id']; ?>">
                                         <input type="text" name="username" value="<?=$user['username']; ?>" class="form-control mb-3" readonly>
                                         <input type="text" name="fname" value="<?=$user['fname']; ?>" class="form-control mb-3">
                                         <select name="level" class="form-control mb-3">
@@ -119,7 +119,7 @@
                                         </select>
                                         <div class="card-footer d-flex">
                                             <div class="form-inline">
-                                                <a href="account_setting.php" class="btn btn-danger mr-3">Batal</a>
+                                                <a href="users.php" class="btn btn-danger mr-3">Batal</a>
                                                 <button type="submit" name="update" class="btn btn-primary">Update</button>
                                             </div>
                                         </div>

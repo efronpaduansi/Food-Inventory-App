@@ -2,9 +2,9 @@
 
     include "../conn/koneksi.php";
 
-    $id_user    = $_GET['id_user'];
+    $id    = $_GET['id'];
 
-    $query = $conn->query("DELETE FROM user WHERE id_user = '$id_user'");
+    $query = $conn->query("DELETE FROM user WHERE id = '$id'");
 
     if($query){
         header("location:../view/superadmin/users.php?hapus=sukses");
