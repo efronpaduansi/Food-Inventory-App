@@ -89,7 +89,7 @@
                     <div class="col-lg-6">
                         <div class="card shadow-lg" data-aos="fade-up" data-aos-duration="1000">
                             <div class="card-header bg-dark text-light">
-                                Anda login sebagai : @<?=$_SESSION['username'] ." " . "[" . $_SESSION['id_user'] . "]";?> 
+                                Anda login sebagai : @<?=$_SESSION['username'] ." " . "[" . $_SESSION['id'] . "]";?> 
                             </div>
                             <div class="card-body">
                                 <div class="row d-flex justify-content-center">
@@ -109,7 +109,7 @@
                                     <h5>:</h5>
                                   </div>
                                   <div class="identitas text-left ml-3">
-                                    <h5><strong><?=$_SESSION['id_user']; ?></strong></h5>
+                                    <h5><strong><?=$_SESSION['id']; ?></strong></h5>
                                     <h5><strong><?=$_SESSION['username']; ?></strong></h5>
                                     <h5><strong><?=$_SESSION['fname']; ?></strong></h5>
                                     <h5><strong><?=$_SESSION['level']; ?></strong></h5>

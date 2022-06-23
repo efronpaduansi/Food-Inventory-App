@@ -1,10 +1,12 @@
 <?php
 
+    session_start();
     include "../conn/koneksi.php";
     include "profit_count.php";
    
 
     $id             = $_POST['id'];
+    $id_user        = $_SESSION['id'];
     $nama_makanan   = $_POST['nama_makanan'];
     $varian_rasa    = $_POST['varian_rasa'];
     $jumlah         = $_POST['jumlah'];
@@ -54,8 +56,8 @@
             header("location:../view/admin/penjualan.php?stock=kurang");
        }else{
            //masukan data ke tabel penjualan
-           $insertData = $conn->query("INSERT INTO penjualan(id, id_stock, id_menu, hrg_jual, jumlah, profit, tgl, administrator) VALUES
-            ('$id', '$idStock', '$idMenu', '$hrgJual', '$jumlah', '$profit', '$tgl', '$administrator')");
+           $insertData = $conn->query("INSERT INTO penjualan(id, id_stock, id_menu, id_user, hrg_jual, jumlah, profit, tgl, administrator) VALUES
+            ('$id', '$idStock', '$idMenu', '$id_user', '$hrgJual', '$jumlah', '$profit', '$tgl', '$administrator')");
             if($insertData){
                 // update tabel stock
                 $update = $conn->query("UPDATE stock SET
@@ -82,8 +84,8 @@
         header("location:../view/admin/penjualan.php?stock=kurang");
        }else{
             //masukan data ke tabel penjualan
-            $insertData = $conn->query("INSERT INTO penjualan(id, id_stock, id_menu, hrg_jual, jumlah, profit, tgl, administrator) VALUES
-            ('$id', '$idStock', '$idMenu', '$hrgJual', '$jumlah', '$profit', '$tgl', '$administrator')");
+            $insertData = $conn->query("INSERT INTO penjualan(id, id_stock, id_menu, id_user, hrg_jual, jumlah, profit, tgl, administrator) VALUES
+            ('$id', '$idStock', '$idMenu', '$id_user', '$hrgJual', '$jumlah', '$profit', '$tgl', '$administrator')");
             if($insertData){
                 // update tabel stock
                 $update = $conn->query("UPDATE stock SET
@@ -110,8 +112,8 @@
             header("location:../view/admin/penjualan.php?stock=kurang");
         }else{
             //masukan data ke tabel penjualan
-            $insertData = $conn->query("INSERT INTO penjualan(id, id_stock, id_menu, hrg_jual, jumlah, profit, tgl, administrator) VALUES
-            ('$id', '$idStock', '$idMenu', '$hrgJual', '$jumlah', '$profit', '$tgl', '$administrator')");
+            $insertData = $conn->query("INSERT INTO penjualan(id, id_stock, id_menu, id_user, hrg_jual, jumlah, profit, tgl, administrator) VALUES
+            ('$id', '$idStock', '$idMenu', '$id_user', '$hrgJual', '$jumlah', '$profit', '$tgl', '$administrator')");
             if($insertData){
                 // update tabel stock
                 $update = $conn->query("UPDATE stock SET
@@ -138,8 +140,8 @@
             header("location:../view/admin/penjualan.php?stock=kurang");
         }else{
              //masukan data ke tabel penjualan
-           $insertData = $conn->query("INSERT INTO penjualan(id, id_stock, id_menu, hrg_jual, jumlah, profit, tgl, administrator) VALUES
-           ('$id','$idStock', '$idMenu', '$hrgJual', '$jumlah', '$profit', '$tgl', '$administrator')");
+           $insertData = $conn->query("INSERT INTO penjualan(id, id_stock, id_menu, id_user, hrg_jual, jumlah, profit, tgl, administrator) VALUES
+           ('$id','$idStock', '$idMenu', '$id_user', '$hrgJual', '$jumlah', '$profit', '$tgl', '$administrator')");
            if($insertData){
                // update tabel stock
                $update = $conn->query("UPDATE stock SET

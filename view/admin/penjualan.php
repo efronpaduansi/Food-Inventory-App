@@ -1,12 +1,17 @@
 <?php
   session_start();
   include "../../conn/koneksi.php";
-  include "../../functions/penjualan_kode.php";
+ 
 
   if(!isset($_SESSION['login'])){
     header("location:../../index.php?session=false");
   }
 
+  //mengambil data penjualan hari ini
+  $tglHariIni = date('Y/m/d');
+  $getDataPenjualan = $conn->query("SELECT SUM(jumlah) AS totalPenjualan FROM penjualan WHERE tgl = '$tglHariIni'");
+  $fetcDataPenjualan = $getDataPenjualan->fetch_array();
+  $dataPenjualan = $fetcDataPenjualan['totalPenjualan'];
 
   
   //cek proses transaksi
@@ -119,7 +124,21 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                          <?=@$alert; ?>
+                         <div class="notif" data-aos="fade-left" data-aos-duration="3000"> <?=@$alert; ?></div>
+                          <!-- Mengecek apakah ada yang terjual hari ini -->
+                            <?php
+                             if($dataPenjualan == 0){
+                              echo "
+                              <div class='alert alert-dark alert-dismissible fade show' role='alert' data-aos='fade-left' data-aos-duration='3000'>
+                                <strong>Belum ada yang terjual nih, yuk jual makanan sekarang!</strong>
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                <span aria-hidden='true'>&times;</span>
+                                </button>
+                              </div>
+                              ";
+                             }
+                            ?>
+
                             <!-- Tombol data penjualan -->
                             <div class="form-inline mb-5">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#penjualanModal">
@@ -127,7 +146,7 @@
                                 </button>
                             </div>
                             <!-- Tabel data penjualan -->
-                            <table class="table table-striped table-responsive">
+                            <table class="table table-striped table-responsive"  data-aos="fade-up" data-aos-duration="3000">
                                 <thead class="thead-dark bg-primary text-center">
                                     <tr>
                                         <th scope="col" class="text-light">NO</th>
@@ -182,6 +201,20 @@
                     </div>
                     <div class="modal-body">
                         <form action="../../functions/penjualan_proses.php" method="post">
+                          <!-- Membuat ID penjualan otomatis -->
+                            <?php 
+                              $query = "SELECT max(id) as kodeTrx FROM penjualan";
+                              $hasil = mysqli_query($conn, $query);
+                              $data = mysqli_fetch_array($hasil);
+                            
+                              $maxkode = $data['kodeTrx'];
+                            
+                              $noUrut = (int) substr($maxkode, 10, 3);
+                            
+                              $noUrut++;
+                              $char = "DPK-" . date('dmy');
+                              $kodeTrx = $char . sprintf("%03s", $noUrut);
+                            ?>
                             <input type="text" name="id" value="<?=$kodeTrx; ?>" class="form-control mb-3" readonly>
                             <select name="nama_makanan" class="form-control mb-3" required>
                                 <option value="" disabled selected hidden>--Select Makanan--</option>
