@@ -32,6 +32,12 @@
     $numData4 = $dataTerjualRasaUdang->fetch_array();
     $jmlPenjualanRasaUdang = $numData4['jmlTerjualRasaUdang'];
 
+    //mengambil data penjualan hari ini
+    $tglHariIni = date('Y/m/d');
+    $getDataPenjualan = $conn->query("SELECT SUM(jumlah) AS totalPenjualan FROM penjualan WHERE tgl = '$tglHariIni'");
+    $fetcDataPenjualan = $getDataPenjualan->fetch_array();
+    $dataPenjualan = $fetcDataPenjualan['totalPenjualan'];
+
     //cek hapus
     if(isset($_GET['hapus'])){
       if($_GET['hapus']== "sukses"){
@@ -53,6 +59,7 @@
     include "../master/header.php";
   ?>
   <title>Data Penjualan - Dimsum Pawonkulo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 </head>
 <body>
   <div id="app">
@@ -127,6 +134,18 @@
           <div class="section-body">
               <div class="container">
                 <?=@$hapusAlert; ?>
+                <?php
+                  if($dataPenjualan == 0){
+                    echo " 
+                    <div class='alert alert-dark alert-dismissible fade show' role='alert'>
+                      <strong>Hari ini belum ada yang terjual lho, tetap semangat ya! <i class='bi bi-emoji-smile-fill'></i></strong>
+                      <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                      <span aria-hidden='true'>&times;</span>
+                      </button>
+                    </div>
+                    ";
+                  }
+                ?>
                   <div class="row">
                      <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                         <div class="card card-statistic-1">

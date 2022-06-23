@@ -2,7 +2,7 @@
 
     session_start();
     include "../conn/koneksi.php";
-    include "profit_count.php";
+   
    
 
     $id             = $_POST['id'];
@@ -18,6 +18,7 @@
     $getIdMenu = $conn->query("SELECT id AS idMenu FROM menu WHERE varian_rasa = '$varian_rasa'");
     $resultIdMenu = $getIdMenu->fetch_array();
     $idMenu = $resultIdMenu['idMenu'];
+  
     
     //ambil id_stock dari tabel stock
     $getIdStock = $conn->query("SELECT id AS id_stock FROM stock WHERE id_menu = '$idMenu'");
@@ -37,7 +38,7 @@
 
     //menghitung profit
     $profit = ($hrgJual - $hrgBeli) * $jumlah;
- 
+   
 
      //mengambil jumlah stock makanan pada tabel stock
      $getStock = $conn->query("SELECT total AS jmlStock FROM stock WHERE id_menu = '$idMenu'");

@@ -24,7 +24,8 @@
   $jmlOrders = $fetchJmlOrders['jmlOrders'];
 
   //Menghitung total profit dari tabel penjualan
-  $getTotalProfit = $conn->query("SELECT SUM(profit) AS totalProfit FROM penjualan WHERE tgl = date('d/m/y')");
+  $tgl = date('Y/m/d');
+  $getTotalProfit = $conn->query("SELECT SUM(profit) AS totalProfit FROM penjualan WHERE tgl = '$tgl'");
   $fetchTotalProfit = $getTotalProfit->fetch_array();
   $totalProfit = $fetchTotalProfit['totalProfit'];
   
@@ -146,7 +147,13 @@
                           <h4>Terjual</h4>
                         </div>
                         <div class="card-body">
-                          <?=$dataPenjualan; ?>
+                         <?php
+                           if($dataPenjualan == 0){
+                            echo 0;
+                           }else{
+                            echo $dataPenjualan; 
+                           }
+                         ?>
                         </div>
                       </div>
                     </div>
@@ -181,9 +188,9 @@
                         </div>
                         <div class="card-body">
                           <?php if($totalProfit == 0){
-                            echo 0;
+                            echo "Rp. ".  0;
                           }else{
-                            echo $totalProfit;
+                            echo "Rp. " . $totalProfit;
                           } ?>
                         </div>
                       </div>

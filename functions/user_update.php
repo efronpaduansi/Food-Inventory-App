@@ -10,15 +10,17 @@
   
 
     //enkripsi password
+    $enkPass = password_hash($password, PASSWORD_DEFAULT);
 
-    $query = $conn->query("UPDATE user SET 
+    $update = $conn->query("UPDATE user SET 
             username    = '$username',
             fname       = '$fname',
-            password    = '$password',
+            password    = '$enkPass',
             level       = '$level'
             WHERE id = '$id'");
-    if($query){
+    if($update){
         header("location:../view/superadmin/users.php?edit=sukses");
+        
     }else{
         header("location:../view/superadmin/users.php?edit=gagal");
     }

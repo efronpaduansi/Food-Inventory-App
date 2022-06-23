@@ -19,7 +19,8 @@
       }
 
     }else{
-      $showProfit = $conn->query("SELECT profit FROM penjualan WHERE tgl = date('d/m/y') AND (id_menu = 'DPK001' OR id_menu ='DPK002' OR id_menu = 'DPK003' OR id_menu = 'DPK004')");
+      $tgl = date('Y/m/d');
+      $showProfit = $conn->query("SELECT profit FROM penjualan WHERE tgl = '$tgl' AND (id_menu = 'DPK001' OR id_menu ='DPK002' OR id_menu = 'DPK003' OR id_menu = 'DPK004')");
       $array = array();
       while($data = $showProfit->fetch_array()){
         $array[] = $data;
@@ -167,7 +168,7 @@
                               $totalProfit = $fetch['totalProfit'];
                             }else{
                               //Menghitung total pendapatan
-                              $getTotalProfit = $conn->query("SELECT SUM(profit) AS totalProfit FROM penjualan WHERE tgl = date('d/m/Y')");
+                              $getTotalProfit = $conn->query("SELECT SUM(profit) AS totalProfit FROM penjualan WHERE tgl = '$tgl'");
                               $fetch = $getTotalProfit->fetch_array();
                               $totalProfit = $fetch['totalProfit'];
 

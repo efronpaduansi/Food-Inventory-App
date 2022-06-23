@@ -2,8 +2,6 @@
 
   session_start();
 
-  
-
     if(isset($_GET['session'])){
       if($_GET['session']== "false"){
          $sessionAlert = "
@@ -20,6 +18,7 @@
 
   if(isset($_GET['pesan'])){
     if($_GET['pesan'] == "gagallogin"){
+   
       $alert = "
                 <div class='alert alert-danger alert-dismissible fade show' role='alert'>
                     <strong>Data anda tidak cocok!</strong>
@@ -28,6 +27,7 @@
                     </button>
                 </div>
             ";
+         
     } else if($_GET['pesan'] == "logout"){
       $alert = "
                 <div class='alert alert-warning alert-dismissible fade show' role='alert'>

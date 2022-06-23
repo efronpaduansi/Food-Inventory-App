@@ -9,7 +9,8 @@
 
         $query = $conn->query("SELECT * FROM user WHERE username = '$username'");
 
-        if(mysqli_num_rows($query)=== 1){
+        if(mysqli_num_rows($query)=== 1)
+        {
           //cek password
           $getData = $query->fetch_assoc();
           $getLevel = $getData['level'];
@@ -17,20 +18,23 @@
           if(password_verify($password, $getData['password'])){
               $_SESSION['login'] = true;
               //cek login berdasarkan level admin dan superadmin
-              if($getLevel == "Admin"){
+              if($getLevel == "Admin")
+              {
                 $_SESSION['id'] = $getData['id'];
                 $_SESSION['username'] = $username;
                 $_SESSION['fname'] = $getData['fname'];
                 $_SESSION['level'] = "Admin";
                 header("location:../view/admin/dashboard.php?login=success");
 
-              }else if($getLevel == "Superadmin"){
+              }else if($getLevel == "Superadmin")
+              {
                 $_SESSION['id'] = $getData['id'];
                 $_SESSION['username'] = $username;
                 $_SESSION['fname'] = $getData['fname'];
                 $_SESSION['level'] = "Superadmin";
                 header("location:../view/superadmin/dashboard.php?login=success");
-              }else{
+              }else
+              {
                 $error = true;
                 die();
               }
@@ -38,9 +42,12 @@
             header("location:../index.php?pesan=gagallogin");
             die();
           }
+        }else{
+         
+          header("location:../index.php?pesan=gagallogin");
+          
         }
-    
-      
+
       }
       
 
