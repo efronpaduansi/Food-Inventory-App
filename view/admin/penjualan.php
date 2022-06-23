@@ -6,6 +6,12 @@
   if(!isset($_SESSION['login'])){
     header("location:../../index.php?session=false");
   }
+  //mengatur hak akses user
+  $level = $_SESSION['level'];
+  if($level == "Superadmin"){
+    header("location:../superadmin/406_error.php");
+    die();
+  }
 
   //mengambil data penjualan hari ini
   $tglHariIni = date('Y/m/d');

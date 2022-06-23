@@ -25,6 +25,7 @@
                 $_SESSION['fname'] = $getData['fname'];
                 $_SESSION['level'] = "Admin";
                 header("location:../view/admin/dashboard.php?login=success");
+                
 
               }else if($getLevel == "Superadmin")
               {

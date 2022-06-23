@@ -5,6 +5,7 @@
   if(!isset($_SESSION['login'])){
     header("location:../../index.php?session=false");
   }
+ 
 
   
 
@@ -86,6 +87,7 @@
           <div class="section-body">
                <div class="row">
                      <!-- Profile informasi -->
+                    
                     <div class="col-lg-6">
                         <div class="card shadow-lg" data-aos="fade-up" data-aos-duration="1000">
                             <div class="card-header bg-dark text-light">

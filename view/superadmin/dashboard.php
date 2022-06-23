@@ -7,6 +7,13 @@
 
   include "../../conn/koneksi.php";
 
+  //mengatur hak akses user
+  $level = $_SESSION['level'];
+  if($level == "Admin"){
+    header("location:../admin/406_error.php");
+    die();
+  }
+
 
   //Menghitung total stok makanan pada tabel stock
   $getDataStock = $conn->query("SELECT SUM(total) AS totalStockMakanan FROM stock");

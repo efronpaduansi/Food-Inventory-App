@@ -233,7 +233,7 @@
                                     <option value="Superadmin">Superadmin</option>
                                 </select>
                                 <div class="input-group mb-5" id="show_hide_password">
-                                    <input type="password" name='password' class="form-control" autocomplete="off" required>
+                                    <input type="password" name='password' class="form-control" autocomplete="off" placeholder="Password" required>
                                     <div class="input-group-append">
                                         <a href="" class="btn btn-outline-secondary"><i class="fas fa-eye-slash" aria-hidden="true"></i></a>
                                     </div>

@@ -1,5 +1,5 @@
 <?php
-
+    
     include "../conn/koneksi.php";
 
     $id = $_POST['id'];
@@ -20,7 +20,7 @@
             WHERE id = '$id'");
     if($update){
         header("location:../view/superadmin/users.php?edit=sukses");
-        
+      
     }else{
         header("location:../view/superadmin/users.php?edit=gagal");
     }

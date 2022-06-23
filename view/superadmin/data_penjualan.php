@@ -5,6 +5,14 @@
     header("location:../../index.php?session=false");
   }
 
+    //mengatur hak akses user
+    $level = $_SESSION['level'];
+    if($level == "Admin"){
+      header("location:../admin/406_error.php");
+      die();
+    }
+  
+
 
     include "../../conn/koneksi.php";
 

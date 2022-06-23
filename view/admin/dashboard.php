@@ -7,6 +7,13 @@
     header("location:../../index.php?session=false");
   }
 
+  //mengatur hak akses user
+  $level = $_SESSION['level'];
+  if($level == "Superadmin"){
+    header("location:../superadmin/406_error.php");
+    die();
+  }
+
   $getDataStock = $conn->query("SELECT SUM(total) AS jmlStock FROM stock");
   $fetchDataStock = $getDataStock->fetch_array();
   $totalStockMakanan = $fetchDataStock['jmlStock'];

@@ -5,7 +5,18 @@ session_start();
 if(!isset($_SESSION['login'])){
     header("location:../../index.php?session=false");
   }
-
+if(isset($_GET['request'])){
+  if($_GET['request']=="pass"){
+    $alert = "
+    <div class='alert alert-warning alert-dismissible fade show' role='alert' data-aos='fade-up' data-aos-duration='3000'>
+        <strong>Silahkan kontak Superadmin untuk mengubah password!</strong>
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+        <span aria-hidden='true'>&times;</span>
+        </button>
+    </div>
+    ";
+  }
+}
 
 
 ?>
@@ -93,10 +104,11 @@ if(!isset($_SESSION['login'])){
                        <div class="card-body">
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item"><a href="account_info.php"><span>Informasi Akun Anda</span></a></li>
-                                <li class="list-group-item"><a href=""><span>Ganti Password</span></a></li>
+                                <li class="list-group-item"><a href="setting.php?request=pass"><span>Ganti Password</span></a></li>
                             </ul>
                        </div>
-                   </div>
+                   </div> <br> <br>
+                   <?=@$alert; ?>
                 </div>
           </div>
         </section>
