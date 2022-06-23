@@ -265,7 +265,7 @@
                           </div>
                           <div class="col-lg-6 col-md-12 col-12 col-sm-12">
                             <div class="card shadow-md rounded">
-                              <div class="card-header"><strong>My Profile - </strong> You're login as @<?=$_SESSION['username'] . " ". "[" . $_SESSION['id_user'] . "]" ?></div>
+                              <div class="card-header"><strong>My Profile - </strong> You're login as @<?=$_SESSION['username'] . " ". "[" . $_SESSION['id'] . "]" ?></div>
                               <div class="card-body text-center">
                                     <img alt="image" src="../../assets/img/avatar/avatar-1.png" class="rounded-circle mr-1" height=75>
                                     <div class="row d-flex justify-content-center mt-5">
@@ -282,7 +282,7 @@
                                           <h5>:</h5>
                                         </div>
                                         <div class="identitas text-left ml-3">
-                                          <h5><strong><?=$_SESSION['id_user']; ?></strong></h5>
+                                          <h5><strong><?=$_SESSION['id']; ?></strong></h5>
                                           <h5><strong><?=$_SESSION['username']; ?></strong></h5>
                                           <h5><strong><?=$_SESSION['fname']; ?></strong></h5>
                                           <h5><strong><?=$_SESSION['level']; ?></strong></h5>

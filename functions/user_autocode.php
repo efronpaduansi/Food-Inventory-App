@@ -1,8 +1,8 @@
 <?php
-  //Membuat id transaksi barang masuk otomatis
-  include '../conn/koneksi.php';
+  //Membuat id user otomatis
+  include "../conn/koneksi.php";
 
-  $query = "SELECT max(id_user) as idUser FROM user";
+  $query = "SELECT max(id) as idUser FROM user";
   $hasil = mysqli_query($conn, $query);
   $data = mysqli_fetch_array($hasil);
 
@@ -13,8 +13,5 @@
   $noUrut++;
   $char = 'USR' . date('dmy');
   $idNewUser = $char . sprintf("%03s", $noUrut);
-
-
-
 
 ?>

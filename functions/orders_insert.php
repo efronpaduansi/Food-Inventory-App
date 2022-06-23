@@ -1,8 +1,9 @@
 <?php
-
+    session_start();
     include "../conn/koneksi.php";
 
     $id             = $_POST['id'];
+    $id_user        = $_SESSION['id'];
     $varian_rasa    = $_POST['varian_rasa'];
     $hrg_beli       = $_POST['hrg_beli'];
     $jumlah         = $_POST['jumlah'];
@@ -15,7 +16,7 @@
     $id_menu = $fetchIdMenu['idMenu'];
 
     //insert data
-    $query = $conn->query("INSERT INTO orders(id, id_menu, hrg_beli, jumlah, tgl_order, administrator) VALUES ('$id', '$id_menu', '$hrg_beli', '$jumlah', '$tgl_order', '$admin')");
+    $query = $conn->query("INSERT INTO orders(id, id_menu, id_user, hrg_beli, jumlah, tgl_order, administrator) VALUES ('$id', '$id_menu', '$id_user', '$hrg_beli', '$jumlah', '$tgl_order', '$admin')");
     if($query){
         //menghitung total stock
         $total = $conn->query("SELECT SUM(jumlah) AS total FROM orders WHERE id_menu = '$id_menu'");

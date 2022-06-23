@@ -1,7 +1,8 @@
 <?php
   session_start();
   include "../../conn/koneksi.php";
-  include "../../functions/orders_id.php";
+  // include "../../functions/orders_id.php";
+ 
 
   if(!isset($_SESSION['login'])){
     header("location:../../index.php?session=false");
@@ -203,6 +204,17 @@
             </div>
             <div class="modal-body">
               <form action="../../functions/orders_insert.php" method="post">
+                <?php 
+                   //membuat id order otomatis 
+                    $query = "SELECT max(id) as orderId FROM orders";
+                    $hasil = mysqli_query($conn, $query);
+                    $data = mysqli_fetch_array($hasil);
+                    $maxkode = $data['orderId'];
+                    $noUrut = (int) substr($maxkode, 9, 3);
+                    $noUrut++;
+                    $char ="ID-" . date('dmy');
+                    $Id = $char . sprintf("%03s", $noUrut);
+                ?>
                 <input type="text" class="form-control mb-3" name="id" value="<?=$Id; ?>" readonly>
                 <select name="makanan" class="form-control mb-3" required>
                   <option value="" disabled selected hidden>--Select Makanan--</option>

@@ -8,9 +8,9 @@
 
 
 
-  $id_user = $_SESSION['id_user'];
+  $id = $_SESSION['id'];
 
-  $getDataUser = $conn->query("SELECT * FROM user WHERE id_user = '$id_user'");
+  $getDataUser = $conn->query("SELECT * FROM user WHERE id = '$id'");
   $fetchDataUser = $getDataUser->fetch_assoc();
   
   
@@ -99,7 +99,7 @@
                 <div class="col-md-6">
                     <div class="card shadow-lg" data-aos="fade-up" data-aos-duration="1000">
                         <div class="card-header bg-dark text-light">
-                             Anda login sebagai : @<?=$_SESSION['username'] . " " ."[".  $_SESSION['id_user']. "]";?> 
+                             Anda login sebagai : @<?=$_SESSION['username'] . " " ."[".  $_SESSION['id']. "]";?> 
                         </div>
                         <div class="card-body text-center">
                                 <img alt="image" src="../../assets/img/avatar/avatar-1.png" class="rounded-circle mr-1" height=75>
@@ -117,7 +117,7 @@
                                      <h5>: </h5>
                                    </div>
                                    <div class="identitas text-left ml-3">
-                                     <h5><?= $_SESSION['id_user']; ?></h5>
+                                     <h5><?= $_SESSION['id']; ?></h5>
                                      <h5><?= $_SESSION['username']; ?></h5>
                                      <h5><?= $_SESSION['fname']; ?></h5>
                                      <h5><?= $_SESSION['level']; ?></h5>

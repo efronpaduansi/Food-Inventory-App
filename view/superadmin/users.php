@@ -2,9 +2,9 @@
 
     session_start();
 
-    if(!isset($_SESSION['login'])){
-    header("location:../../index.php?session=false");
-  }
+  //   if(!isset($_SESSION['login'])){
+  //   header("location:../../index.php?session=false");
+  // }
 
 
     include "../../conn/koneksi.php";
@@ -154,7 +154,7 @@
                              ?>
                             <tr>
                                 <th scope="row"><?= $no; ?></th>
-                                <td><?= $user['id_user']; ?></td>
+                                <td><?= $user['id']; ?></td>
                                 <td><?= $user['username']; ?></td>
                                 <td><?= $user['fname']; ?></td>
                                 <td><?= $user['level']; ?></td>

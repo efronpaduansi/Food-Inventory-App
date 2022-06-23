@@ -2,11 +2,29 @@
   session_start();
 
   include "../../conn/koneksi.php";
-  include "../../functions/laporan_count.php";
+  // include "../../functions/laporan_count.php";
 
   if(!isset($_SESSION['login'])){
     header("location:../../index.php?session=false");
   }
+
+    //cari data berdasarkan tanggal
+    if(isset($_POST['cari']))
+    {
+        $keyword = $_POST['keyword'];
+        $selectData = $_POST['select_data'];
+
+       if($selectData == 'Orders'){
+            $getDataOrders = $conn->query("SELECT SUM(jumlah) AS jmlOrders FROM orders WHERE tgl_order LIKE '%$keyword%'");
+            $resultDataOrders = $getDataOrders->fetch_array();
+            $jmlDataOrders = $resultDataOrders['jmlOrders'];
+       }else if($selectData == 'Penjualan'){
+            $getDataPenjualan = $conn->query("SELECT SUM(jumlah) AS jmlPenjualan FROM penjualan WHERE tgl LIKE '%$keyword%'");
+            $resultDataPenjualan = $getDataPenjualan->fetch_array();
+            $jmlDataPenjualan = $resultDataPenjualan['jmlPenjualan'];
+       }
+        
+    }
 
 
 
@@ -135,7 +153,7 @@
                                <div class="card-body text-center">
                                     <h1 class="text-success">
                                       <?php
-                                        if($jmlDataOrders == 0){
+                                        if(@$jmlDataOrders == 0){
                                           echo "<h1 class='text-danger'>0</h1>"; 
                                         }else{
                                           echo @$jmlDataOrders; 
@@ -143,7 +161,7 @@
                                       ?>
                                     </h1>
                                     <p>
-                                      Total data : <?=$allOrders; ?>
+                                      Total data : <?=@$allOrders; ?>
                                     </p>
                                     <div class="form-inline mt-5 d-block justify-content-center">
                                         <a  href="../../functions/orders_report_pdf.php" target="_blank" class="btn btn-dark mr-3"><i class="fas fa-file-pdf"></i> Cetak PDF</a>
@@ -158,7 +176,7 @@
                                <div class="card-body text-center">
                                  <h1 class="text-success">
                                   <?php
-                                      if($jmlDataPenjualan == 0){
+                                      if(@$jmlDataPenjualan == 0){
                                         echo "<h1 class='text-danger'>0</h1>"; 
                                       }else{
                                         echo @$jmlDataPenjualan; 
@@ -166,7 +184,7 @@
                                     ?>
                                  </h1>
                                  <p>
-                                   Total data : <?=$allPenjualan; ?>
+                                   Total data : <?=@$allPenjualan; ?>
                                  </p>
                                     <div class="form-inline mt-5 d-block justify-content-center">
                                         <a href="../../functions/penjualan_report_pdf.php" target="_blank" class="btn btn-dark mr-3"><i class="fas fa-file-pdf"></i> Cetak PDF</a>
@@ -179,9 +197,9 @@
                            <div class="card shadow-lg">
                                <div class="card-header bg-primary text-light"><strong>Total Stock</strong></div>
                                <div class="card-body text-center">
-                                    <h1 class="text-success"><?=$jmlDataStock; ?></h1>
+                                    <h1 class="text-success"><?=@$jmlDataStock; ?></h1>
                                     <p>
-                                      Total data : <?=$jmlDataStock; ?>
+                                      Total data : <?=@$jmlDataStock; ?>
                                     </p>
                                     <div class="form-inline mt-5 d-block justify-content-center">
                                         <a href="../../functions/stock_report_pdf.php" target="_blank" class="btn btn-dark mr-3"><i class="fas fa-file-pdf"></i> Cetak PDF</a>

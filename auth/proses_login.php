@@ -18,14 +18,14 @@
               $_SESSION['login'] = true;
               //cek login berdasarkan level admin dan superadmin
               if($getLevel == "Admin"){
-                $_SESSION['id_user'] = $getData['id_user'];
+                $_SESSION['id'] = $getData['id'];
                 $_SESSION['username'] = $username;
                 $_SESSION['fname'] = $getData['fname'];
                 $_SESSION['level'] = "Admin";
                 header("location:../view/admin/dashboard.php?login=success");
 
               }else if($getLevel == "Superadmin"){
-                $_SESSION['id_user'] = $getData['id_user'];
+                $_SESSION['id'] = $getData['id'];
                 $_SESSION['username'] = $username;
                 $_SESSION['fname'] = $getData['fname'];
                 $_SESSION['level'] = "Superadmin";

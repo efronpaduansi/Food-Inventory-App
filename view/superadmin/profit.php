@@ -2,7 +2,7 @@
   session_start();
     //membuat kode menu otomatis
     include "../../conn/koneksi.php";
-    include "../../functions/profit_count.php";
+    
 
     if(!isset($_SESSION['login'])){
     header("location:../../index.php?session=false");
@@ -26,60 +26,7 @@
       }
 
     }
-
-    
-    
-
-    //cek pesan masuk
-    if(isset($_GET['pesan'])){
-      if($_GET['pesan'] == "sukses"){
-        $alert = "
-                <div class='alert alert-success alert-dismissible fade show' role='alert'>
-                    <strong>Menu baru berhasil ditambahkan</strong>
-                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                    <span aria-hidden='true'>&times;</span>
-                    </button>
-                </div>
-            ";
-      }else{
-        $alert = "
-                <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-                    <strong>Menu baru gagal ditambahkan</strong>
-                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                    <span aria-hidden='true'>&times;</span>
-                    </button>
-                </div>
-            ";
-      }
-    }
-
-    //cek hapus menu
-    if( isset($_GET['hapus'])){
-      if($_GET['hapus'] == "sukses"){
-        $alert = "
-          <div class='alert alert-success alert-dismissible fade show' role='alert'>
-              <strong>Menu baru berhasil dihapus</strong>
-              <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-              <span aria-hidden='true'>&times;</span>
-              </button>
-          </div>
-          ";
-      }
-    }
-
-    //cek update menu
-    if( isset($_GET['update'])){
-      if($_GET['update'] == "sukses"){
-        $alert = "
-        <div class='alert alert-success alert-dismissible fade show' role='alert'>
-            <strong>Menu baru berhasil diubah</strong>
-            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-            <span aria-hidden='true'>&times;</span>
-            </button>
-        </div>
-        ";
-      }
-    }
+   
 ?>
 <!DOCTYPE html>
 <html lang="en">
