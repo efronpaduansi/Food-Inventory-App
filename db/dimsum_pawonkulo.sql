@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.5deb2
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Apr 28, 2022 at 02:39 AM
--- Server version: 8.0.28-0ubuntu0.20.04.3
--- PHP Version: 7.4.3
+-- Host: 127.0.0.1
+-- Generation Time: Jun 23, 2022 at 06:44 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -25,41 +24,98 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `brg_masuk`
+-- Table structure for table `menu`
 --
 
-CREATE TABLE `brg_masuk` (
-  `id_masuk` int NOT NULL,
-  `kode_transaksi` varchar(10) NOT NULL,
-  `nama_makanan` varchar(20) NOT NULL,
-  `varian_rasa` varchar(10) NOT NULL,
-  `harga_satuan` int NOT NULL,
-  `jumlah` int NOT NULL,
-  `tgl_masuk` date NOT NULL,
-  `penerima` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `menu` (
+  `id` varchar(10) NOT NULL,
+  `makanan` varchar(15) NOT NULL,
+  `varian_rasa` varchar(15) NOT NULL,
+  `harga` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `brg_masuk`
+-- Dumping data for table `menu`
 --
 
-INSERT INTO `brg_masuk` (`id_masuk`, `kode_transaksi`, `nama_makanan`, `varian_rasa`, `harga_satuan`, `jumlah`, `tgl_masuk`, `penerima`) VALUES
-(42, 'ID003', 'Dimsum', 'Ayam', 6000, 44, '2022-04-27', 'Helna Santika'),
-(47, 'ID004', 'Dimsum', 'Cumi', 3000, 10, '2022-04-27', 'Helna Santika');
+INSERT INTO `menu` (`id`, `makanan`, `varian_rasa`, `harga`) VALUES
+('DPK001', 'Dimsum', 'Ayam', 5000),
+('DPK002', 'Dimsum', 'Beef', 5000),
+('DPK003', 'Dimsum', 'Cumi', 5000),
+('DPK004', 'Dimsum', 'Udang', 5000);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `stok`
+-- Table structure for table `orders`
 --
 
-CREATE TABLE `stok` (
-  `id` int NOT NULL,
-  `id_masuk` int NOT NULL,
-  `nama_makanan` varchar(20) NOT NULL,
-  `varian_rasa` varchar(10) NOT NULL,
-  `jumlah` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `orders` (
+  `id` varchar(20) NOT NULL,
+  `id_menu` varchar(10) NOT NULL,
+  `id_user` varchar(20) NOT NULL,
+  `hrg_beli` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `tgl_order` date NOT NULL,
+  `administrator` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `id_menu`, `id_user`, `hrg_beli`, `jumlah`, `tgl_order`, `administrator`) VALUES
+('ID-230622001', 'DPK001', 'USR230622002', 3000, 30, '2022-06-23', 'Administrator'),
+('ID-230622002', 'DPK002', 'USR230622002', 3500, 45, '2022-06-23', 'Administrator'),
+('ID-230622003', 'DPK003', 'USR230622002', 3000, 35, '2022-06-23', 'Administrator'),
+('ID-230622004', 'DPK004', 'USR230622002', 3000, 30, '2022-06-23', 'Administrator');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `penjualan`
+--
+
+CREATE TABLE `penjualan` (
+  `id` varchar(20) NOT NULL,
+  `id_stock` int(11) NOT NULL,
+  `id_menu` varchar(10) NOT NULL,
+  `id_user` varchar(20) NOT NULL,
+  `hrg_jual` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `profit` int(11) NOT NULL,
+  `tgl` date NOT NULL,
+  `administrator` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `penjualan`
+--
+
+INSERT INTO `penjualan` (`id`, `id_stock`, `id_menu`, `id_user`, `hrg_jual`, `jumlah`, `profit`, `tgl`, `administrator`) VALUES
+('DPK-230622001', 2, 'DPK002', 'USR230622003', 5000, 2, 3000, '2022-06-23', 'Helna Santika');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stock`
+--
+
+CREATE TABLE `stock` (
+  `id` int(11) NOT NULL,
+  `id_menu` varchar(10) NOT NULL,
+  `total` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `stock`
+--
+
+INSERT INTO `stock` (`id`, `id_menu`, `total`) VALUES
+(1, 'DPK001', 30),
+(2, 'DPK002', 43),
+(3, 'DPK003', 35),
+(4, 'DPK004', 30);
 
 -- --------------------------------------------------------
 
@@ -68,71 +124,96 @@ CREATE TABLE `stok` (
 --
 
 CREATE TABLE `user` (
-  `id_user` varchar(12) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `fname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `id` varchar(20) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `fname` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `level` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `level` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id_user`, `username`, `fname`, `password`, `level`) VALUES
-('USR210422002', 'helnasantika', 'Helna Santika', '12345', 'Admin'),
-('USR220422003', 'efronpaduansi', 'Efronius Paduansi', '12345', 'Superadmin'),
-('USR220422004', 'andiagat', 'Andi H. Agat', '12345', 'Admin'),
-('USR270422005', 'aldo123', 'Aldo Saputra', '12345', 'Superadmin');
+INSERT INTO `user` (`id`, `username`, `fname`, `password`, `level`) VALUES
+('USR230622002', 'admin2022', 'Administrator', '$2y$10$KfoBspXvevnZ9d0L4wreKunGvN3Lug/XLl2omCAU98IE59mTAX/lK', 'Superadmin'),
+('USR230622003', 'helnasantika', 'Helna Santika', '$2y$10$EdxU4P3PlXDvDgTylrFt7OGj8N2iasEi5jqNAhGUhDWHGv3N4MyAO', 'Admin');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `brg_masuk`
+-- Indexes for table `menu`
 --
-ALTER TABLE `brg_masuk`
-  ADD PRIMARY KEY (`id_masuk`);
+ALTER TABLE `menu`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `stok`
+-- Indexes for table `orders`
 --
-ALTER TABLE `stok`
+ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_masuk` (`id_masuk`);
+  ADD KEY `id_menu` (`id_menu`),
+  ADD KEY `id_user` (`id_user`);
+
+--
+-- Indexes for table `penjualan`
+--
+ALTER TABLE `penjualan`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_stock` (`id_stock`),
+  ADD KEY `id_menu` (`id_menu`),
+  ADD KEY `id_stock_2` (`id_stock`),
+  ADD KEY `id_user` (`id_user`);
+
+--
+-- Indexes for table `stock`
+--
+ALTER TABLE `stock`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_menu` (`id_menu`);
 
 --
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`id_user`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `brg_masuk`
+-- AUTO_INCREMENT for table `stock`
 --
-ALTER TABLE `brg_masuk`
-  MODIFY `id_masuk` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
-
---
--- AUTO_INCREMENT for table `stok`
---
-ALTER TABLE `stok`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+ALTER TABLE `stock`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `stok`
+-- Constraints for table `orders`
 --
-ALTER TABLE `stok`
-  ADD CONSTRAINT `stok_ibfk_1` FOREIGN KEY (`id_masuk`) REFERENCES `brg_masuk` (`id_masuk`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`id_menu`) REFERENCES `menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `penjualan`
+--
+ALTER TABLE `penjualan`
+  ADD CONSTRAINT `penjualan_ibfk_1` FOREIGN KEY (`id_menu`) REFERENCES `menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `penjualan_ibfk_2` FOREIGN KEY (`id_stock`) REFERENCES `stock` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `penjualan_ibfk_3` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `stock`
+--
+ALTER TABLE `stock`
+  ADD CONSTRAINT `stock_ibfk_1` FOREIGN KEY (`id_menu`) REFERENCES `menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
