@@ -3,7 +3,7 @@
 # Overview
 Aplikasi inventori makanan berbasis web yang dibangun menggunakan PHP Native, MySQL database dan Bootstrap Framework.
 
-#Features :
+# Features :
     - Dashboard Menggunakan Stisla dashboard template
     - Login (multi level user)
     - Data Orders Makanan
@@ -12,10 +12,10 @@ Aplikasi inventori makanan berbasis web yang dibangun menggunakan PHP Native, My
     - Cetak Laporan (PDF & Excel)
     - Preferencess (Account Setting, Add new user)
    
-#Include :
+# Include :
     - File database mysql pada folder /db/dimsum_pawonkulo.db
 
-#Step Installations :
+# Step Installations :
     Aplikasi ini dibagikan secara gratis (Open Source). Bagi anda yang ingin mengunduh sebagai referensi belajar dan ingin mengembangkan fitur silahkan ikuti langkah-langkah berikut ini :
     - Silahkan unduh atau clone aplikasi dengan menekan tombol code diatas kanan project ini
     - Simpan di folder htdocs server anda
