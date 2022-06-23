@@ -2,13 +2,13 @@
 
     session_start();
 
-  //   if(!isset($_SESSION['login'])){
-  //   header("location:../../index.php?session=false");
-  // }
+    if(!isset($_SESSION['login'])){
+    header("location:../../index.php?session=false");
+  }
 
 
     include "../../conn/koneksi.php";
-    include "../../functions/user_autocode.php";
+  
 
 
     //ambil data user dari database
@@ -195,6 +195,20 @@
                     </div>
                         <div class="modal-body">
                             <form action="../../functions/user_insert.php" method="post">
+                                <?php
+                                  //membuat user id otomatis
+                                  $query = "SELECT max(id) as idUser FROM user";
+                                  $hasil = mysqli_query($conn, $query);
+                                  $data = mysqli_fetch_array($hasil);
+                                
+                                  $maxkode = $data['idUser'];
+                                
+                                  $noUrut = (int) substr($maxkode, 9, 3);
+                                
+                                  $noUrut++;
+                                  $char = 'USR' . date('dmy');
+                                  $idNewUser = $char . sprintf("%03s", $noUrut);
+                                ?>
                                 <input class="form-control mb-3" name="id_user" type="text" value="<?= $idNewUser; ?>" readonly>
                                 <input type="text" name="username" id="username" class="form-control mb-3" placeholder="Username" required autofocus autocomplete="off" minlength="6" maxlength="20">
                                 <span id="pesan"></span>

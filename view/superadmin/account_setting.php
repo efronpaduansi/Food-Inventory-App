@@ -9,9 +9,9 @@
 
 
 
-  $id_user = $_SESSION['id_user'];
+  $id = $_SESSION['id'];
 
-  $getDataUser = $conn->query("SELECT * FROM user WHERE id_user = '$id_user'");
+  $getDataUser = $conn->query("SELECT * FROM user WHERE id = '$id'");
   $fetchDataUser = $getDataUser->fetch_assoc();
   
   
