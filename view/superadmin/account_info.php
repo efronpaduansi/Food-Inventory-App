@@ -124,7 +124,7 @@
                                    </div>
                                  </div>
                                 <div class="form-inline d-flex justify-content-center mt-5">
-                                  <a href="user_edit.php?id_user=<?=$fetchDataUser['id_user']; ?>" class="btn btn-primary mr-4">Edit Akun</a>
+                                  <a href="user_edit.php?id=<?=$fetchDataUser['id']; ?>" class="btn btn-primary mr-4">Edit Akun</a>
                                   <a href="account_setting.php" class="btn btn-danger">Kembali</a>
                               </div>
                         </div>
