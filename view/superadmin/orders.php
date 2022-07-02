@@ -179,7 +179,7 @@
                           <td><?=$orders['administrator']; ?></td>
                           <td>
                             <div class="form-inline">
-                              <a href="../../functions/orders_edit.php?id=<?=$orders['id']; ?>" data-toggle="tooltip" data-placement="left" title="Ubah Data"><i class="fas fa-edit"></i></a>
+                              <a href="orders_edit.php?id=<?=$orders['id']; ?>" data-toggle="tooltip" data-placement="left" title="Ubah Data"><i class="fas fa-edit"></i></a>
                               <a href="../../functions/orders_delete.php?id=<?=$orders['id']; ?>" data-toggle="tooltip" data-placement="left" title="Hapus Data" onclick="return confirm('Tindakan ini akan menghapus data secara permanen. Yakin ?')"><i class="fas fa-trash"></i></a>
                             </div>
                           </td>

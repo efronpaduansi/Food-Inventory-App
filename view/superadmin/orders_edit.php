@@ -2,16 +2,18 @@
   session_start();
   include "../../conn/koneksi.php";
   
-  if(!isset($_SESSION['login'])){
-    header("location:../../index.php?session=false");
-  }
+  // if(!isset($_SESSION['login'])){
+  //   header("location:../../index.php?session=false");
+  // }
 
 
   $id = $_GET['id'];
 
-  //tampil data kedalam table
-  $query = $conn->query("SELECT menu.nama_makanan, menu.varian_rasa, stock.id, stock.kode_menu, stock.hrg_beli, stock.jumlah, stock.tgl_order, stock.administrator FROM (menu LEFT JOIN stock ON menu.kode = stock.kode_menu) WHERE id = '$id'");
-  while( $data = $query->fetch_assoc()) {
+  $query = $conn->query("SELECT * FROM orders WHERE id='$id'");
+  while($orders = $query->fetch_assoc()) :
+
+  
+  
 
 ?>
 <!DOCTYPE html>
@@ -70,8 +72,8 @@
               <li class="nav-item">
                 <a href="dashboard.php" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
               </li>
-              <li class=""><a class="nav-link" href="orders.php"><i class="fas fa-shopping-bag"></i><span>Orders</span></a></li>
-              <li class="active"><a class="nav-link" href="stock.php"><i class="fas fa-layer-group"></i><span>Stock</span></a></li>
+              <li class="active"><a class="nav-link" href="orders.php"><i class="fas fa-shopping-bag"></i><span>Orders</span></a></li>
+              <li class=""><a class="nav-link" href="stock.php"><i class="fas fa-layer-group"></i><span>Stock</span></a></li>
               <li class=""><a class="nav-link" href="menu.php"><i class="fas fa-clipboard-list"></i><span>Menu</span></a></li>
               <li class=""><a class="nav-link" href="data_penjualan.php"><i class="fas fa-chart-line"></i><span>Penjualan</span></a></li>
               <li class=""><a class="nav-link" href="profit.php"><i class="fas fa-coins"></i><span>Profit</span></a></li>
@@ -95,24 +97,24 @@
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>Edit data stock</h1>
+            <h1>Edit Data Orders</h1>
           </div>
           <div class="section-body">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card shadow-lg">
-                            <div class="card-header">Edit data stock</div>
+                            <div class="card-header">Edit Data Orders</div>
                             <div class="card-body">
-                                <form action="../../functions/stock_update.php" method="post">
-                                   <input type="hidden" name="id" value="<?=$data['id']; ?>">
-                                   <input type="hidden" name="kode_menu" class="form-control mb-3" value="<?=$data['kode_menu']; ?>" readonly>
+                                <form action="../../functions/orders_update.php" method="post">
+                                   <input type="hidden" name="id" value="<?=$orders['id']; ?>">
+                                   <input type="hidden" name="id_user" value="<?=$_SESSION['id']; ?>">
                                    <select name="nama_makanan" class="form-control mb-3" required>
                                       <option value="" disabled selected hidden>Select Makanan</option>
                                       <option value="Dimsum">Dimsum</option>
                                   </select>
                                    <select name="varian_rasa" id="varian_rasa" class="form-control mb-3" required>
-                                       <option value="" disabled selected hidden><?=$data['varian_rasa']; ?></option>
+                                       <option value="" disabled selected hidden>--Select varian rasa--</option>
                                         <!-- Ambil nama makanan dari tb_makanan -->
                                         <?php
                                           $sql = $conn->query("SELECT * FROM menu");
@@ -121,13 +123,13 @@
                                        <option value="<?=$varian['varian_rasa'];?>"><?=$varian['varian_rasa']; ?></option>
                                        <?php } ?>
                                     </select>
-                                   <input type="number" name="hrg_beli" class="form-control mb-3" value="<?=$data['hrg_beli']; ?>" required>
-                                   <input type="number" name="jumlah" class="form-control mb-3" value="<?=$data['jumlah']; ?>" required>
+                                   <input type="number" name="hrg_beli" class="form-control mb-3" value="<?= $orders['hrg_beli']; ?>" required>
+                                   <input type="number" name="jumlah" class="form-control mb-3" value="<?=$orders['jumlah']; ?>" required>
                                    <input type="date" name="tgl_order" class="form-control mb-3">
                                    <input type="text" name="administrator" class="form-control mb-5" value="<?=$_SESSION['fname']; ?>" readonly>
                                    <div class="card-footer">
                                        <div class="form-inline">
-                                           <a href="stock.php" class="btn btn-danger mr-3">Batal</a>
+                                           <a href="orders.php" class="btn btn-danger mr-3">Batal</a>
                                            <button type="submit" name="update" class="btn btn-primary">Update</button>
                                        </div>
                                    </div>
@@ -143,4 +145,4 @@
      <?php include "../master/footer.php" ?>
 </body>
 </html>
-<?php } ?>
+<?php endwhile ?>

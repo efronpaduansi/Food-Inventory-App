@@ -11,7 +11,7 @@
         $id = $_GET['id'];
 
         $query = $conn->query("SELECT * FROM menu WHERE id = '$id'");
-        while( $menu = $query->fetch_assoc()) {
+        while( $menu = $query->fetch_assoc()) :
 
 ?>
 <!DOCTYPE html>
@@ -126,4 +126,4 @@
      <?php include "../master/footer.php" ?>
 </body>
 </html>
-<?php } ?>
+<?php endwhile ?>
